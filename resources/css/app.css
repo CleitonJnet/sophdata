@@ -1,15 +1,26 @@
 @import 'tailwindcss';
-@import '../../vendor/livewire/flux/dist/flux.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
-@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
-
-@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-50: #eff7ff;
+    --color-brand-100: #dcedff;
+    --color-brand-200: #b9ddff;
+    --color-brand-300: #85c6ff;
+    --color-brand-400: #4aa5ff;
+    --color-brand-500: #1f7fff;
+    --color-brand-600: #0b61e8;
+    --color-brand-700: #0b4dbc;
+    --color-brand-800: #0f4297;
+    --color-brand-900: #123a76;
+    --color-brand-950: #0c2449;
+
+    --color-action-400: #ff785a;
+    --color-action-500: #d83a20;
+    --color-action-600: #b92c16;
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -28,11 +39,104 @@
     --color-accent-foreground: var(--color-white);
 }
 
-@layer theme {
-    .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+}
+
+body {
+    background: #f8fafc;
+    overflow-x: hidden;
+}
+
+html.menu-open,
+html.menu-open body {
+    overflow: hidden;
+}
+
+:where(a, button, summary, input, select, textarea, [role='button']):focus-visible {
+    outline: 3px solid #1f7fff !important;
+    outline-offset: 3px !important;
+}
+
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.75rem 1rem;
+    color: #0c2449;
+    font-weight: 700;
+    box-shadow: 0 12px 30px rgb(12 36 73 / 20%);
+    transition: transform 150ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+::selection {
+    background: #b9ddff;
+    color: #0c2449;
+}
+
+.hero-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.card-lift {
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.horizontal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #b9ddff transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 0.35rem;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #b9ddff;
+}
+
+.whatsapp-floating {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+@media (hover: hover) {
+    .card-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 50px -24px rgb(15 66 151 / 35%);
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        scroll-padding-top: 11rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }
 
@@ -46,21 +150,3 @@
         border-color: var(--color-gray-200, currentColor);
     }
 }
-
-[data-flux-field]:not(ui-radio, ui-checkbox) {
-    @apply grid gap-2;
-}
-
-[data-flux-label] {
-    @apply  !mb-0 !leading-tight;
-}
-
-input:focus[data-flux-control],
-textarea:focus[data-flux-control],
-select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
-}
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */

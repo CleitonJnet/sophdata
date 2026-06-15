@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Domínio provisório: altere as URLs abaixo quando o domínio oficial mudar. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://sophdata.com.br/</loc>
+    </url>
+    <url>
+        <loc>https://sophdata.com.br/para-voce</loc>
+    </url>
+    <url>
+        <loc>https://sophdata.com.br/para-empresas</loc>
+    </url>
+    <url>
+        <loc>https://sophdata.com.br/sobre</loc>
+    </url>
+    <url>
+        <loc>https://sophdata.com.br/contato</loc>
+    </url>
+    <url>
+        <loc>https://sophdata.com.br/politica-de-privacidade</loc>
+    </url>
+</urlset>
