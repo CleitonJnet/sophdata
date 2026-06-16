@@ -116,10 +116,12 @@
                         </div>
 
                         <figure class="relative mx-auto w-full max-w-180">
-                            <div class="absolute inset-8 rounded-full bg-brand-400/20 blur-3xl"></div>
+                            <div class="absolute inset-8 rounded-full bg-brand-400/20 blur-3xl" aria-hidden="true"></div>
                             <img src="{{ $resolvedImage }}" alt="{{ $resolvedImageAlt }}"
+                                width="1440" height="1040"
                                 class="relative aspect-18/13 w-full rounded-3xl object-cover shadow-2xl sm:rounded-4xl"
-                                decoding="async" fetchpriority="{{ $loop->first ? 'high' : 'auto' }}">
+                                loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async"
+                                fetchpriority="{{ $loop->first ? 'high' : 'auto' }}">
                         </figure>
                     </div>
                 </div>
@@ -149,18 +151,32 @@
             },
             autoplay: {
                 delay: 2500,
-                disableOnInteraction: false,
+                disableOnInteraction: true,
             },
             creativeEffect: {
                 prev: {
                     shadow: true,
-                    translate: [0, 0, -800],
-                    rotate: [180, 0, 0],
+                    translate: ["-120%", 0, -500],
                 },
                 next: {
                     shadow: true,
-                    translate: [0, 0, -800],
-                    rotate: [-180, 0, 0],
+                    translate: ["120%", 0, -500],
+                },
+            },
+            breakpoints: {
+                768: {
+                    creativeEffect: {
+                        prev: {
+                            shadow: true,
+                            translate: [0, 0, -800],
+                            rotate: [180, 0, 0],
+                        },
+                        next: {
+                            shadow: true,
+                            translate: [0, 0, -800],
+                            rotate: [-180, 0, 0],
+                        },
+                    },
                 },
             },
         });

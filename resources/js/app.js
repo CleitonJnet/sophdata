@@ -1,21 +1,33 @@
 const menuButton = document.querySelector('[data-menu-button]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
+let closeMobileMenu = () => {};
 
 if (menuButton && mobileMenu) {
-    const closeMobileMenu = () => {
+    const menuOpenIcon = menuButton.querySelector('[data-menu-open-icon]');
+    const menuCloseIcon = menuButton.querySelector('[data-menu-close-icon]');
+
+    const syncMenuIcon = (isOpen) => {
+        menuOpenIcon?.classList.toggle('hidden', isOpen);
+        menuCloseIcon?.classList.toggle('hidden', !isOpen);
+    };
+
+    closeMobileMenu = () => {
         menuButton.setAttribute('aria-expanded', 'false');
         menuButton.setAttribute('aria-label', 'Abrir menu');
         mobileMenu.classList.add('hidden');
         document.documentElement.classList.remove('menu-open');
+        syncMenuIcon(false);
     };
 
     menuButton.addEventListener('click', () => {
         const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        const nextIsOpen = !isOpen;
 
-        menuButton.setAttribute('aria-expanded', String(!isOpen));
+        menuButton.setAttribute('aria-expanded', String(nextIsOpen));
         menuButton.setAttribute('aria-label', isOpen ? 'Abrir menu' : 'Fechar menu');
         mobileMenu.classList.toggle('hidden', isOpen);
-        document.documentElement.classList.toggle('menu-open', !isOpen);
+        document.documentElement.classList.toggle('menu-open', nextIsOpen);
+        syncMenuIcon(nextIsOpen);
     });
 
     mobileMenu.querySelectorAll('a').forEach((link) => {
@@ -105,10 +117,7 @@ document.addEventListener('keydown', (event) => {
         closeAllMegaMenus();
 
         if (isMobileMenuOpen && menuButton && mobileMenu) {
-            document.documentElement.classList.remove('menu-open');
-            menuButton.setAttribute('aria-expanded', 'false');
-            menuButton.setAttribute('aria-label', 'Abrir menu');
-            mobileMenu.classList.add('hidden');
+            closeMobileMenu();
             menuButton.focus();
         } else {
             openMegaTrigger?.focus();

@@ -23,7 +23,7 @@
         subtitle="Conte rapidamente o que você precisa resolver. A SophData orienta você na escolha do serviço ou pacote mais adequado."
         primary-button-text="Iniciar atendimento" :primary-button-url="$whatsappUrl" secondary-button-text="Solicitar atendimento empresarial"
         :secondary-button-url="$businessWhatsappUrl" tertiary-button-text="Quero atendimento" :tertiary-button-url="$personalWhatsappUrl"
-        :image="config('sophdata.images.contact')" image-alt="Atendimento de tecnologia da SophData" />
+        :image="config('sophdata.images.contact')" image-alt="Atendimento da SophData" />
 
     <section class="bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto grid max-w-8xl gap-6 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
@@ -63,7 +63,7 @@
         <div class="mx-auto grid max-w-8xl items-start gap-12 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
             <div>
                 <x-site.section-heading eyebrow="Antes de iniciar" title="Perguntas para orientar o atendimento"
-                    description="Não é um formulário funcional. Use este roteiro visual para preparar sua mensagem antes de iniciar o atendimento." />
+                    description="Use este roteiro para agilizar seu atendimento e organizar as informações principais antes de iniciar a conversa." />
                 <div class="mt-8 rounded-3xl bg-brand-50 p-6 ring-1 ring-brand-100">
                     <p class="font-bold text-brand-950">Como funciona?</p>
                     <p class="mt-2 leading-7 text-slate-600">O link abre um canal externo de contato com uma mensagem-base.
@@ -91,6 +91,6 @@
     </section>
 
     <p class="bg-brand-50 px-4 py-8 text-center text-sm text-slate-600">
-        Este site não possui formulário funcional, cadastro ou armazenamento das respostas acima.
+        As respostas não são enviadas por esta página nesta fase; elas servem como roteiro para organizar sua solicitação.
     </p>
 @endsection

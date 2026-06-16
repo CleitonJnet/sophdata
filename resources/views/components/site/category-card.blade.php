@@ -17,8 +17,8 @@
 <article
     {{ $attributes->class(['category-card card-lift group relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm swiper-slide']) }}>
     <figure>
-        <img src="{{ $resolvedImage }}" alt="{{ $title }}" class="aspect-video w-full object-cover" loading="lazy"
-            decoding="async">
+        <img src="{{ $resolvedImage }}" alt="Solução de {{ $title }}" width="1280" height="720"
+            class="aspect-video w-full object-cover" loading="lazy" decoding="async">
     </figure>
     <div class="flex flex-1 flex-col p-6 pb-24">
         <div>

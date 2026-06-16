@@ -38,7 +38,9 @@
             @foreach ($profiles as $profile)
                 <article class="card-lift flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
                     <figure>
-                        <img src="{{ asset($profile['image']) }}" alt="Imagem do portal {{ $profile['title'] }}" class="aspect-video w-full object-cover" loading="lazy" decoding="async">
+                        <img src="{{ asset($profile['image']) }}" alt="Soluções do portal {{ $profile['title'] }}"
+                            width="1280" height="720" class="aspect-video w-full object-cover" loading="lazy"
+                            decoding="async">
                     </figure>
                     <div class="flex flex-1 flex-col p-7">
                         <h2 class="text-2xl font-bold text-brand-950">{{ $profile['title'] }}</h2>

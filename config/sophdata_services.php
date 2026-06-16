@@ -71,6 +71,238 @@ $packages = static function (
     ], $levels);
 };
 
+$businessContractingModes = [
+    'suporte-de-ti' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para corrigir uma necessidade específica de suporte técnico sem contratar acompanhamento fixo.',
+            'items' => ['Correção de problema', 'Configuração', 'Revisão de computador ou periférico'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Suporte de TI para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Muito recomendado para empresas que precisam de suporte recorrente, prevenção e orientação para a equipe.',
+            'items' => ['Suporte contínuo', 'Prevenção', 'Manutenção e orientação recorrente'],
+            'cta_label' => 'Solicitar proposta mensal',
+            'recommended' => true,
+            'recommendation_label' => 'Muito recomendado',
+            'whatsapp_message' => 'Olá, quero solicitar proposta mensal de Suporte de TI para minha empresa.',
+        ],
+    ],
+    'redes-e-wifi' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para resolver falhas de conexão, ajustar roteadores, organizar Wi-Fi ou revisar compartilhamentos.',
+            'items' => ['Correção de problema', 'Configuração', 'Revisão de rede'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Redes e Wi-Fi para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Opcional para empresas que desejam manutenção, revisão recorrente e acompanhamento da estabilidade da rede.',
+            'items' => ['Revisão recorrente', 'Manutenção', 'Prevenção de instabilidade'],
+            'cta_label' => 'Avaliar contrato mensal',
+            'recommendation_label' => 'Opcional',
+            'whatsapp_message' => 'Olá, quero avaliar contrato mensal de Redes e Wi-Fi para minha empresa.',
+        ],
+    ],
+    'seguranca-e-backup' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para revisar riscos, configurar backup inicial, proteger contas ou orientar medidas imediatas.',
+            'items' => ['Revisão', 'Implantação', 'Configuração de backup'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Segurança e Backup para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Recomendado para acompanhar backups, revisar acessos e reduzir riscos de perda de dados ao longo do tempo.',
+            'items' => ['Backup recorrente', 'Prevenção', 'Revisão de segurança'],
+            'cta_label' => 'Solicitar proposta mensal',
+            'recommended' => true,
+            'recommendation_label' => 'Recomendado',
+            'whatsapp_message' => 'Olá, quero solicitar proposta mensal de Segurança e Backup para minha empresa.',
+        ],
+    ],
+    'sites-e-sistemas' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para criar uma página, ajustar um site, implantar recurso específico ou resolver uma demanda definida.',
+            'items' => ['Implantação', 'Melhoria específica', 'Configuração'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Sites e Sistemas para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Para manutenção, evolução contínua de sites e sistemas, ajustes recorrentes e melhoria de processos digitais.',
+            'items' => ['Manutenção', 'Evolução de sites e sistemas', 'Melhorias contínuas'],
+            'cta_label' => 'Solicitar proposta mensal',
+            'recommended' => true,
+            'recommendation_label' => 'Para evolução contínua',
+            'whatsapp_message' => 'Olá, quero solicitar proposta mensal de Sites e Sistemas para minha empresa.',
+        ],
+    ],
+    'automacao-e-dados' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para organizar uma planilha, criar um formulário, montar relatório ou automatizar uma tarefa específica.',
+            'items' => ['Melhoria específica', 'Configuração', 'Implantação'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Automação e Dados para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Para melhorias contínuas em controles, relatórios, dados e processos administrativos que evoluem com a rotina.',
+            'items' => ['Melhorias contínuas', 'Evolução de processos', 'Relatórios recorrentes'],
+            'cta_label' => 'Solicitar proposta mensal',
+            'recommended' => true,
+            'recommendation_label' => 'Para melhorias contínuas',
+            'whatsapp_message' => 'Olá, quero solicitar proposta mensal de Automação e Dados para minha empresa.',
+        ],
+    ],
+    'computadores-corporativos' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para avaliar, melhorar, montar ou renovar computadores específicos conforme a necessidade da empresa.',
+            'items' => ['Correção de problema', 'Upgrade', 'Implantação de equipamento'],
+            'cta_label' => 'Solicitar atendimento pontual',
+            'whatsapp_message' => 'Olá, quero solicitar atendimento pontual de Computadores Corporativos para minha empresa.',
+        ],
+        'monthly_contract' => [
+            'title' => 'Contrato mensal',
+            'description' => 'Opcional para empresas que desejam manutenção preventiva, revisão periódica e orientação de renovação.',
+            'items' => ['Manutenção preventiva', 'Revisão recorrente', 'Planejamento de renovação'],
+            'cta_label' => 'Avaliar contrato mensal',
+            'recommendation_label' => 'Opcional',
+            'whatsapp_message' => 'Olá, quero avaliar contrato mensal de Computadores Corporativos para minha empresa.',
+        ],
+    ],
+];
+
+$personalServiceFormats = [
+    'computador-lento' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para corrigir uma lentidão, erro de programa, impressora ou configuração específica.',
+            'items' => ['Correção de problema', 'Ajuste de desempenho', 'Orientação final'],
+            'cta_label' => 'Quero resolver este problema',
+            'whatsapp_message' => 'Olá, quero resolver um problema pontual de computador lento.',
+        ],
+        'complete_review' => [
+            'title' => 'Revisão completa',
+            'description' => 'Para revisar desempenho, organização de arquivos, programas e configurações do computador.',
+            'items' => ['Organização completa', 'Revisão de programas', 'Recomendações de melhoria'],
+            'cta_label' => 'Escolher este atendimento',
+            'highlight' => true,
+            'whatsapp_message' => 'Olá, quero uma revisão completa do meu computador.',
+        ],
+        'follow_up' => [
+            'title' => 'Retorno ou orientação complementar',
+            'description' => 'Para tirar dúvidas depois do atendimento ou receber orientação para manter o computador em ordem.',
+            'items' => ['Dúvidas de uso', 'Orientação complementar', 'Retorno sob consulta'],
+            'cta_label' => 'Solicitar orientação',
+            'whatsapp_message' => 'Olá, quero orientação complementar sobre meu computador.',
+        ],
+    ],
+    'wifi-e-casa-conectada' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para corrigir Wi-Fi ruim, roteador mal configurado ou dispositivo que não conecta.',
+            'items' => ['Correção de conexão', 'Configuração de roteador', 'Teste de sinal'],
+            'cta_label' => 'Quero resolver este problema',
+            'whatsapp_message' => 'Olá, quero resolver um problema pontual de Wi-Fi ou casa conectada.',
+        ],
+        'complete_review' => [
+            'title' => 'Revisão completa',
+            'description' => 'Para revisar a rede doméstica, conectar dispositivos e organizar o uso da internet em casa.',
+            'items' => ['Rede doméstica organizada', 'Dispositivos conectados', 'Orientação de estabilidade'],
+            'cta_label' => 'Escolher este atendimento',
+            'highlight' => true,
+            'whatsapp_message' => 'Olá, quero uma revisão completa do meu Wi-Fi e dispositivos.',
+        ],
+        'follow_up' => [
+            'title' => 'Retorno ou orientação complementar',
+            'description' => 'Para receber orientação depois dos ajustes ou revisar uma mudança no ambiente.',
+            'items' => ['Retorno sob consulta', 'Orientação de uso', 'Ajustes complementares'],
+            'cta_label' => 'Solicitar orientação',
+            'whatsapp_message' => 'Olá, quero orientação complementar sobre Wi-Fi e casa conectada.',
+        ],
+    ],
+    'backup-e-seguranca' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para configurar backup inicial, revisar uma conta ou proteger arquivos importantes.',
+            'items' => ['Backup inicial', 'Proteção de conta', 'Orientação contra golpes'],
+            'cta_label' => 'Quero resolver este problema',
+            'whatsapp_message' => 'Olá, quero resolver uma necessidade pontual de backup e segurança.',
+        ],
+        'complete_review' => [
+            'title' => 'Revisão completa',
+            'description' => 'Para organizar arquivos, senhas, contas e cópias de segurança com mais cuidado.',
+            'items' => ['Arquivos organizados', 'Contas revisadas', 'Rotina de backup'],
+            'cta_label' => 'Escolher este atendimento',
+            'highlight' => true,
+            'whatsapp_message' => 'Olá, quero uma revisão completa de backup e segurança.',
+        ],
+        'follow_up' => [
+            'title' => 'Retorno ou orientação complementar',
+            'description' => 'Para tirar dúvidas sobre segurança, recuperar o passo a passo ou revisar novos arquivos.',
+            'items' => ['Dúvidas de segurança', 'Retorno sob consulta', 'Orientação complementar'],
+            'cta_label' => 'Solicitar orientação',
+            'whatsapp_message' => 'Olá, quero orientação complementar sobre backup e segurança.',
+        ],
+    ],
+    'estudos-carreira-e-ia' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para organizar uma necessidade específica de estudos, currículo, LinkedIn, produtividade ou IA.',
+            'items' => ['Organização inicial', 'Ajuste de ferramenta', 'Orientação prática'],
+            'cta_label' => 'Quero resolver este problema',
+            'whatsapp_message' => 'Olá, quero atendimento pontual para estudos, carreira ou IA.',
+        ],
+        'complete_review' => [
+            'title' => 'Revisão completa',
+            'description' => 'Para revisar rotina digital, materiais, presença profissional e uso de ferramentas com mais estratégia.',
+            'items' => ['Arquivos organizados', 'Presença profissional', 'Fluxo de produtividade'],
+            'cta_label' => 'Escolher este atendimento',
+            'highlight' => true,
+            'whatsapp_message' => 'Olá, quero uma revisão completa para estudos, carreira e IA.',
+        ],
+        'follow_up' => [
+            'title' => 'Retorno ou orientação complementar',
+            'description' => 'Para aprofundar dúvidas, praticar ferramentas ou avaliar orientação recorrente sob consulta.',
+            'items' => ['Orientação complementar', 'Prática guiada', 'Retorno sob consulta'],
+            'cta_label' => 'Solicitar orientação',
+            'whatsapp_message' => 'Olá, quero orientação complementar para estudos, carreira e IA.',
+        ],
+    ],
+    'montagem-e-upgrade-de-pc' => [
+        'one_time_service' => [
+            'title' => 'Atendimento pontual',
+            'description' => 'Para avaliar peças, resolver uma dúvida de upgrade ou executar uma melhoria específica.',
+            'items' => ['Avaliação de peças', 'Upgrade pontual', 'Orientação de compra'],
+            'cta_label' => 'Quero resolver este problema',
+            'whatsapp_message' => 'Olá, quero atendimento pontual para montagem ou upgrade de PC.',
+        ],
+        'complete_review' => [
+            'title' => 'Revisão completa',
+            'description' => 'Para planejar o computador, revisar compatibilidade, desempenho e organização dos componentes.',
+            'items' => ['Planejamento completo', 'Compatibilidade', 'Recomendações de melhoria'],
+            'cta_label' => 'Escolher este atendimento',
+            'highlight' => true,
+            'whatsapp_message' => 'Olá, quero uma revisão completa para montagem ou upgrade de PC.',
+        ],
+        'follow_up' => [
+            'title' => 'Retorno ou orientação complementar',
+            'description' => 'Para revisar orçamento, tirar dúvidas sobre peças ou receber orientação após a melhoria.',
+            'items' => ['Dúvidas sobre peças', 'Retorno sob consulta', 'Orientação complementar'],
+            'cta_label' => 'Solicitar orientação',
+            'whatsapp_message' => 'Olá, quero orientação complementar sobre montagem ou upgrade de PC.',
+        ],
+    ],
+];
+
 $category = static function (
     string $key,
     string $slug,
@@ -85,7 +317,7 @@ $category = static function (
     array $problemsSolved,
     array $customerProblemCards,
     array $categoryPackages,
-) use ($images): array {
+) use ($images, $businessContractingModes, $personalServiceFormats): array {
     return [
         'key' => $key,
         'slug' => $slug,
@@ -104,6 +336,8 @@ $category = static function (
         'problems_solved' => $problemsSolved,
         'customer_problem_cards' => $customerProblemCards,
         'packages' => $categoryPackages,
+        'contracting_modes' => $portal === 'business' ? ($businessContractingModes[$slug] ?? []) : [],
+        'service_formats' => $portal === 'personal' ? ($personalServiceFormats[$slug] ?? []) : [],
         'faq' => [],
     ];
 };

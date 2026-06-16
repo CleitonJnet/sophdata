@@ -7,6 +7,7 @@
 
 @section('content')
     @php
+        /** @var array $portal */
         $whatsappUrl = sophdata_whatsapp_url('Olá, quero atendimento para uma necessidade pessoal.');
         $problemOrder = [
             'Meu computador está lento',
@@ -17,11 +18,7 @@
         ];
         $problemsByTitle = collect($problemCards)->keyBy('title');
         $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
-        $categoriesBySlug = collect($categories)->keyBy('slug');
-        $featuredHeroServices = collect(['wifi-e-casa-conectada', 'montagem-e-upgrade-de-pc'])
-            ->map(fn(string $slug) => $categoriesBySlug->get($slug))
-            ->filter();
-        $heroSlides = $featuredHeroServices
+        $serviceHeroSlides = collect($categories)
             ->map(
                 fn(array $service) => [
                     'eyebrow' => 'Portal Para Você',
@@ -37,27 +34,49 @@
             )
             ->values()
             ->all();
-        $packageLevels = [
+        $heroSlides = array_merge(
             [
-                'title' => 'Essencial',
-                'positioning' => 'Para começar',
-                'description' => 'Resolve a necessidade principal com orientação clara e uma entrega objetiva.',
-                'items' => ['Problema prioritário', 'Configuração necessária', 'Orientação simples'],
-                'featured' => false,
+                [
+                    'eyebrow' => 'Portal Para Você',
+                    'title' => $portal['title'],
+                    'subtitle' => $portal['subtitle'],
+                    'primaryButtonText' => $portal['primary_cta'],
+                    'primaryButtonUrl' => $whatsappUrl,
+                    'secondaryButtonText' => $portal['secondary_cta'],
+                    'secondaryButtonUrl' => '#packages',
+                    'image' => $portal['image'],
+                    'imageAlt' => 'Soluções de tecnologia para o dia a dia',
+                ],
+            ],
+            $serviceHeroSlides,
+        );
+        $resolutionFormats = [
+            [
+                'title' => 'Correção pontual',
+                'label' => 'Prata',
+                'description' => 'Para resolver um problema específico sem transformar o atendimento em plano.',
+                'examples' => ['Computador lento', 'Wi-Fi ruim', 'Erro de programa', 'Impressora'],
+                'cta' => 'Quero resolver este problema',
+                'url' => sophdata_whatsapp_url('Olá, quero resolver um problema pontual de tecnologia.'),
+                'highlight' => false,
             ],
             [
-                'title' => 'Profissional',
-                'positioning' => 'Recomendado',
-                'description' => 'Inclui o nível Essencial e acrescenta organização, segurança e acompanhamento.',
-                'items' => ['Tudo do Essencial', 'Melhorias adicionais', 'Acompanhamento após a entrega'],
-                'featured' => true,
+                'title' => 'Organização completa',
+                'label' => 'Azul',
+                'description' => 'Para revisar, organizar e deixar o ambiente digital mais estável.',
+                'examples' => ['Arquivos', 'Backup', 'Contas', 'Configurações e orientações'],
+                'cta' => 'Escolher este atendimento',
+                'url' => sophdata_whatsapp_url('Olá, quero uma organização completa do meu ambiente digital.'),
+                'highlight' => true,
             ],
             [
-                'title' => 'Completo',
-                'positioning' => 'Solução completa',
-                'description' => 'Amplia o nível Profissional com prevenção, organização e suporte mais abrangente.',
-                'items' => ['Tudo do Profissional', 'Prevenção e continuidade', 'Suporte ampliado'],
-                'featured' => false,
+                'title' => 'Orientação complementar',
+                'label' => 'Azul claro',
+                'description' => 'Para quem deseja aprender, receber orientação ou fazer uma revisão depois do atendimento.',
+                'examples' => ['Estudos', 'Carreira', 'IA', 'Segurança ou uso do computador'],
+                'cta' => 'Solicitar orientação',
+                'url' => sophdata_whatsapp_url('Olá, quero orientação complementar de tecnologia.'),
+                'highlight' => false,
             ],
         ];
         $audiences = [
@@ -128,12 +147,45 @@
 
     <section id="packages" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Progressão comercial" title="Escolha o nível de atendimento ideal"
-                description="Cada categoria oferece três níveis progressivos. Os detalhes completos ficam na página de cada solução."
+            <x-site.section-heading eyebrow="Formato de atendimento" title="Escolha como deseja resolver"
+                description="O foco é resolver sua necessidade com atendimento pontual, revisão mais completa ou orientação complementar."
                 centered />
             <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
-                @foreach ($packageLevels as $level)
-                    <x-site.portal-level-card :level="$level" />
+                @foreach ($resolutionFormats as $format)
+                    <article @class([
+                        'relative flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm sm:p-8',
+                        'border-2 border-brand-500 shadow-brand-900/10 after:absolute after:inset-x-8 after:top-0 after:h-1 after:rounded-b-full after:bg-gold' => $format['highlight'],
+                        'border border-slate-300' => !$format['highlight'],
+                    ])>
+                        <span @class([
+                            'inline-flex w-fit rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]',
+                            'bg-brand-100 text-brand-800 ring-1 ring-brand-200' => $format['highlight'],
+                            'bg-slate-100 text-slate-700 ring-1 ring-slate-200' => !$format['highlight'],
+                        ])>
+                            {{ $format['label'] }}
+                        </span>
+                        <h2 class="mt-5 text-2xl font-bold text-brand-950">{{ $format['title'] }}</h2>
+                        <p class="mt-4 leading-7 text-slate-600">{{ $format['description'] }}</p>
+                        <ul class="mt-6 grid gap-3 text-sm font-semibold text-slate-700">
+                            @foreach ($format['examples'] as $example)
+                                <li class="flex gap-3">
+                                    <span @class([
+                                        'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-xs font-bold',
+                                        'bg-brand-600 text-white' => $format['highlight'],
+                                        'bg-slate-200 text-slate-700' => !$format['highlight'],
+                                    ]) aria-hidden="true">✓</span>
+                                    {{ $example }}
+                                </li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ $format['url'] }}" target="_blank" rel="noopener noreferrer" @class([
+                            'mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 py-3 text-center text-sm font-bold transition',
+                            'bg-brand-600 text-white hover:bg-brand-700' => $format['highlight'],
+                            'bg-action-500 text-white hover:bg-action-600' => !$format['highlight'],
+                        ])>
+                            {{ $format['cta'] }}
+                        </a>
+                    </article>
                 @endforeach
             </div>
         </div>
@@ -175,7 +227,7 @@
 
     <x-site.cta-section title="Quer resolver um problema de tecnologia sem complicação?"
         description="Inicie o atendimento e escolha o pacote mais adequado para sua necessidade."
-        button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal SophData" />
+        button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal da SophData" />
 
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">

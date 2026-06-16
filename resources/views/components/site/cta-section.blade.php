@@ -18,7 +18,8 @@
 <section {{ $attributes->class(['bg-brand-50 px-4 py-12 sm:px-6 sm:py-16 lg:px-8']) }}>
     <div class="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-brand-950 text-white shadow-xl sm:rounded-[2rem]">
         <figure class="absolute inset-0" aria-hidden="true">
-            <img src="{{ $resolvedImage }}" alt="" class="h-full w-full object-cover opacity-25" loading="lazy" decoding="async">
+            <img src="{{ $resolvedImage }}" alt="" aria-hidden="true" width="1600" height="480"
+                class="h-full w-full object-cover opacity-25" loading="lazy" decoding="async">
         </figure>
         <div class="hero-grid relative flex flex-col items-start justify-between gap-8 p-6 sm:p-10 lg:flex-row lg:items-center lg:p-12">
             <div class="max-w-2xl">

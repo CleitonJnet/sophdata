@@ -7,22 +7,25 @@
 
 @section('content')
     @php
+        /** @var array $portal */
         $whatsappUrl = sophdata_whatsapp_url('Olá, quero solicitar atendimento empresarial.');
         $problemOrder = [
+            'Precisa de site ou sistema?',
             'Computadores parando?',
             'Internet ou Wi-Fi instável?',
             'Sua empresa não tem backup?',
-            'Precisa de site ou sistema?',
             'Usa planilhas demais?',
             'Precisa renovar computadores?',
         ];
         $problemsByTitle = collect($problemCards)->keyBy('title');
         $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
         $categoriesBySlug = collect($categories)->keyBy('slug');
-        $featuredHeroServices = collect(['sites-e-sistemas', 'suporte-de-ti'])
+        $featuredCategories = collect(['sites-e-sistemas'])
             ->map(fn(string $slug) => $categoriesBySlug->get($slug))
-            ->filter();
-        $heroSlides = $featuredHeroServices
+            ->filter()
+            ->merge(collect($categories)->reject(fn(array $category) => $category['slug'] === 'sites-e-sistemas'))
+            ->values();
+        $serviceHeroSlides = $featuredCategories
             ->map(
                 fn(array $service) => [
                     'eyebrow' => 'Portal Para Empresas',
@@ -38,6 +41,22 @@
             )
             ->values()
             ->all();
+        $heroSlides = array_merge(
+            [
+                [
+                    'eyebrow' => 'Portal Para Empresas',
+                    'title' => $portal['title'],
+                    'subtitle' => $portal['subtitle'],
+                    'primaryButtonText' => $portal['primary_cta'],
+                    'primaryButtonUrl' => $whatsappUrl,
+                    'secondaryButtonText' => $portal['secondary_cta'],
+                    'secondaryButtonUrl' => '#solutions',
+                    'image' => $portal['image'],
+                    'imageAlt' => 'Soluções de tecnologia para empresas',
+                ],
+            ],
+            $serviceHeroSlides,
+        );
         $packageLevels = [
             [
                 'title' => 'Essencial',
@@ -118,6 +137,26 @@
             'Segurança Digital',
             'Montagem de Computadores',
         ];
+        $contractingOptions = [
+            [
+                'title' => 'Serviço pontual',
+                'label' => 'Prata',
+                'description' => 'Para resolver uma necessidade específica da empresa com escopo definido.',
+                'items' => ['Correção de problema', 'Configuração', 'Implantação', 'Revisão', 'Melhoria específica'],
+                'cta' => 'Solicitar atendimento pontual',
+                'url' => sophdata_whatsapp_url('Olá, quero solicitar atendimento pontual para minha empresa.'),
+                'featured' => false,
+            ],
+            [
+                'title' => 'Contrato mensal',
+                'label' => 'Dourado',
+                'description' => 'Para empresas que precisam de acompanhamento recorrente, prevenção e evolução contínua.',
+                'items' => ['Suporte contínuo', 'Prevenção', 'Backup recorrente', 'Manutenção', 'Evolução de sites, sistemas e processos'],
+                'cta' => 'Solicitar proposta mensal',
+                'url' => sophdata_whatsapp_url('Olá, quero solicitar proposta mensal para minha empresa.'),
+                'featured' => true,
+            ],
+        ];
     @endphp
 
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$portal['title']" :subtitle="$portal['subtitle']" :primary-button-text="$portal['primary_cta']"
@@ -130,7 +169,7 @@
                 description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa."
                 centered />
             <div class="swiper sd_problems">
-                <div class="swiper-wrapper my-12">
+                <div class="swiper-wrapper mt-12">
                     @foreach ($featuredProblems as $card)
                         <x-site.category-card :title="$card['title']" :description="$card['description']" :image="$card['image']" :url="route('portal.business.category', $card['target_category_slug'])"
                             :cta-label="$card['cta_label']" />
@@ -149,8 +188,8 @@
                 description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação."
                 centered />
             <div class="swiper sd_solutions">
-                <div class="mt-12 swiper-wrapper my-12">
-                    @foreach ($categories as $category)
+                <div class="mt-12 swiper-wrapper">
+                    @foreach ($featuredCategories as $category)
                         <x-site.category-card :title="$category['title']" :description="$category['short_description']" :image="$category['image']" :url="route('portal.business.category', $category['slug'])"
                             :items="array_slice($category['benefits'], 0, 3)" cta-label="Conhecer serviço" />
                     @endforeach
@@ -158,6 +197,52 @@
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-16 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+            <x-site.section-heading eyebrow="Formas de contratação" title="Como sua empresa pode contratar"
+                description="Escolha entre resolver uma demanda específica ou manter acompanhamento recorrente conforme a rotina da empresa."
+                centered />
+            <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
+                @foreach ($contractingOptions as $option)
+                    <article @class([
+                        'relative flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm sm:p-8',
+                        'border-2 border-gold shadow-brand-900/10' => $option['featured'],
+                        'border border-slate-300' => !$option['featured'],
+                    ])>
+                        <span @class([
+                            'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]',
+                            'bg-gold text-brand-950' => $option['featured'],
+                            'border border-slate-300 bg-slate-50 text-slate-700' => !$option['featured'],
+                        ])>
+                            {{ $option['label'] }}
+                        </span>
+                        <h2 class="mt-5 text-2xl font-bold text-brand-950">{{ $option['title'] }}</h2>
+                        <p class="mt-4 leading-7 text-slate-600">{{ $option['description'] }}</p>
+                        <ul class="mt-6 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-2">
+                            @foreach ($option['items'] as $item)
+                                <li class="flex gap-3">
+                                    <span @class([
+                                        'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-xs font-bold',
+                                        'bg-gold text-brand-950' => $option['featured'],
+                                        'bg-slate-200 text-slate-700' => !$option['featured'],
+                                    ]) aria-hidden="true">✓</span>
+                                    {{ $item }}
+                                </li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ $option['url'] }}" target="_blank" rel="noopener noreferrer" @class([
+                            'mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 py-3 text-center text-sm font-bold transition sm:w-fit',
+                            'bg-brand-600 text-white hover:bg-brand-700' => $option['featured'],
+                            'bg-action-500 text-white hover:bg-action-600' => !$option['featured'],
+                        ])>
+                            {{ $option['cta'] }}
+                        </a>
+                    </article>
+                @endforeach
             </div>
         </div>
     </section>
@@ -213,7 +298,7 @@
     <x-site.cta-section title="Sua empresa precisa de uma TI mais organizada?"
         description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
         button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
-        image-alt="Atendimento empresarial SophData" />
+        image-alt="Atendimento empresarial da SophData" />
 
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">

@@ -9,6 +9,11 @@
     $message = $package['whatsapp_message'] ?? "Olá, gostaria de saber mais sobre o pacote {$package['name']}.";
     $url = sophdata_whatsapp_url($message, $number);
     $level = $package['level_label'];
+    $badge = $isFeatured ? ($package['badge'] ?? 'Mais escolhido') : null;
+    $positioning = $package['positioning'] ?? null;
+    $subtitle = $package['subtitle'] ?? null;
+    $headerLabel = $positioning && $positioning !== $badge ? "{$positioning} · {$level}" : $level;
+    $showSubtitle = filled($subtitle) && $subtitle !== $badge;
 @endphp
 
 <article {{ $attributes->class([
@@ -16,19 +21,19 @@
     'border-2 border-gold shadow-xl shadow-brand-900/10 lg:-translate-y-2' => $isFeatured,
     'border border-slate-200 shadow-sm' => ! $isFeatured,
 ]) }}>
-    <span @class([
-        'absolute -top-3 left-6 rounded-full px-4 py-1.5 text-xs font-bold shadow',
-        'bg-gold text-brand-950' => $isFeatured,
-        'border border-slate-200 bg-white text-brand-700' => ! $isFeatured,
-    ])>
-        {{ $package['badge'] }}
-    </span>
+    @if ($badge)
+        <span class="absolute -top-3 left-6 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-brand-950 shadow">
+            {{ $badge }}
+        </span>
+    @endif
 
     <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">
-        {{ $package['positioning'] }} · {{ $level }}
+        {{ $headerLabel }}
     </p>
     <h3 class="mt-3 text-2xl font-bold text-brand-950">{{ $package['name'] }}</h3>
-    <p class="mt-2 font-semibold text-slate-700">{{ $package['subtitle'] }}</p>
+    @if ($showSubtitle)
+        <p class="mt-2 font-semibold text-slate-700">{{ $subtitle }}</p>
+    @endif
     <p class="mt-4 leading-7 text-slate-600">{{ $package['description'] }}</p>
     <p class="mt-4 rounded-2xl bg-brand-50 p-4 text-sm font-semibold leading-6 text-brand-950">
         Para quem é indicado: {{ $package['best_for'] }}

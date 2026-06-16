@@ -32,7 +32,9 @@
         <figure class="shrink-0">
             <img
                 src="{{ $resolvedMobileImage }}"
-                alt="Miniatura de {{ $displayTitle }}"
+                alt="Imagem de {{ $displayTitle }}"
+                width="320"
+                height="200"
                 class="h-16 w-24 rounded-xl object-cover"
                 loading="lazy"
                 decoding="async"
@@ -49,7 +51,9 @@
         <figure>
             <img
                 src="{{ $resolvedMenuImage }}"
-                alt="Solução de {{ $displayTitle }}"
+                alt="Imagem de {{ $displayTitle }}"
+                width="640"
+                height="360"
                 class="aspect-[16/9] w-full object-cover"
                 loading="lazy"
                 decoding="async"

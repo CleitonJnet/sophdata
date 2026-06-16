@@ -65,7 +65,8 @@
             <figure class="rounded-[2rem] border border-brand-100 bg-white p-8 shadow-xl">
                 <x-site.logo class="mb-8" />
                 <img src="{{ asset(config('sophdata.images.about')) }}" alt="Imagem institucional da SophData"
-                    class="aspect-square w-full rounded-3xl object-cover" loading="lazy" decoding="async">
+                    width="1200" height="1200" class="aspect-square w-full rounded-3xl object-cover" loading="lazy"
+                    decoding="async">
             </figure>
         </div>
     </section>
