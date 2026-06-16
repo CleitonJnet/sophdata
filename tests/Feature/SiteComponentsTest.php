@@ -1,386 +1,436 @@
 <?php
 
-use Illuminate\Support\Facades\Blade;
-
-test('site components render their content and default assets', function () {
-    $package = config('sophdata.categories.personal.0.packages.1');
-    $faq = [config('sophdata.faq.0')];
-    $steps = [
-        ['title' => 'Diagnóstico', 'description' => 'Entender a necessidade.'],
-        ['title' => 'Execução', 'description' => 'Aplicar a solução.'],
-    ];
-
-    $html = Blade::render(<<<'BLADE'
-        <x-site.hero-banner
-            eyebrow="Destaque"
-            title="Hero reutilizável"
-            subtitle="Descrição do hero."
-            primary-button-text="Começar"
-            primary-button-url="/contato"
-            tertiary-button-text="WhatsApp"
-            tertiary-button-url="https://wa.me/5521972765535"
-        />
-        <x-site.offer-card title="Oferta teste" description="Uma oferta." url="/oferta" button-text="Ver oferta" />
-        <x-site.category-card title="Categoria teste" description="Uma categoria." url="/categoria" :items="['Item um']" />
-        <x-site.package-card :package="$package" whatsapp-number="5521972765535" />
-        <x-site.section-heading eyebrow="Seção" title="Título da seção" description="Descrição da seção." />
-        <x-site.cta-section title="CTA teste" description="Descrição CTA." button-text="Conversar" button-url="/contato" />
-        <x-site.quick-action-bar />
-        <x-site.faq :items="$faq" />
-        <x-site.process-steps :steps="$steps" />
-        <x-site.profile-switch />
-    BLADE, compact('package', 'faq', 'steps'));
-
-    expect($html)
-        ->toContain('Hero reutilizável')
-        ->toContain('https://placehold.co/720x520/F3F6FA/0B1F4D?text=SophData')
-        ->toContain('Oferta teste')
-        ->toContain('Categoria teste')
-        ->toContain('Mais escolhido')
-        ->toContain('Título da seção')
-        ->toContain('Fale+com+a+SophData')
-        ->toContain('O que você precisa resolver?')
-        ->toContain($faq[0]['question'])
-        ->toContain('Diagnóstico')
-        ->toContain('Para Você')
-        ->toContain('Para Empresas')
-        ->toContain('5521972765535');
-});
-
-test('commercial pages use the reusable visual components', function () {
-    $this->get(route('home'))
+test('business portal sells business problems without personal categories', function () {
+    $response = $this->get(route('portal.business'))
         ->assertOk()
-        ->assertSee('O que você precisa resolver?')
-        ->assertSee('Principais soluções')
-        ->assertSee('Pacotes em destaque');
-
-    $this->get(route('para-voce'))
-        ->assertOk()
-        ->assertSee('Categorias de atendimento')
-        ->assertSee('Mais escolhido')
-        ->assertSee('Computador em Ordem');
-
-    $this->get(route('para-empresas'))
-        ->assertOk()
-        ->assertSee('O que sua empresa precisa resolver?')
-        ->assertSee('TI Profissional Mensal');
-
-    $this->get(route('contato'))
-        ->assertOk()
-        ->assertSee('Estas respostas ajudam no diagnóstico inicial')
-        ->assertSee('Responder pelo WhatsApp');
-});
-
-test('home renders the complete commercial portal structure', function () {
-    $response = $this->get(route('home'));
-
-    $response->assertOk()
-        ->assertSee('Soluções em TI para pessoas, pequenos negócios e instituições')
-        ->assertSee('Quero atendimento para mim')
-        ->assertSee('Quero soluções para minha empresa')
-        ->assertSee('https://placehold.co/720x520/0B1F4D/FFFFFF?text=Solucoes+em+TI', false)
-        ->assertSee('Escolha seu perfil')
-        ->assertSee('https://placehold.co/640x360/F3F6FA/0B1F4D?text=Para+Voce', false)
-        ->assertSee('Suporte Técnico')
-        ->assertSee('Segurança e Backup')
-        ->assertSee('Sites e Sistemas')
-        ->assertSee('Redes e Infraestrutura')
-        ->assertSee('Montagem de Computadores')
-        ->assertSee('Consultoria e Automação')
-        ->assertSee('Atendimento Essencial')
-        ->assertSee('Solução Profissional')
-        ->assertSee('Acompanhamento Completo')
-        ->assertSee('Mais escolhido')
-        ->assertSee('Tecnologia bem organizada evita perda de tempo, retrabalho e prejuízos.')
-        ->assertSee(config('sophdata.differentials.0'))
-        ->assertSee(config('sophdata.differentials.6'))
-        ->assertSee('Você explica pelo WhatsApp')
-        ->assertSee(config('sophdata.faq.0.question'))
-        ->assertSee('Precisa organizar sua tecnologia?')
-        ->assertSee('https://placehold.co/1200x360/F3F6FA/0B1F4D?text=Atendimento+SophData', false);
-});
-
-test('personal page renders every category and its commercial packages', function () {
-    $response = $this->get(route('para-voce'));
-    $categories = config('sophdata.categories.personal');
-    $expectedPackageNames = [
-        'SOS Digital Essencial',
-        'Computador em Ordem',
-        'Suporte Pessoal Completo',
-        'Wi-Fi Essencial',
-        'Casa Conectada Plus',
-        'Home Office Seguro',
-        'Contas Protegidas',
-        'Família Segura Digital',
-        'Blindagem Digital Familiar',
-        'Kit Estudante Digital',
-        'Carreira Digital Profissional',
-        'Mentoria Digital de Carreira',
-        'IA para o Dia a Dia',
-        'Produtividade Digital com IA',
-        'Oficina IA Profissional',
-        'Upgrade Essencial',
-        'PC Sob Medida',
-        'Estação Completa Personalizada',
-    ];
-
-    $response->assertOk()
-        ->assertSee('Soluções de tecnologia para o seu dia a dia')
-        ->assertSee('Falar no WhatsApp')
-        ->assertSee('Ver pacotes')
-        ->assertSee('Tecnologia+Para+Voce', false)
-        ->assertSee('Suporte')
-        ->assertSee('Casa Conectada')
-        ->assertSee('Proteção')
-        ->assertSee('Estudos')
-        ->assertSee('IA')
-        ->assertSee('Montagem de PCs')
-        ->assertSee('Quer resolver um problema de tecnologia sem complicação?')
-        ->assertSee('Atendimento+Para+Voce', false);
-
-    foreach ($categories as $category) {
-        $response
-            ->assertSee($category['title'])
-            ->assertSee($category['image'], false)
-            ->assertSee('id="'.$category['slug'].'"', false);
-    }
-
-    foreach ($expectedPackageNames as $packageName) {
-        $response->assertSee($packageName);
-    }
-
-    expect(substr_count($response->getContent(), 'Mais escolhido'))->toBeGreaterThanOrEqual(6)
-        ->and(substr_count($response->getContent(), 'https://wa.me/5521972765535'))->toBeGreaterThanOrEqual(18);
-});
-
-test('business page renders every category and its commercial packages', function () {
-    $response = $this->get(route('para-empresas'));
-    $categories = config('sophdata.categories.business');
-    $expectedPackageNames = [
-        'TI Essencial Empresarial',
-        'TI Profissional Mensal',
-        'TI Completa para Pequenos Negócios',
-        'Rede Organizada Essencial',
-        'Infraestrutura Profissional',
-        'Ambiente Corporativo Conectado',
-        'Check-up de Segurança',
-        'Empresa Segura',
-        'Blindagem Empresarial Digital',
-        'Página Profissional Essencial',
-        'Site Institucional Profissional',
-        'Presença Digital Completa',
-        'Sistema Essencial de Gestão',
-        'Sistema Profissional Sob Medida',
-        'Plataforma Completa de Gestão',
-        'Planilhas Inteligentes',
-        'Automação Administrativa',
-        'Fluxo Digital Automatizado',
-        'Publicação Web Essencial',
-        'Deploy Profissional de Sistemas',
-        'Servidor Gerenciado Linux',
-        'Diagnóstico de TI',
-        'Plano de Modernização Digital',
-        'Gestão Consultiva de TI',
-        'Estação Corporativa Essencial',
-        'Renovação Profissional do Parque de TI',
-        'Ambiente Corporativo Completo',
-    ];
-    $segments = ['Igrejas', 'Escolas', 'Escritórios', 'Consultórios', 'Lojas', 'Prestadores de serviço', 'Pequenas empresas', 'Instituições'];
-
-    $response->assertOk()
+        ->assertSee('Portal Para Empresas')
         ->assertSee('Soluções de TI para pequenos negócios e instituições')
-        ->assertSee('Solicitar orçamento')
-        ->assertSee('Ver soluções')
-        ->assertSee('TI+Para+Empresas', false)
         ->assertSee('O que sua empresa precisa resolver?')
-        ->assertSee('Suporte')
-        ->assertSee('Redes')
-        ->assertSee('Segurança')
-        ->assertSee('Sites')
-        ->assertSee('Sistemas')
-        ->assertSee('Automação')
-        ->assertSee('Servidores')
-        ->assertSee('Consultoria')
-        ->assertSee('Computadores')
-        ->assertSee('Pequenos+Negocios+e+Instituicoes', false)
-        ->assertSee('Por que contratar uma consultoria de TI?')
-        ->assertSee('Reduz problemas recorrentes')
-        ->assertSee('Permite atendimento recorrente')
-        ->assertSee('Sua empresa precisa de uma TI mais organizada?')
-        ->assertSee('Solicite+um+Orcamento', false);
-
-    foreach ($categories as $category) {
-        $response
-            ->assertSee($category['title'])
-            ->assertSee($category['image'], false)
-            ->assertSee('id="'.$category['slug'].'"', false);
-    }
-
-    foreach ($expectedPackageNames as $packageName) {
-        $response->assertSee($packageName);
-    }
-
-    foreach ($segments as $segment) {
-        $response->assertSee($segment);
-    }
-
-    expect(substr_count($response->getContent(), 'Mais escolhido'))->toBeGreaterThanOrEqual(9)
-        ->and(substr_count($response->getContent(), 'https://wa.me/5521972765535'))->toBeGreaterThanOrEqual(27);
-});
-
-test('about page presents identity expertise process and values', function () {
-    $response = $this->get(route('sobre'));
-    $areas = [
-        'Suporte técnico',
-        'Redes',
-        'Linux',
-        'Sistemas web',
-        'Laravel',
-        'PHP',
-        'MySQL',
-        'PostgreSQL',
-        'Java',
-        'Spring Boot',
-        'Backup',
-        'Segurança digital',
-        'Montagem e upgrade de computadores',
-    ];
-    $values = ['Clareza', 'Confiança', 'Organização', 'Responsabilidade', 'Solução prática', 'Acompanhamento'];
-
-    $response->assertOk()
-        ->assertSee('Sobre a SophData')
-        ->assertSee('Tecnologia com clareza, organização e confiança para pessoas, pequenos negócios e instituições.')
-        ->assertSee('Sobre+SophData', false)
-        ->assertSee('A SophData nasceu para ajudar pessoas, pequenos negócios e instituições')
-        ->assertSee('Diagnóstico inicial')
-        ->assertSee('Proposta adequada')
-        ->assertSee('Execução organizada')
-        ->assertSee('Orientação ao cliente')
-        ->assertSee('Fale com a SophData');
-
-    foreach ($areas as $area) {
-        $response->assertSee($area);
-    }
-
-    foreach ($values as $value) {
-        $response->assertSee($value);
-    }
-});
-
-test('contact page provides channels and a non functional preparation guide', function () {
-    $response = $this->get(route('contato'));
-    $questions = [
-        'Você precisa de atendimento para pessoa física ou empresa?',
-        'Qual problema deseja resolver?',
-        'É algo urgente?',
-        'O atendimento pode ser remoto?',
-        'Você precisa de orçamento para algum pacote específico?',
-    ];
-
-    $response->assertOk()
-        ->assertSee('Fale com a SophData')
-        ->assertSee('Explique sua necessidade e receba orientação sobre o pacote mais adequado.')
-        ->assertSee('Contato+SophData', false)
-        ->assertSee(config('sophdata.brand.email'))
-        ->assertSee(config('sophdata.brand.region'))
-        ->assertSee('Atendimento presencial sob consulta.')
-        ->assertSee('Responder pelo WhatsApp')
-        ->assertSee('não possui formulário funcional')
-        ->assertSee('https://wa.me/'.config('sophdata.brand.whatsapp'), false);
-
-    foreach ($questions as $question) {
-        $response->assertSee($question);
-    }
-});
-
-test('privacy page explains the current data practices', function () {
-    $response = $this->get(route('politica-de-privacidade'));
-
-    $response->assertOk()
-        ->assertSee('Site institucional')
-        ->assertSee('Contato pelo WhatsApp')
-        ->assertSee('Uso dos dados enviados')
-        ->assertSee('não possui cadastro de usuários')
-        ->assertSee('pagamento online')
-        ->assertSee('ferramentas de análise de acesso')
-        ->assertSee('Remoção de dados')
-        ->assertSee(config('sophdata.brand.email'))
-        ->assertSee('Falar pelo WhatsApp');
-});
-
-test('whatsapp helper sanitizes the number and encodes the message', function () {
-    $url = sophdata_whatsapp_url(
-        'Olá, teste & segurança.',
-        '55 (21) 99999-0000',
-    );
-
-    expect($url)->toBe(
-        'https://wa.me/5521999990000?text=Ol%C3%A1%2C%20teste%20%26%20seguran%C3%A7a.',
-    );
-});
-
-test('commercial pages use contextual whatsapp messages', function () {
-    $this->get(route('home'))
-        ->assertOk()
-        ->assertSee(rawurlencode('Olá, gostaria de conhecer as soluções da SophData.'), false);
-
-    $this->get(route('para-voce'))
-        ->assertOk()
-        ->assertSee(rawurlencode('Olá, gostaria de atendimento para pessoa física.'), false);
-
-    $this->get(route('para-empresas'))
-        ->assertOk()
-        ->assertSee(rawurlencode('Olá, gostaria de solicitar um orçamento para minha empresa.'), false);
-
-    $package = config('sophdata.categories.personal.0.packages.0');
-
-    $this->get(route('para-voce'))
-        ->assertSee(sophdata_whatsapp_url($package['whatsapp_message']), false);
-});
-
-test('footer renders brand navigation solutions contact and legal information', function () {
-    $response = $this->get(route('home'));
-    $year = now()->year;
-
-    $response->assertOk()
-        ->assertSee(config('sophdata.brand.name'))
-        ->assertSee(config('sophdata.brand.slogan'))
-        ->assertSee('Soluções em TI para pessoas, pequenos negócios e instituições.')
-        ->assertSee('Política de Privacidade')
-        ->assertSee('Suporte Técnico')
-        ->assertSee('Segurança e Backup')
-        ->assertSee('Sites e Sistemas')
-        ->assertSee('Redes e Infraestrutura')
+        ->assertSee('Escolha o problema mais próximo da sua realidade e veja a solução indicada.')
+        ->assertSee('Computadores parando?')
+        ->assertSee('Sua empresa não tem backup?')
+        ->assertSee('Precisa de site ou sistema?')
+        ->assertSee('Usa planilhas demais?')
+        ->assertSee('Precisa renovar os computadores?')
+        ->assertSee('Soluções organizadas por área')
+        ->assertSee('Suporte de TI')
+        ->assertSee('Redes e Wi-Fi')
+        ->assertSee('Computadores Corporativos')
+        ->assertSee('Escolha o nível de atendimento ideal')
+        ->assertSee('Para quais negócios?')
+        ->assertSee('Igrejas')
+        ->assertSee('Consultórios')
+        ->assertSee('Prestadores de serviço')
+        ->assertSee('Por que contratar a SophData?')
+        ->assertSee('Correção de problemas, organização da rotina')
+        ->assertSee('Tecnologias e áreas')
+        ->assertSee('Spring Boot')
         ->assertSee('Montagem de Computadores')
-        ->assertSee('Consultoria de TI')
-        ->assertSee(config('sophdata.brand.whatsapp'))
-        ->assertSee(config('sophdata.brand.email'))
-        ->assertSee(config('sophdata.brand.region'))
-        ->assertSee('Falar no WhatsApp')
-        ->assertSee("© {$year} SophData. Todos os direitos reservados.")
-        ->assertSee(route('politica-de-privacidade'), false)
-        ->assertSee(route('para-voce').'#suporte-digital-pessoal', false)
-        ->assertSee(route('para-empresas').'#seguranca-e-backup', false);
+        ->assertSee('Sua empresa precisa de uma TI mais organizada?')
+        ->assertSee('Solicitar atendimento empresarial')
+        ->assertDontSee('Falar no WhatsApp');
+
+    preg_match('/<main id="main-content"[^>]*>(.*)<\/main>/s', $response->getContent(), $matches);
+
+    expect($matches[1])
+        ->not->toContain('Suporte Digital Pessoal')
+        ->not->toContain('Meu computador está lento')
+        ->and(substr_count($matches[1], 'card-lift group'))->toBe(12);
 });
 
-test('commercial pages keep responsive navigation and external whatsapp behavior', function () {
-    $this->get(route('para-voce'))
+test('personal portal sells personal problems without business categories', function () {
+    $response = $this->get(route('portal.personal'))
         ->assertOk()
-        ->assertSee('horizontal-scroll', false)
-        ->assertSee('lg:top-40', false)
-        ->assertSee('target="_blank" rel="noopener noreferrer"', false);
+        ->assertSee('Portal Para Você')
+        ->assertSee('Soluções de tecnologia para o seu dia a dia')
+        ->assertSee('O que você precisa resolver hoje?')
+        ->assertSee('Escolha o problema mais próximo da sua necessidade e encontre a solução adequada.')
+        ->assertSee('Meu computador está lento')
+        ->assertSee('Meu Wi-Fi está ruim')
+        ->assertSee('Quero proteger meus arquivos')
+        ->assertSee('Preciso organizar estudos ou carreira')
+        ->assertSee('Quero montar ou melhorar meu PC')
+        ->assertSee('Soluções organizadas por área')
+        ->assertSee('Computador Lento')
+        ->assertSee('Escolha o nível de atendimento ideal')
+        ->assertSee('Para quem é?')
+        ->assertSee('Famílias')
+        ->assertSee('Profissionais autônomos')
+        ->assertSee('Pessoas em home office')
+        ->assertSee('Por que contratar a SophData?')
+        ->assertSee('Ajuda para quem não entende termos técnicos')
+        ->assertSee('Tecnologias e áreas')
+        ->assertSee('Produtividade')
+        ->assertSee('Quer resolver um problema de tecnologia sem complicação?')
+        ->assertSee('Quero atendimento')
+        ->assertDontSee('Falar no WhatsApp');
 
-    $this->get(route('para-empresas'))
-        ->assertOk()
-        ->assertSee('horizontal-scroll', false)
-        ->assertSee('Plano recomendado · Profissional')
-        ->assertDontSee('Plano recomendado · professional')
-        ->assertSee('Falar no WhatsApp');
+    preg_match('/<main id="main-content"[^>]*>(.*)<\/main>/s', $response->getContent(), $matches);
 
-    $this->get(route('home'))
+    expect($matches[1])
+        ->not->toContain('Suporte de TI')
+        ->not->toContain('Computadores parando?')
+        ->and(substr_count($matches[1], 'card-lift group'))->toBe(10);
+});
+
+test('category pages present benefits problems and progressive commercial packages', function (string $routeName, string $slug, string $title, string $concreteItem) {
+    $response = $this->get(route($routeName, $slug))
         ->assertOk()
-        ->assertDontSee('Lorem ipsum')
-        ->assertDontSee('R$', false)
-        ->assertDontSee('>Quero o Essencial<', false)
-        ->assertSee('whatsapp-floating', false);
+        ->assertSee($title)
+        ->assertSee('aria-label="Breadcrumb"', false)
+        ->assertSee('O que essa solução resolve?')
+        ->assertSee('Escolha o pacote ideal')
+        ->assertSee('Comece pelo essencial, avance para o recomendado ou escolha a solução completa.')
+        ->assertSee('Essencial')
+        ->assertSee('Profissional')
+        ->assertSee('Completo')
+        ->assertSee('Para começar')
+        ->assertSee('Mais escolhido')
+        ->assertSee('Solução completa')
+        ->assertSee('Para quem é indicado')
+        ->assertSee('O que resolve')
+        ->assertSee('Itens inclusos')
+        ->assertSee('Inclui tudo do Essencial')
+        ->assertSee('Inclui tudo do Profissional')
+        ->assertSee('melhor equilíbrio entre custo e benefício')
+        ->assertSee($concreteItem)
+        ->assertSee('Escolher este pacote')
+        ->assertSee('Compare os pacotes')
+        ->assertSee('<table', false)
+        ->assertSee('<caption', false)
+        ->assertSee('<thead', false)
+        ->assertSee('<tbody', false)
+        ->assertSee('scope="col"', false)
+        ->assertSee('scope="row"', false)
+        ->assertSee('Como escolher?')
+        ->assertSee('Escolha o Essencial')
+        ->assertSee('Escolha o Profissional')
+        ->assertSee('Escolha o Completo')
+        ->assertSee('Como funciona o atendimento')
+        ->assertSee('Primeiro contato')
+        ->assertSee('Diagnóstico')
+        ->assertSee('Proposta')
+        ->assertSee('Execução')
+        ->assertSee('Orientação final')
+        ->assertSee('Perguntas sobre esta solução')
+        ->assertDontSee('Diagnóstico inicial')
+        ->assertDontSee('Execução do escopo essencial')
+        ->assertDontSee('Falar no WhatsApp');
+
+    expect(preg_match_all('/<h1\b/i', $response->getContent()))->toBe(1)
+        ->and(substr_count($response->getContent(), 'Escolher este pacote'))->toBe(3);
+})->with([
+    'business' => ['portal.business.category', 'seguranca-e-backup', 'Segurança e Backup', 'Configuração de backup automático'],
+    'personal' => ['portal.personal.category', 'wifi-e-casa-conectada', 'Wi-Fi e Casa Conectada', 'Análise do sinal nos ambientes principais'],
+]);
+
+test('category pages use specific FAQ when available and portal FAQ as fallback', function () {
+    $this->get(route('portal.business.category', 'seguranca-e-backup'))
+        ->assertOk()
+        ->assertSee('Como escolher o pacote para minha empresa?');
+
+    $this->get(route('portal.business.category', 'suporte-de-ti'))
+        ->assertOk()
+        ->assertSee('Como escolher o pacote para minha empresa?');
+
+    $this->get(route('portal.personal.category', 'wifi-e-casa-conectada'))
+        ->assertOk()
+        ->assertSee('Como saber qual pacote escolher?');
+});
+
+test('unknown category slugs return not found in both portals', function () {
+    $this->get('/para-empresas/categoria-inexistente')->assertNotFound();
+    $this->get('/para-voce/categoria-inexistente')->assertNotFound();
+});
+
+test('category final calls to action match each portal', function () {
+    $this->get(route('portal.business.category', 'suporte-de-ti'))
+        ->assertOk()
+        ->assertSee('Pronto para organizar esta área da sua empresa?')
+        ->assertSee('Inicie o atendimento e receba orientação para escolher o melhor pacote.')
+        ->assertSee('Solicitar atendimento empresarial');
+
+    $this->get(route('portal.personal.category', 'computador-lento'))
+        ->assertOk()
+        ->assertSee('Quer resolver isso com orientação clara?')
+        ->assertSee('Inicie o atendimento e receba ajuda para escolher o pacote mais adequado.')
+        ->assertSee('Quero atendimento');
+});
+
+test('all configured categories render only in their own portal', function () {
+    foreach (config('sophdata_services.personal') as $category) {
+        $this->get(route('portal.personal.category', $category['slug']))
+            ->assertOk()
+            ->assertSee($category['title']);
+
+        $this->get(route('portal.business.category', $category['slug']))
+            ->assertNotFound();
+    }
+
+    foreach (config('sophdata_services.business') as $category) {
+        $this->get(route('portal.business.category', $category['slug']))
+            ->assertOk()
+            ->assertSee($category['title']);
+
+        $this->get(route('portal.personal.category', $category['slug']))
+            ->assertNotFound();
+    }
+});
+
+test('profile chooser consumes portal configuration', function () {
+    $this->get(route('portal.choose'))
+        ->assertOk()
+        ->assertSee('Como você deseja navegar?')
+        ->assertSee('Escolha o perfil mais adequado para encontrar as soluções certas da SophData.')
+        ->assertSee('Acessar portal empresarial')
+        ->assertSee('Acessar portal pessoal')
+        ->assertSee('Suporte, redes e Wi-Fi, segurança, backup, sites, sistemas, automação e computadores')
+        ->assertSee('Suporte para computador, internet, segurança digital')
+        ->assertSee('/para-empresas', false)
+        ->assertSee('/para-voce', false);
+});
+
+test('real SophData logo is rendered with accessible active portal link', function () {
+    $this->get(route('portal.business'))
+        ->assertOk()
+        ->assertSee('src="'.asset('img/SophData-logo.svg').'"', false)
+        ->assertSee('src="'.asset('img/SophData-text.svg').'"', false)
+        ->assertSee('alt="SophData"', false)
+        ->assertSee('aria-label="Ir para o portal principal da SophData"', false);
+
+    $this->get(route('portal.personal'))
+        ->assertSee('href="'.route('portal.personal').'"', false)
+        ->assertSee('aria-label="Ir para o portal principal da SophData"', false);
+});
+
+test('header composes accessible profile switcher service navigation and mobile menu', function () {
+    $business = $this->get(route('portal.business'))->assertOk();
+    $personal = $this->get(route('portal.personal'))->assertOk();
+
+    $business
+        ->assertSee('Soluções em TI para pessoas e empresas')
+        ->assertSee('aria-label="Navegação principal"', false)
+        ->assertSee('aria-label="Alternar entre os portais"', false)
+        ->assertSee('aria-label="Serviços principais do portal ativo"', false)
+        ->assertDontSee('data-mega-menu', false)
+        ->assertDontSee('data-mega-trigger', false)
+        ->assertSee('aria-expanded="false"', false)
+        ->assertSee('data-menu-button', false)
+        ->assertSee('aria-controls="mobile-navigation"', false)
+        ->assertSee('Miniatura de Suporte de TI')
+        ->assertSee('Redes e Wi-Fi')
+        ->assertDontSee('Miniatura de Computador Lento');
+
+    $personal
+        ->assertSee('Miniatura de Computador Lento')
+        ->assertSee('Wi-Fi e Casa Conectada')
+        ->assertDontSee('Miniatura de Suporte de TI');
+});
+
+test('layout exposes skip link and semantic regions', function () {
+    $content = $this->get(route('portal.business'))->assertOk()->getContent();
+
+    expect($content)
+        ->toContain('href="#main-content"')
+        ->toContain('Ir para o conteúdo principal')
+        ->toContain('<header')
+        ->toContain('<main id="main-content"')
+        ->toContain('<footer');
+});
+
+test('portal home pages use one heading level one and semantic commercial cards', function (string $routeName) {
+    $content = $this->get(route($routeName))->assertOk()->getContent();
+
+    expect(preg_match_all('/<h1\b/i', $content))->toBe(1)
+        ->and(substr_count($content, '<section'))->toBeGreaterThanOrEqual(8)
+        ->and(substr_count($content, '<article'))->toBeGreaterThan(10)
+        ->and(substr_count($content, '<figure'))->toBeGreaterThan(10)
+        ->and($content)->toContain('alt="');
+})->with(['portal.business', 'portal.personal']);
+
+test('visible calls to action avoid application focused labels', function () {
+    $urls = [
+        route('portal.business'),
+        route('portal.personal'),
+        route('portal.business.category', 'suporte-de-ti'),
+        route('portal.personal.category', 'computador-lento'),
+        route('site.contact'),
+    ];
+
+    foreach ($urls as $url) {
+        expect($this->get($url)->assertOk()->getContent())
+            ->not->toContain('Falar no WhatsApp')
+            ->not->toContain('Chamar no WhatsApp')
+            ->not->toContain('Mandar WhatsApp');
+    }
+});
+
+test('institutional pages render normally', function (string $routeName, string $text) {
+    $this->get(route($routeName))
+        ->assertOk()
+        ->assertSee($text);
+})->with([
+    ['site.about', 'Sobre a SophData'],
+    ['site.contact', 'Inicie seu atendimento'],
+    ['site.privacy', 'Política de Privacidade'],
+]);
+
+test('about page presents institutional content logo and global call to action', function () {
+    $this->get(route('site.about'))
+        ->assertOk()
+        ->assertSee('Quem somos')
+        ->assertSee('Áreas de atuação')
+        ->assertSee('Experiência técnica')
+        ->assertSee('Forma de trabalho')
+        ->assertSee('Entendemos o problema')
+        ->assertSee('Indicamos a solução adequada')
+        ->assertSee('Valores')
+        ->assertSee('Imagem institucional da SophData')
+        ->assertSee('src="'.asset('img/SophData-logo.svg').'"', false)
+        ->assertSee('Iniciar atendimento');
+});
+
+test('contact page has no functional form and guides the customer to atendimento', function () {
+    $this->get(route('site.contact'))
+        ->assertOk()
+        ->assertDontSee('<form', false)
+        ->assertSee('Iniciar atendimento')
+        ->assertSee(config('sophdata.brand.email'))
+        ->assertSee(config('sophdata.brand.region'))
+        ->assertSee('Atendimento remoto')
+        ->assertSee('Atendimento presencial sob consulta')
+        ->assertSee('O atendimento é para pessoa física ou empresa?')
+        ->assertSee('Qual problema deseja resolver?')
+        ->assertSee('O atendimento é urgente?')
+        ->assertSee('Pode ser remoto?')
+        ->assertSee('Existe algum pacote de interesse?')
+        ->assertSee('Não é um formulário funcional.');
+});
+
+test('privacy policy explains current institutional data practices', function () {
+    $this->get(route('site.privacy'))
+        ->assertOk()
+        ->assertSee('Site institucional')
+        ->assertSee('Atendimento por link externo')
+        ->assertSee('Dados enviados voluntariamente')
+        ->assertSee('Sem cadastro de usuários')
+        ->assertSee('Sem pagamento online')
+        ->assertSee('Sem área do cliente')
+        ->assertSee('Análise de acesso futura')
+        ->assertSee('Solicitar atendimento');
+});
+
+test('footer contains institutional summary links solutions contact and copyright', function () {
+    $this->get(route('portal.business'))
+        ->assertOk()
+        ->assertSee('SophData')
+        ->assertSee(config('sophdata.brand.slogan'))
+        ->assertSee('Soluções em TI para pessoas, pequenos negócios e instituições')
+        ->assertSee('Para Empresas')
+        ->assertSee('Para Você')
+        ->assertSee('Escolher perfil')
+        ->assertSee('Sobre')
+        ->assertSee('Contato')
+        ->assertSee('Política de Privacidade')
+        ->assertSee('Soluções para empresas')
+        ->assertSee('Soluções para você')
+        ->assertSee('Suporte de TI')
+        ->assertSee('Computador Lento')
+        ->assertSee(config('sophdata.brand.email'))
+        ->assertSee(config('sophdata.brand.whatsapp_display'))
+        ->assertSee('Iniciar atendimento')
+        ->assertSee('© '.date('Y').' SophData. Todos os direitos reservados.');
+});
+
+test('public pages expose specific seo metadata and canonical urls', function (string $path, string $title, string $descriptionFragment) {
+    $content = $this->get($path)->assertOk()->getContent();
+
+    expect($content)
+        ->toContain("<title>{$title}</title>")
+        ->toContain('name="description"')
+        ->toContain($descriptionFragment)
+        ->toContain('rel="canonical" href="'.url($path).'"')
+        ->and(preg_match_all('/<h1\b/i', $content))->toBe(1);
+})->with([
+    ['/para-empresas', 'SophData | Soluções de TI para Empresas', 'paradas, Wi-Fi instável e planilhas demais'],
+    ['/para-voce', 'SophData | Soluções de Tecnologia para Você', 'computador lento, Wi-Fi ruim, proteção de contas'],
+    ['/escolher-perfil', 'Escolha seu Perfil | SophData', 'Escolha entre o portal Para Empresas'],
+    ['/sobre', 'Sobre a SophData | Soluções em TI', 'Conheça a SophData'],
+    ['/contato', 'Contato | SophData', 'Inicie atendimento'],
+    ['/politica-de-privacidade', 'Política de Privacidade | SophData', 'privacidade e uso de dados'],
+    ['/para-empresas/seguranca-e-backup', 'Segurança e Backup | SophData', 'Essencial, Profissional e Completo'],
+    ['/para-voce/wifi-e-casa-conectada', 'Wi-Fi e Casa Conectada | SophData', 'Essencial, Profissional e Completo'],
+]);
+
+test('rendered informative images have alt text and async decoding', function (string $routeName) {
+    $content = $this->get(route($routeName))->assertOk()->getContent();
+
+    preg_match_all('/<img\b[^>]*>/i', $content, $matches);
+
+    expect($matches[0])->not->toBeEmpty();
+
+    foreach ($matches[0] as $imageTag) {
+        expect($imageTag)
+            ->toContain('alt=')
+            ->toContain('decoding="async"');
+    }
+})->with([
+    'portal.business',
+    'portal.personal',
+    'portal.choose',
+    'site.about',
+]);
+
+test('sitemap lists root portals categories and institutional pages', function () {
+    $sitemap = file_get_contents(public_path('sitemap.xml'));
+
+    $expectedUrls = [
+        'https://sophdata.com.br/',
+        'https://sophdata.com.br/para-empresas',
+        'https://sophdata.com.br/para-voce',
+        'https://sophdata.com.br/sobre',
+        'https://sophdata.com.br/contato',
+        'https://sophdata.com.br/politica-de-privacidade',
+    ];
+
+    foreach (config('sophdata_services.business') as $category) {
+        $expectedUrls[] = 'https://sophdata.com.br/para-empresas/'.$category['slug'];
+    }
+
+    foreach (config('sophdata_services.personal') as $category) {
+        $expectedUrls[] = 'https://sophdata.com.br/para-voce/'.$category['slug'];
+    }
+
+    foreach ($expectedUrls as $url) {
+        expect($sitemap)->toContain("<loc>{$url}</loc>");
+    }
+
+    expect(simplexml_load_string($sitemap))->not->toBeFalse();
+});
+
+test('robots file points to the public sitemap', function () {
+    expect(file_get_contents(public_path('robots.txt')))
+        ->toContain('User-agent: *')
+        ->toContain('Allow: /')
+        ->toContain('Sitemap: https://sophdata.com.br/sitemap.xml');
+});
+
+test('layout exposes SophData favicon and social sharing metadata', function () {
+    $content = $this->get(route('portal.business'))->assertOk()->getContent();
+
+    expect($content)
+        ->toContain('name="csrf-token"')
+        ->toContain('property="og:type" content="website"')
+        ->toContain('property="og:url" content="'.route('portal.business').'"')
+        ->toContain('property="og:title" content="SophData | Soluções de TI para Empresas"')
+        ->toContain('property="og:image" content="'.asset(config('sophdata.logos.symbol')).'"')
+        ->toContain('property="og:description"')
+        ->toContain('name="twitter:card" content="summary"')
+        ->toContain('rel="icon" type="image/svg+xml" href="'.asset('favicon.svg').'"')
+        ->toContain('rel="mask-icon" href="'.asset('favicon.svg').'"')
+        ->toContain('name="theme-color" content="#ffffff"');
+
+    expect(file_get_contents(public_path('favicon.svg')))
+        ->toContain('id="svg1"')
+        ->toContain('fill="#08265a"');
 });

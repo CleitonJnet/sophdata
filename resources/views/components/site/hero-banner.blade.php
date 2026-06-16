@@ -82,13 +82,15 @@
             </div>
         </div>
 
-        <div class="relative mx-auto w-full max-w-[720px]">
+        <figure class="relative mx-auto w-full max-w-[720px]">
             <div class="absolute inset-8 rounded-full bg-brand-400/20 blur-3xl"></div>
             <img
                 src="{{ $image }}"
                 alt="{{ $resolvedImageAlt }}"
                 class="relative aspect-[18/13] w-full rounded-3xl object-cover shadow-2xl sm:rounded-[2rem]"
+                decoding="async"
+                fetchpriority="high"
             >
-        </div>
+        </figure>
     </div>
 </section>

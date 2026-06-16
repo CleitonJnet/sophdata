@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Domínio provisório: altere esta URL quando o domínio oficial mudar.
 Sitemap: https://sophdata.com.br/sitemap.xml

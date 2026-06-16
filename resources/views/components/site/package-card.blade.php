@@ -8,32 +8,38 @@
     $number = $whatsappNumber ?: config('sophdata.brand.whatsapp');
     $message = $package['whatsapp_message'] ?? "Olá, gostaria de saber mais sobre o pacote {$package['name']}.";
     $url = sophdata_whatsapp_url($message, $number);
-    $levelLabels = [
-        'essential' => 'Essencial',
-        'professional' => 'Profissional',
-        'complete' => 'Completo',
-    ];
-    $level = $levelLabels[$package['level']] ?? $package['level'];
+    $level = $package['level_label'];
 @endphp
 
 <article {{ $attributes->class([
     'relative flex h-full flex-col rounded-3xl bg-white p-6 sm:p-7',
-    'border-2 border-brand-500 shadow-xl shadow-brand-900/10 lg:-translate-y-2' => $isFeatured,
+    'border-2 border-gold shadow-xl shadow-brand-900/10 lg:-translate-y-2' => $isFeatured,
     'border border-slate-200 shadow-sm' => ! $isFeatured,
 ]) }}>
-    @if ($isFeatured)
-        <span class="absolute -top-3 left-6 rounded-full bg-brand-600 px-4 py-1.5 text-xs font-bold text-white shadow" aria-label="Pacote em destaque">
-            {{ $package['badge'] ?: 'Mais escolhido' }}
-        </span>
-    @endif
+    <span @class([
+        'absolute -top-3 left-6 rounded-full px-4 py-1.5 text-xs font-bold shadow',
+        'bg-gold text-brand-950' => $isFeatured,
+        'border border-slate-200 bg-white text-brand-700' => ! $isFeatured,
+    ])>
+        {{ $package['badge'] }}
+    </span>
 
     <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">
-        {{ $isFeatured ? 'Plano recomendado · ' : '' }}{{ $level }}
+        {{ $package['positioning'] }} · {{ $level }}
     </p>
     <h3 class="mt-3 text-2xl font-bold text-brand-950">{{ $package['name'] }}</h3>
     <p class="mt-2 font-semibold text-slate-700">{{ $package['subtitle'] }}</p>
     <p class="mt-4 leading-7 text-slate-600">{{ $package['description'] }}</p>
+    <p class="mt-4 rounded-2xl bg-brand-50 p-4 text-sm font-semibold leading-6 text-brand-950">
+        Para quem é indicado: {{ $package['best_for'] }}
+    </p>
 
+    <div class="mt-5">
+        <h4 class="text-sm font-bold text-brand-950">O que resolve</h4>
+        <p class="mt-2 text-sm leading-6 text-slate-600">{{ $package['commercial_summary'] }}</p>
+    </div>
+
+    <h4 class="mt-6 text-sm font-bold text-brand-950">Itens inclusos</h4>
     <ul class="mt-6 grid gap-3 text-sm text-slate-700">
         @foreach ($package['included_items'] as $item)
             <li class="flex gap-3">
@@ -42,6 +48,16 @@
             </li>
         @endforeach
     </ul>
+
+    <p class="mt-6 rounded-2xl border border-slate-200 p-4 text-sm leading-6 text-slate-500">
+        @if ($package['level'] === 'essential')
+            Escopo focado na necessidade principal, sem acompanhamento ampliado.
+        @elseif ($package['level'] === 'professional')
+            Inclui tudo do Essencial, acrescenta organização, melhorias e acompanhamento, com o melhor equilíbrio entre custo e benefício.
+        @else
+            Inclui tudo do Profissional e acrescenta prevenção, documentação e continuidade.
+        @endif
+    </p>
 
     <a
         href="{{ $url }}"
@@ -53,6 +69,6 @@
             'bg-action-500 text-white hover:bg-action-600' => ! $isFeatured,
         ])
     >
-        {{ $package['button_text'] }}
+        {{ $package['cta_label'] }}
     </a>
 </article>

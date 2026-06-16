@@ -1,97 +1,137 @@
 <?php
 
-test('commercial catalog has the expected categories and packages', function () {
-    $catalog = require dirname(__DIR__, 2).'/config/sophdata.php';
-    $personalCategories = $catalog['categories']['personal'];
-    $businessCategories = $catalog['categories']['business'];
-    $categories = [...$personalCategories, ...$businessCategories];
+test('general configuration contains institutional data and real logo paths', function () {
+    $config = require dirname(__DIR__, 2).'/config/sophdata.php';
 
-    expect($catalog['brand']['name'])->toBe('SophData')
-        ->and($catalog['brand']['whatsapp'])->toBe('5521972765535')
-        ->and($personalCategories)->toHaveCount(6)
-        ->and($businessCategories)->toHaveCount(9)
-        ->and($catalog['differentials'])->toHaveCount(7)
-        ->and($catalog['faq'])->toHaveCount(8);
+    expect($config['brand'])->toMatchArray([
+        'name' => 'SophData',
+        'short_name' => 'SD',
+        'slogan' => 'Tecnologia com clareza, organização e confiança.',
+        'whatsapp' => '5521972765535',
+        'whatsapp_display' => '(21) 97276-5535',
+    ])->and($config['links'])->not->toBeEmpty()
+        ->and($config['differentials'])->not->toBeEmpty()
+        ->and($config['technologies'])->not->toBeEmpty()
+        ->and($config['faq'])->not->toBeEmpty()
+        ->and(dirname(__DIR__, 2).'/public/'.$config['logos']['symbol'])->toBeFile()
+        ->and(dirname(__DIR__, 2).'/public/'.$config['logos']['wordmark'])->toBeFile();
+});
 
-    $slugs = [];
+test('portal configuration defines both commercial identities', function () {
+    $portals = require dirname(__DIR__, 2).'/config/sophdata_portals.php';
 
-    foreach ($categories as $category) {
-        expect($category)->toHaveKeys([
-            'slug',
-            'title',
-            'eyebrow',
-            'short_description',
-            'description',
-            'audience',
-            'image',
-            'packages',
-        ])->and($category['packages'])->toHaveCount(3);
-
-        $slugs[] = $category['slug'];
-
-        foreach ($category['packages'] as $package) {
-            expect($package)->toHaveKeys([
-                'level',
-                'name',
-                'subtitle',
-                'description',
-                'included_items',
-                'featured',
-                'badge',
-                'button_text',
-                'whatsapp_message',
-            ])->and($package['name'])->not->toBeEmpty()
-                ->and($package['button_text'])->toBeIn(['Falar no WhatsApp', 'Solicitar orçamento'])
-                ->and($package['description'])->not->toMatch('/(?:R\\$|\\$\\s*\\d|\\bpreço\\b)/iu');
-        }
-
-        expect(array_column($category['packages'], 'level'))->toBe([
-            'essential',
-            'professional',
-            'complete',
-        ])->and(array_column($category['packages'], 'featured'))->toBe([
-            false,
-            true,
-            false,
+    expect($portals)->toHaveKeys(['business', 'personal'])
+        ->and($portals['business'])->toMatchArray([
+            'key' => 'business',
+            'label' => 'Para Empresas',
+            'route' => 'portal.business',
+            'url' => '/para-empresas',
+            'primary_cta' => 'Solicitar atendimento empresarial',
+        ])->and($portals['personal'])->toMatchArray([
+            'key' => 'personal',
+            'label' => 'Para Você',
+            'route' => 'portal.personal',
+            'url' => '/para-voce',
+            'primary_cta' => 'Quero atendimento',
         ]);
+});
+
+test('service catalog separates portals and provides complete category structures', function () {
+    $services = require dirname(__DIR__, 2).'/config/sophdata_services.php';
+    $categoryKeys = [
+        'key', 'slug', 'portal', 'title', 'eyebrow', 'short_description',
+        'description', 'menu_title', 'menu_description', 'image', 'menu_image', 'mobile_image',
+        'hero_image', 'benefits', 'problems_solved', 'customer_problem_cards',
+        'packages', 'faq',
+    ];
+    $packageKeys = [
+        'level', 'level_label', 'name', 'positioning', 'best_for', 'subtitle',
+        'description', 'included_items', 'commercial_summary', 'featured',
+        'badge', 'cta_label', 'whatsapp_message',
+    ];
+
+    expect($services['business'])->toHaveCount(6)
+        ->and($services['personal'])->toHaveCount(5);
+
+    foreach (['business', 'personal'] as $portal) {
+        $categories = $services[$portal];
+
+        foreach ($categories as $category) {
+            expect($category)->toHaveKeys($categoryKeys)
+                ->and($category['portal'])->toBe($portal)
+                ->and($category['key'])->toMatch('/^[a-z][a-z0-9_]+$/')
+                ->and($category['slug'])->toMatch('/^[a-z0-9-]+$/')
+                ->and($category['benefits'])->not->toBeEmpty()
+                ->and($category['problems_solved'])->not->toBeEmpty()
+                ->and($category['customer_problem_cards'])->not->toBeEmpty()
+                ->and($category['packages'])->toHaveCount(3)
+                ->and($category['image'])->toStartWith('https://placehold.co/')
+                ->and($category['menu_image'])->toStartWith('https://placehold.co/')
+                ->and($category['hero_image'])->toStartWith('https://placehold.co/');
+
+            foreach ($category['customer_problem_cards'] as $card) {
+                expect($card)->toHaveKeys([
+                    'title', 'description', 'target_category_slug', 'cta_label', 'image',
+                ])->and($card['target_category_slug'])->toBe($category['slug'])
+                    ->and($card['cta_label'])->toBe('Conhecer solução');
+            }
+
+            foreach ($category['packages'] as $package) {
+                expect($package)->toHaveKeys($packageKeys)
+                    ->and($package['cta_label'])->toBe('Escolher este pacote')
+                    ->and($package['included_items'])->not->toContain('Diagnóstico inicial')
+                    ->and($package['included_items'])->not->toContain('Execução do escopo essencial');
+            }
+
+            expect(array_column($category['packages'], 'level'))->toBe([
+                'essential', 'professional', 'complete',
+            ])->and(array_column($category['packages'], 'level_label'))->toBe([
+                'Essencial', 'Profissional', 'Completo',
+            ])->and(array_column($category['packages'], 'featured'))->toBe([
+                false, true, false,
+            ])->and(array_slice(
+                $category['packages'][1]['included_items'],
+                0,
+                count($category['packages'][0]['included_items']),
+            ))->toBe($category['packages'][0]['included_items'])
+                ->and(array_slice(
+                    $category['packages'][2]['included_items'],
+                    0,
+                    count($category['packages'][1]['included_items']),
+                ))->toBe($category['packages'][1]['included_items']);
+        }
     }
-
-    expect($slugs)->toHaveCount(count(array_unique($slugs)));
 });
 
-test('personal categories use the requested commercial package names', function () {
-    $catalog = require dirname(__DIR__, 2).'/config/sophdata.php';
-    $personalCategories = $catalog['categories']['personal'];
+test('service configuration provides general FAQ for both portals', function () {
+    $services = require dirname(__DIR__, 2).'/config/sophdata_services.php';
 
-    expect(array_map(
-        fn (array $category): array => array_column($category['packages'], 'name'),
-        $personalCategories,
-    ))->toBe([
-        ['SOS Digital Essencial', 'Computador em Ordem', 'Suporte Pessoal Completo'],
-        ['Wi-Fi Essencial', 'Casa Conectada Plus', 'Home Office Seguro'],
-        ['Contas Protegidas', 'Família Segura Digital', 'Blindagem Digital Familiar'],
-        ['Kit Estudante Digital', 'Carreira Digital Profissional', 'Mentoria Digital de Carreira'],
-        ['IA para o Dia a Dia', 'Produtividade Digital com IA', 'Oficina IA Profissional'],
-        ['Upgrade Essencial', 'PC Sob Medida', 'Estação Completa Personalizada'],
-    ]);
+    expect($services['portal_faq'])->toHaveKeys(['business', 'personal'])
+        ->and($services['portal_faq']['business'])->not->toBeEmpty()
+        ->and($services['portal_faq']['personal'])->not->toBeEmpty();
 });
 
-test('business categories use the requested commercial package names', function () {
-    $catalog = require dirname(__DIR__, 2).'/config/sophdata.php';
-    $businessCategories = $catalog['categories']['business'];
+test('problem catalog includes the requested customer situations', function () {
+    $services = require dirname(__DIR__, 2).'/config/sophdata_services.php';
+    $businessTitles = collect($services['business'])
+        ->flatMap(fn (array $category): array => $category['customer_problem_cards'])
+        ->pluck('title');
+    $personalTitles = collect($services['personal'])
+        ->flatMap(fn (array $category): array => $category['customer_problem_cards'])
+        ->pluck('title');
 
-    expect(array_map(
-        fn (array $category): array => array_column($category['packages'], 'name'),
-        $businessCategories,
-    ))->toBe([
-        ['TI Essencial Empresarial', 'TI Profissional Mensal', 'TI Completa para Pequenos Negócios'],
-        ['Rede Organizada Essencial', 'Infraestrutura Profissional', 'Ambiente Corporativo Conectado'],
-        ['Check-up de Segurança', 'Empresa Segura', 'Blindagem Empresarial Digital'],
-        ['Página Profissional Essencial', 'Site Institucional Profissional', 'Presença Digital Completa'],
-        ['Sistema Essencial de Gestão', 'Sistema Profissional Sob Medida', 'Plataforma Completa de Gestão'],
-        ['Planilhas Inteligentes', 'Automação Administrativa', 'Fluxo Digital Automatizado'],
-        ['Publicação Web Essencial', 'Deploy Profissional de Sistemas', 'Servidor Gerenciado Linux'],
-        ['Diagnóstico de TI', 'Plano de Modernização Digital', 'Gestão Consultiva de TI'],
-        ['Estação Corporativa Essencial', 'Renovação Profissional do Parque de TI', 'Ambiente Corporativo Completo'],
-    ]);
+    expect($businessTitles)->toContain(
+        'Computadores parando?',
+        'Internet ou Wi-Fi instável?',
+        'Sua empresa não tem backup?',
+        'Precisa de site ou sistema?',
+        'Usa planilhas demais?',
+        'Precisa renovar os computadores?',
+    )->and($personalTitles)->toContain(
+        'Meu computador está lento',
+        'Meu Wi-Fi está ruim',
+        'Quero proteger meus arquivos',
+        'Preciso organizar estudos ou carreira',
+        'Quero montar ou melhorar meu PC',
+    );
 });

@@ -22,6 +22,11 @@
     --color-action-500: #d83a20;
     --color-action-600: #b92c16;
 
+    --color-gold: #C9A227;
+    --color-gold-light: #F2D675;
+    --color-silver: #C0C7D1;
+    --color-silver-light: #EEF1F4;
+
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
     --color-zinc-200: #e5e5e5;
@@ -47,6 +52,11 @@ html {
 body {
     background: #f8fafc;
     overflow-x: hidden;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 html.menu-open,
@@ -121,7 +131,7 @@ html.menu-open body {
 
 @media (min-width: 1024px) {
     html {
-        scroll-padding-top: 11rem;
+        scroll-padding-top: 12.5rem;
     }
 }
 

@@ -21,8 +21,8 @@
         <path d="M9 8.5c.4 2.5 2 4.1 4.5 4.8l1-1c.2-.2.5-.2.7-.1l2 .9"/>
     </svg>
     @unless ($floating)
-        {{ $slot->isEmpty() ? 'Conversar no WhatsApp' : $slot }}
+        {{ $slot->isEmpty() ? 'Iniciar atendimento' : $slot }}
     @else
-        <span class="sr-only">Conversar no WhatsApp</span>
+        <span class="sr-only">Iniciar atendimento</span>
     @endunless
 </a>
