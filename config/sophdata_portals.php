@@ -6,12 +6,12 @@ return [
         'label' => 'Para Empresas',
         'route' => 'portal.business',
         'url' => '/para-empresas',
-        'title' => 'Soluções de TI para pequenos negócios e instituições',
+        'title' => 'Soluções de TI para empresas e instituições',
         'subtitle' => 'Suporte técnico, redes e Wi-Fi, segurança, backup, sites, sistemas, automação e computadores corporativos para manter sua operação funcionando com clareza e confiança.',
         'audience' => 'Empresas, igrejas, escolas, escritórios, consultórios, prestadores de serviço e instituições.',
         'primary_cta' => 'Solicitar atendimento empresarial',
         'secondary_cta' => 'Ver soluções',
-        'image' => 'https://placehold.co/720x520/0B1F4D/FFFFFF?text=TI+Para+Empresas',
+        'image' => 'img/sophdata/portals/business-hero.webp',
     ],
 
     'personal' => [
@@ -24,6 +24,6 @@ return [
         'audience' => 'Pessoas físicas, estudantes, famílias, profissionais autônomos e home office.',
         'primary_cta' => 'Quero atendimento',
         'secondary_cta' => 'Ver pacotes',
-        'image' => 'https://placehold.co/720x520/0B1F4D/FFFFFF?text=Tecnologia+Para+Voce',
+        'image' => 'img/sophdata/portals/personal-hero.webp',
     ],
 ];

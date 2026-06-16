@@ -7,6 +7,14 @@
 @php
     $isActive = request()->route('category') === ($category['slug'] ?? null);
     $displayTitle = $category['menu_title'] ?? $category['title'];
+    $menuImage = $category['menu_image'] ?? config('sophdata.images.menu_card');
+    $mobileImage = $category['mobile_image'] ?? config('sophdata.images.mobile_thumbnail');
+    $resolvedMenuImage = str_starts_with($menuImage, 'http://') || str_starts_with($menuImage, 'https://') || str_starts_with($menuImage, '/')
+        ? $menuImage
+        : asset($menuImage);
+    $resolvedMobileImage = str_starts_with($mobileImage, 'http://') || str_starts_with($mobileImage, 'https://') || str_starts_with($mobileImage, '/')
+        ? $mobileImage
+        : asset($mobileImage);
 @endphp
 
 <a
@@ -23,7 +31,7 @@
     @if ($mobile)
         <figure class="shrink-0">
             <img
-                src="{{ $category['mobile_image'] }}"
+                src="{{ $resolvedMobileImage }}"
                 alt="Miniatura de {{ $displayTitle }}"
                 class="h-16 w-24 rounded-xl object-cover"
                 loading="lazy"
@@ -40,7 +48,7 @@
     @else
         <figure>
             <img
-                src="{{ $category['menu_image'] }}"
+                src="{{ $resolvedMenuImage }}"
                 alt="Solução de {{ $displayTitle }}"
                 class="aspect-[16/9] w-full object-cover"
                 loading="lazy"

@@ -39,10 +39,11 @@
     <meta name="theme-color" content="#ffffff">
 
     @fonts
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-Qv7I1o7q.css') }}">
 </head>
 
-<body class="font-sans text-slate-900 antialiased">
+<body class="font-sans text-slate-900 antialiased relative">
     <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
 
     <x-site.header />
@@ -53,6 +54,8 @@
 
     <x-site.footer />
     <x-site.whatsapp-floating />
+
+    <script src="{{ asset('build/assets/app-aDJEZouh.js') }}"></script>
 </body>
 
 </html>

@@ -84,11 +84,12 @@ return [
     ],
 
     'images' => [
-        'hero' => 'https://placehold.co/720x520/0B1F4D/FFFFFF?text=SophData',
-        'banner' => 'https://placehold.co/1200x360/0B1F4D/FFFFFF?text=SophData',
-        'category_card' => 'https://placehold.co/640x360/F3F6FA/0B1F4D?text=Servico',
-        'menu_card' => 'https://placehold.co/320x180/F3F6FA/0B1F4D?text=Servico',
-        'mobile_thumbnail' => 'https://placehold.co/160x100/F3F6FA/0B1F4D?text=Servico',
-        'about' => 'https://placehold.co/720x720/F3F6FA/0B1F4D?text=Sobre+SophData',
+        'hero' => 'img/sophdata/portals/business-hero.webp',
+        'banner' => 'img/sophdata/cta/contact-banner.webp',
+        'category_card' => 'img/sophdata/services/business/suporte-de-ti.webp',
+        'menu_card' => 'img/sophdata/menu/business-suporte-de-ti.webp',
+        'mobile_thumbnail' => 'img/sophdata/menu/business-suporte-de-ti-mobile.webp',
+        'about' => 'img/sophdata/pages/about.webp',
+        'contact' => 'img/sophdata/pages/contact-hero.webp',
     ],
 ];

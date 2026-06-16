@@ -9,14 +9,14 @@
             [
                 'title' => 'Para Empresas',
                 'description' => 'Suporte, redes e Wi-Fi, segurança, backup, sites, sistemas, automação e computadores para pequenos negócios e instituições.',
-                'image' => 'https://placehold.co/640x360/0B1F4D/FFFFFF?text=Para+Empresas',
+                'image' => 'img/sophdata/pages/choose-business.webp',
                 'button' => 'Acessar portal empresarial',
                 'url' => route('portal.business'),
             ],
             [
                 'title' => 'Para Você',
                 'description' => 'Suporte para computador, internet, segurança digital, estudos, carreira, produtividade e montagem de PCs.',
-                'image' => 'https://placehold.co/640x360/F3F6FA/0B1F4D?text=Para+Voce',
+                'image' => 'img/sophdata/pages/choose-personal.webp',
                 'button' => 'Acessar portal pessoal',
                 'url' => route('portal.personal'),
             ],
@@ -38,7 +38,7 @@
             @foreach ($profiles as $profile)
                 <article class="card-lift flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
                     <figure>
-                        <img src="{{ $profile['image'] }}" alt="{{ $profile['title'] }}" class="aspect-video w-full object-cover" loading="lazy" decoding="async">
+                        <img src="{{ asset($profile['image']) }}" alt="Imagem do portal {{ $profile['title'] }}" class="aspect-video w-full object-cover" loading="lazy" decoding="async">
                     </figure>
                     <div class="flex flex-1 flex-col p-7">
                         <h2 class="text-2xl font-bold text-brand-950">{{ $profile['title'] }}</h2>

@@ -1,18 +1,19 @@
 <?php
 
 $images = [
-    'category' => 'https://placehold.co/640x360/F3F6FA/0B1F4D?text=Servico',
-    'menu' => 'https://placehold.co/320x180/F3F6FA/0B1F4D?text=Servico',
-    'mobile' => 'https://placehold.co/160x100/F3F6FA/0B1F4D?text=Servico',
-    'hero' => 'https://placehold.co/720x520/0B1F4D/FFFFFF?text=SophData',
+    'category' => static fn (string $portal, string $slug): string => "img/sophdata/services/{$portal}/{$slug}.webp",
+    'menu' => static fn (string $portal, string $slug): string => "img/sophdata/menu/{$portal}-{$slug}.webp",
+    'mobile' => static fn (string $portal, string $slug): string => "img/sophdata/menu/{$portal}-{$slug}-mobile.webp",
+    'hero' => static fn (string $portal, string $slug): string => "img/sophdata/services/{$portal}/{$slug}-hero.webp",
+    'problem' => static fn (string $portal, string $slug): string => "img/sophdata/problems/{$portal}/{$slug}.webp",
 ];
 
-$problemCard = static fn (string $title, string $description, string $slug): array => [
+$problemCard = static fn (string $title, string $description, string $slug, string $portal): array => [
     'title' => $title,
     'description' => $description,
     'target_category_slug' => $slug,
     'cta_label' => 'Conhecer solução',
-    'image' => 'https://placehold.co/640x360/F3F6FA/0B1F4D?text=Servico',
+    'image' => $images['problem']($portal, $slug),
 ];
 
 $packages = static function (
@@ -95,10 +96,10 @@ $category = static function (
         'short_description' => $shortDescription,
         'description' => $description,
         'menu_description' => $menuDescription,
-        'image' => $images['category'],
-        'menu_image' => $images['menu'],
-        'mobile_image' => $images['mobile'],
-        'hero_image' => $images['hero'],
+        'image' => $images['category']($portal, $slug),
+        'menu_image' => $images['menu']($portal, $slug),
+        'mobile_image' => $images['mobile']($portal, $slug),
+        'hero_image' => $images['hero']($portal, $slug),
         'benefits' => $benefits,
         'problems_solved' => $problemsSolved,
         'customer_problem_cards' => $customerProblemCards,
@@ -134,7 +135,7 @@ return [
             'Computadores, impressoras, e-mails e programas.',
             ['Correção de lentidão e travamentos', 'Organização de e-mails e impressoras', 'Orientação para a equipe'],
             ['Computadores parando durante o trabalho', 'Impressoras que não imprimem', 'Programas e e-mails com erro'],
-            [$problemCard('Computadores parando?', 'Corrija lentidão, travamentos, impressoras e programas que atrapalham a equipe.', 'suporte-de-ti')],
+            [$problemCard('Computadores parando?', 'Corrija lentidão, travamentos, impressoras e programas que atrapalham a equipe.', 'suporte-de-ti', 'business')],
             $packages('Suporte de TI', ['Suporte Essencial', 'Suporte Profissional', 'Suporte Completo'], ['uma falha pontual em computador ou programa', 'empresas que precisam corrigir e organizar a rotina de suporte', 'equipes que precisam de suporte ampliado e prevenção'], ['Atendimento remoto para a demanda principal', 'Correção de lentidão, travamentos ou erro de programa', 'Configuração de impressora, e-mail ou acesso necessário'], ['Revisão dos computadores atendidos', 'Organização de programas e atalhos essenciais', 'Orientação prática para evitar erros recorrentes'], ['Registro dos equipamentos atendidos', 'Rotina preventiva combinada', 'Canal de suporte prioritário no período contratado'])
         ),
         $category(
@@ -149,7 +150,7 @@ return [
             'Wi-Fi, roteadores, visitantes e compartilhamento.',
             ['Sinal melhor nos ambientes', 'Rede de visitantes separada', 'Impressoras e arquivos compartilhados com segurança'],
             ['Internet ou Wi-Fi instável', 'Ambientes sem sinal', 'Rede sem senha ou sem organização'],
-            [$problemCard('Internet ou Wi-Fi instável?', 'Melhore sinal, roteador, rede de visitantes e compartilhamento de impressoras.', 'redes-e-wifi')],
+            [$problemCard('Internet ou Wi-Fi instável?', 'Melhore sinal, roteador, rede de visitantes e compartilhamento de impressoras.', 'redes-e-wifi', 'business')],
             $packages('Redes e Wi-Fi', ['Wi-Fi Essencial', 'Rede Profissional', 'Rede Completa'], ['um ambiente com falha de sinal', 'empresas com equipe, visitantes e impressoras na rede', 'operações que dependem de rede estável e documentada'], ['Análise do sinal nos pontos principais', 'Configuração do roteador e senha Wi-Fi', 'Orientação de posicionamento para melhorar cobertura'], ['Rede de visitantes separada', 'Compartilhamento de impressora ou arquivos', 'Organização de nomes, senhas e dispositivos'], ['Mapeamento dos equipamentos de rede', 'Plano de melhoria de cobertura', 'Documentação simples de acessos e configurações'])
         ),
         $category(
@@ -164,7 +165,7 @@ return [
             'Backup automático, acessos e orientação contra golpes.',
             ['Backup automático configurado', 'Contas com mais segurança', 'Equipe orientada contra golpes'],
             ['Empresa sem backup confiável', 'Contas sem autenticação em dois fatores', 'Medo de perder documentos importantes'],
-            [$problemCard('Sua empresa não tem backup?', 'Configure backup automático, revise acessos e teste a recuperação de arquivos.', 'seguranca-e-backup')],
+            [$problemCard('Sua empresa não tem backup?', 'Configure backup automático, revise acessos e teste a recuperação de arquivos.', 'seguranca-e-backup', 'business')],
             $packages('Segurança e Backup', ['Backup Essencial', 'Segurança Profissional', 'Proteção Completa'], ['empresas sem backup automático', 'negócios que precisam proteger contas, arquivos e dispositivos', 'operações que precisam de continuidade e revisão periódica'], ['Mapeamento dos arquivos importantes', 'Configuração de backup automático', 'Teste de restauração de uma amostra'], ['Ativação de autenticação em dois fatores', 'Revisão de acessos e senhas críticas', 'Orientação contra golpes comuns'], ['Política simples de backup e acesso', 'Cópia adicional em destino separado', 'Calendário de testes de restauração'])
         ),
         $category(
@@ -179,7 +180,7 @@ return [
             'Sites profissionais e sistemas simples.',
             ['Site com botão de atendimento', 'SEO básico e publicação inicial', 'Processos menos dependentes de papel ou mensagens soltas'],
             ['Empresa sem site profissional', 'Atendimentos sem organização', 'Relatórios e inscrições manuais demais'],
-            [$problemCard('Precisa de site ou sistema?', 'Crie um site profissional ou um sistema simples para organizar sua operação.', 'sites-e-sistemas')],
+            [$problemCard('Precisa de site ou sistema?', 'Crie um site profissional ou um sistema simples para organizar sua operação.', 'sites-e-sistemas', 'business')],
             $packages('Sites e Sistemas', ['Presença Essencial', 'Site ou Sistema Profissional', 'Solução Web Completa'], ['quem precisa começar com uma presença clara', 'empresas que precisam de mais páginas ou um fluxo simples', 'organizações que precisam de conteúdo, publicação e acompanhamento'], ['Página institucional responsiva', 'Botão de atendimento', 'Publicação inicial e SEO básico'], ['Páginas adicionais ou fluxo simples de cadastro', 'Formulário visual ou organização de contatos sem envio funcional nesta fase', 'Integração com mapa ou redes sociais'], ['Planejamento de conteúdo e navegação', 'Documentação de acesso e publicação', 'Acompanhamento inicial após entrega'])
         ),
         $category(
@@ -194,7 +195,7 @@ return [
             'Planilhas, formulários, relatórios e rotinas.',
             ['Menos digitação repetitiva', 'Relatórios mais rápidos', 'Dados mais organizados'],
             ['Planilhas demais na rotina', 'Relatórios demorados', 'Informações copiadas manualmente'],
-            [$problemCard('Usa planilhas demais?', 'Organize planilhas, relatórios e tarefas repetitivas para reduzir retrabalho.', 'automacao-e-dados')],
+            [$problemCard('Usa planilhas demais?', 'Organize planilhas, relatórios e tarefas repetitivas para reduzir retrabalho.', 'automacao-e-dados', 'business')],
             $packages('Automação e Dados', ['Planilha Essencial', 'Automação Profissional', 'Fluxo Completo'], ['uma planilha ou relatório prioritário', 'rotinas com várias fontes ou tarefas repetidas', 'processos que precisam de regras, documentação e acompanhamento'], ['Organização da planilha principal', 'Fórmulas e validações úteis', 'Relatório simples para consulta'], ['Automação de uma tarefa repetitiva', 'Integração entre planilhas definidas', 'Tratamento de erros e dados duplicados'], ['Fluxo automatizado com etapas documentadas', 'Painel de indicadores simples', 'Monitoramento inicial e plano de manutenção'])
         ),
         $category(
@@ -209,7 +210,7 @@ return [
             'Montagem, upgrade, renovação e padronização.',
             ['Computadores mais rápidos', 'Configuração padronizada', 'Compra com menos desperdício'],
             ['Computadores antigos e lentos', 'Máquinas sem padrão', 'Dúvida sobre compra ou upgrade'],
-            [$problemCard('Precisa renovar os computadores?', 'Planeje upgrades, montagem ou renovação dos computadores da equipe.', 'computadores-corporativos')],
+            [$problemCard('Precisa renovar os computadores?', 'Planeje upgrades, montagem ou renovação dos computadores da equipe.', 'computadores-corporativos', 'business')],
             $packages('Computadores Corporativos', ['Upgrade Essencial', 'Renovação Profissional', 'Parque Completo'], ['uma máquina lenta ou upgrade pontual', 'empresas renovando vários computadores', 'equipes que precisam de padronização e continuidade'], ['Análise do uso e dos programas necessários', 'Recomendação de upgrade ou equipamento', 'Instalação, configuração e testes'], ['Padronização de sistema e programas', 'Migração organizada de arquivos', 'Inventário dos equipamentos renovados'], ['Plano de renovação por prioridade', 'Documentação de configurações e garantias', 'Acompanhamento inicial da equipe'])
         ),
     ],
@@ -227,7 +228,7 @@ return [
             'Lentidão, travamentos, programas e impressoras.',
             ['Mais desempenho no uso diário', 'Programas corrigidos', 'Organização básica do computador'],
             ['Computador lento ou travando', 'Programa que não abre', 'Impressora ou configuração com erro'],
-            [$problemCard('Meu computador está lento', 'Corrija lentidão, travamentos, erros, programas e impressoras.', 'computador-lento')],
+            [$problemCard('Meu computador está lento', 'Corrija lentidão, travamentos, erros, programas e impressoras.', 'computador-lento', 'personal')],
             $packages('Computador Lento', ['Correção Essencial', 'Computador em Ordem', 'Revisão Completa'], ['um problema pontual de lentidão ou erro', 'quem precisa corrigir e organizar o computador', 'quem quer uma revisão ampla com acompanhamento'], ['Atendimento remoto para o problema principal', 'Correção de lentidão, travamento ou programa com erro', 'Orientação simples sobre o ajuste feito'], ['Revisão de inicialização e armazenamento', 'Organização de programas e arquivos básicos', 'Verificação básica de segurança'], ['Organização de arquivos importantes', 'Configuração de rotina de manutenção', 'Acompanhamento após o atendimento'])
         ),
         $category(
@@ -242,7 +243,7 @@ return [
             'Roteador, Wi-Fi, impressora, TV e dispositivos.',
             ['Sinal melhor nos cômodos principais', 'Dispositivos conectados corretamente', 'Home office mais estável'],
             ['Wi-Fi ruim em casa', 'Impressora que não conecta', 'Smart TV ou dispositivo fora da rede'],
-            [$problemCard('Meu Wi-Fi está ruim', 'Melhore sinal, roteador, impressora, smart TV e dispositivos conectados.', 'wifi-e-casa-conectada')],
+            [$problemCard('Meu Wi-Fi está ruim', 'Melhore sinal, roteador, impressora, smart TV e dispositivos conectados.', 'wifi-e-casa-conectada', 'personal')],
             $packages('Wi-Fi e Casa Conectada', ['Wi-Fi Essencial', 'Casa Conectada Profissional', 'Home Office Completo'], ['um problema de sinal ou roteador', 'casas com vários dispositivos conectados', 'quem depende da rede para trabalhar ou estudar'], ['Análise do sinal nos ambientes principais', 'Configuração do roteador', 'Orientação para melhorar cobertura'], ['Conexão de impressora, TV ou dispositivo', 'Organização de nomes, senhas e rede de visitantes', 'Ajuste de canais e posicionamento'], ['Planejamento de expansão da cobertura', 'Configuração prioritária para home office', 'Documentação simples da rede'])
         ),
         $category(
@@ -257,7 +258,7 @@ return [
             'Fotos, documentos, contas, senhas e WhatsApp.',
             ['Arquivos com cópia segura', 'Contas mais protegidas', 'Orientação contra golpes'],
             ['Medo de perder fotos ou documentos', 'Contas sem proteção', 'Senhas fracas ou esquecidas'],
-            [$problemCard('Quero proteger meus arquivos', 'Proteja fotos, documentos, contas, senhas, e-mail e WhatsApp.', 'backup-e-seguranca')],
+            [$problemCard('Quero proteger meus arquivos', 'Proteja fotos, documentos, contas, senhas, e-mail e WhatsApp.', 'backup-e-seguranca', 'personal')],
             $packages('Backup e Segurança', ['Proteção Essencial', 'Segurança Profissional', 'Proteção Completa'], ['proteger contas ou arquivos principais', 'quem precisa de backup e revisão de segurança', 'famílias ou pessoas com muitos arquivos importantes'], ['Revisão das contas prioritárias', 'Ativação de autenticação em dois fatores', 'Configuração de recuperação de conta'], ['Mapeamento de fotos e documentos importantes', 'Configuração de backup automático', 'Orientação contra golpes comuns'], ['Teste de restauração de arquivos', 'Organização de acessos de emergência', 'Plano simples de revisão periódica'])
         ),
         $category(
@@ -272,7 +273,7 @@ return [
             'Estudos, currículo, LinkedIn, produtividade e IA.',
             ['Materiais e arquivos organizados', 'Ferramentas de estudo configuradas', 'IA aplicada a tarefas reais'],
             ['Materiais de estudo espalhados', 'Currículo ou LinkedIn desorganizado', 'Dúvida sobre como usar IA'],
-            [$problemCard('Preciso organizar estudos ou carreira', 'Organize estudos, currículo, LinkedIn, produtividade e IA.', 'estudos-carreira-e-ia')],
+            [$problemCard('Preciso organizar estudos ou carreira', 'Organize estudos, currículo, LinkedIn, produtividade e IA.', 'estudos-carreira-e-ia', 'personal')],
             $packages('Estudos, Carreira e IA', ['Organização Essencial', 'Produtividade Profissional', 'Método Completo'], ['organizar uma necessidade imediata', 'quem quer estruturar estudo, carreira e produtividade', 'quem deseja método com IA e acompanhamento'], ['Organização de pastas e materiais', 'Configuração de ferramentas de aula ou trabalho', 'Ajuste de câmera, áudio ou videoconferência'], ['Organização de currículo, LinkedIn ou portfólio', 'Rotina digital de tarefas e calendário', 'Exemplos práticos de uso de IA'], ['Biblioteca personalizada de instruções de IA', 'Backup dos materiais importantes', 'Acompanhamento para ajuste da rotina'])
         ),
         $category(
@@ -287,7 +288,7 @@ return [
             'SSD, memória, limpeza, montagem e compra.',
             ['Melhor desempenho', 'Peças compatíveis', 'Compra orientada pelo uso real'],
             ['PC lento para o uso atual', 'Dúvida sobre SSD ou memória', 'Compra de peças sem segurança'],
-            [$problemCard('Quero montar ou melhorar meu PC', 'Planeje montagem, SSD, memória, limpeza, desempenho e compra de peças.', 'montagem-e-upgrade-de-pc')],
+            [$problemCard('Quero montar ou melhorar meu PC', 'Planeje montagem, SSD, memória, limpeza, desempenho e compra de peças.', 'montagem-e-upgrade-de-pc', 'personal')],
             $packages('Montagem e Upgrade de PC', ['Upgrade Essencial', 'PC Sob Medida', 'Estação Completa'], ['melhorar um computador existente', 'montar uma máquina nova equilibrada', 'quem quer montagem, migração e acompanhamento'], ['Análise do computador e objetivo de uso', 'Recomendação de SSD, memória ou peça compatível', 'Instalação do componente e testes'], ['Seleção completa de componentes', 'Montagem e organização interna', 'Instalação de sistema, drivers e atualizações'], ['Migração organizada de arquivos', 'Testes de estabilidade e temperatura', 'Documentação dos componentes e acompanhamento inicial'])
         ),
     ],

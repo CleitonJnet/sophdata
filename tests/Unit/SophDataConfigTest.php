@@ -38,6 +38,7 @@ test('portal configuration defines both commercial identities', function () {
 
 test('service catalog separates portals and provides complete category structures', function () {
     $services = require dirname(__DIR__, 2).'/config/sophdata_services.php';
+    $publicDir = dirname(__DIR__, 2).'/public';
     $categoryKeys = [
         'key', 'slug', 'portal', 'title', 'eyebrow', 'short_description',
         'description', 'menu_title', 'menu_description', 'image', 'menu_image', 'mobile_image',
@@ -65,15 +66,22 @@ test('service catalog separates portals and provides complete category structure
                 ->and($category['problems_solved'])->not->toBeEmpty()
                 ->and($category['customer_problem_cards'])->not->toBeEmpty()
                 ->and($category['packages'])->toHaveCount(3)
-                ->and($category['image'])->toStartWith('https://placehold.co/')
-                ->and($category['menu_image'])->toStartWith('https://placehold.co/')
-                ->and($category['hero_image'])->toStartWith('https://placehold.co/');
+                ->and($category['image'])->toStartWith('img/sophdata/')
+                ->and($publicDir.'/'.$category['image'])->toBeFile()
+                ->and($category['menu_image'])->toStartWith('img/sophdata/')
+                ->and($publicDir.'/'.$category['menu_image'])->toBeFile()
+                ->and($category['mobile_image'])->toStartWith('img/sophdata/')
+                ->and($publicDir.'/'.$category['mobile_image'])->toBeFile()
+                ->and($category['hero_image'])->toStartWith('img/sophdata/')
+                ->and($publicDir.'/'.$category['hero_image'])->toBeFile();
 
             foreach ($category['customer_problem_cards'] as $card) {
                 expect($card)->toHaveKeys([
                     'title', 'description', 'target_category_slug', 'cta_label', 'image',
                 ])->and($card['target_category_slug'])->toBe($category['slug'])
-                    ->and($card['cta_label'])->toBe('Conhecer solução');
+                    ->and($card['cta_label'])->toBe('Conhecer solução')
+                    ->and($card['image'])->toStartWith('img/sophdata/')
+                    ->and($publicDir.'/'.$card['image'])->toBeFile();
             }
 
             foreach ($category['packages'] as $package) {
