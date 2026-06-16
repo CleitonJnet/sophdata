@@ -17,6 +17,26 @@
         ];
         $problemsByTitle = collect($problemCards)->keyBy('title');
         $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
+        $categoriesBySlug = collect($categories)->keyBy('slug');
+        $featuredHeroServices = collect(['wifi-e-casa-conectada', 'montagem-e-upgrade-de-pc'])
+            ->map(fn(string $slug) => $categoriesBySlug->get($slug))
+            ->filter();
+        $heroSlides = $featuredHeroServices
+            ->map(
+                fn(array $service) => [
+                    'eyebrow' => 'Portal Para Você',
+                    'title' => $service['title'],
+                    'subtitle' => $service['description'],
+                    'primaryButtonText' => 'Ver pacotes',
+                    'primaryButtonUrl' => route('portal.personal.category', $service['slug']),
+                    'secondaryButtonText' => $portal['primary_cta'],
+                    'secondaryButtonUrl' => $whatsappUrl,
+                    'image' => $service['hero_image'],
+                    'imageAlt' => 'Solução pessoal de ' . $service['title'],
+                ],
+            )
+            ->values()
+            ->all();
         $packageLevels = [
             [
                 'title' => 'Essencial',
@@ -66,12 +86,9 @@
         ];
     @endphp
 
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-
     <x-site.hero-banner eyebrow="Portal Para Você" :title="$portal['title']" :subtitle="$portal['subtitle']" :primary-button-text="$portal['primary_cta']" :primary-button-url="$whatsappUrl"
         :secondary-button-text="$portal['secondary_cta']" secondary-button-url="#packages" :image="$portal['image']"
-        image-alt="Soluções de tecnologia para o dia a dia" variant="light" />
+        image-alt="Soluções de tecnologia para o dia a dia" :slides="$heroSlides" variant="light" />
 
     <section id="solutions" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -156,6 +173,10 @@
         </div>
     </section>
 
+    <x-site.cta-section title="Quer resolver um problema de tecnologia sem complicação?"
+        description="Inicie o atendimento e escolha o pacote mais adequado para sua necessidade."
+        button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal SophData" />
+
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Experiência prática" title="Tecnologias e áreas"
@@ -171,70 +192,65 @@
         </div>
     </section>
 
-    <x-site.cta-section title="Quer resolver um problema de tecnologia sem complicação?"
-        description="Inicie o atendimento e escolha o pacote mais adequado para sua necessidade."
-        button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal SophData" />
-
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
     <!-- Initialize Swiper -->
     <script>
-        var swiper = new Swiper(".sd_problems", {
-            slidesPerView: 1.1,
-            spaceBetween: 10,
-            grabCursor: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                540: {
-                    slidesPerView: 2.1,
-                    spaceBetween: 15,
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper(".sd_problems", {
+                slidesPerView: 1.1,
+                spaceBetween: 10,
+                grabCursor: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
                 },
-                768: {
-                    slidesPerView: 3.1,
-                    spaceBetween: 15,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
                 },
-                1024: {
-                    slidesPerView: 4.1,
-                    spaceBetween: 20,
+                breakpoints: {
+                    540: {
+                        slidesPerView: 2.1,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 3.1,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 4.1,
+                        spaceBetween: 20,
+                    },
                 },
-            },
 
-        });
+            });
 
-        var swiper = new Swiper(".sd_solutions", {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            grabCursor: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                540: {
-                    slidesPerView: 2.1,
-                    spaceBetween: 15,
+            var swiper = new Swiper(".sd_solutions", {
+                slidesPerView: 1,
+                spaceBetween: 10,
+                grabCursor: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
                 },
-                768: {
-                    slidesPerView: 3.1,
-                    spaceBetween: 15,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
                 },
-                1024: {
-                    slidesPerView: 4.1,
-                    spaceBetween: 20,
+                breakpoints: {
+                    540: {
+                        slidesPerView: 2.1,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 3.1,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 4.1,
+                        spaceBetween: 20,
+                    },
                 },
-            },
+            });
         });
     </script>
 

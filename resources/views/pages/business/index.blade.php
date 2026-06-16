@@ -2,7 +2,8 @@
 
 @section('title', 'SophData | Soluções de TI para Empresas')
 @section('meta_description',
-    'Suporte de TI, redes, segurança, backup, sites, sistemas, automação e computadores corporativos para pequenos negócios e instituições.')
+    'Suporte de TI, redes, segurança, backup, sites, sistemas, automação e computadores
+    corporativos para pequenos negócios e instituições.')
 
 @section('content')
     @php
@@ -17,25 +18,48 @@
         ];
         $problemsByTitle = collect($problemCards)->keyBy('title');
         $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
+        $categoriesBySlug = collect($categories)->keyBy('slug');
+        $featuredHeroServices = collect(['sites-e-sistemas', 'suporte-de-ti'])
+            ->map(fn(string $slug) => $categoriesBySlug->get($slug))
+            ->filter();
+        $heroSlides = $featuredHeroServices
+            ->map(
+                fn(array $service) => [
+                    'eyebrow' => 'Portal Para Empresas',
+                    'title' => $service['title'],
+                    'subtitle' => $service['description'],
+                    'primaryButtonText' => 'Conhecer serviço',
+                    'primaryButtonUrl' => route('portal.business.category', $service['slug']),
+                    'secondaryButtonText' => $portal['primary_cta'],
+                    'secondaryButtonUrl' => $whatsappUrl,
+                    'image' => $service['hero_image'],
+                    'imageAlt' => 'Solução empresarial de ' . $service['title'],
+                ],
+            )
+            ->values()
+            ->all();
         $packageLevels = [
             [
                 'title' => 'Essencial',
                 'positioning' => 'Para começar',
-                'description' => 'Ideal para empresas que precisam resolver um problema específico, como computador lento, Wi-Fi instável, backup inicial ou ajustes pontuais.',
+                'description' =>
+                    'Ideal para empresas que precisam resolver um problema específico, como computador lento, Wi-Fi instável, backup inicial ou ajustes pontuais.',
                 'items' => ['Problema prioritário', 'Entrega objetiva', 'Orientações de uso'],
                 'featured' => false,
             ],
             [
                 'title' => 'Profissional',
                 'positioning' => 'Mais escolhido',
-                'description' => 'Inclui a solução essencial e acrescenta mais organização, segurança e orientação para evitar que o mesmo problema volte rapidamente.',
+                'description' =>
+                    'Inclui a solução essencial e acrescenta mais organização, segurança e orientação para evitar que o mesmo problema volte rapidamente.',
                 'items' => ['Tudo do Essencial', 'Melhorias estruturadas', 'Acompanhamento após a entrega'],
                 'featured' => true,
             ],
             [
                 'title' => 'Completo',
                 'positioning' => 'Solução completa',
-                'description' => 'Indicado para empresas que desejam acompanhamento, prevenção, documentação e uma TI mais preparada para crescer com segurança.',
+                'description' =>
+                    'Indicado para empresas que desejam acompanhamento, prevenção, documentação e uma TI mais preparada para crescer com segurança.',
                 'items' => ['Tudo do Profissional', 'Prevenção e documentação', 'Suporte ampliado'],
                 'featured' => false,
             ],
@@ -51,12 +75,35 @@
             'Instituições',
         ];
         $reasons = [
-            ['title' => 'Atendimento claro e didático', 'description' => 'Você entende o que será feito, por que será feito e como usar melhor a solução depois da entrega.'],
-            ['title' => 'Experiência com suporte, redes e sistemas', 'description' => 'A SophData une suporte técnico, infraestrutura, desenvolvimento e organização digital em uma visão prática.'],
-            ['title' => 'Soluções sob medida', 'description' => 'Cada atendimento considera a realidade da empresa, o tamanho da equipe e o orçamento disponível.'],
-            ['title' => 'Foco em prevenção e organização', 'description' => 'Além de corrigir problemas, o objetivo é reduzir riscos, retrabalho e falhas recorrentes.'],
-            ['title' => 'Atendimento remoto e presencial sob consulta', 'description' => 'Muitos problemas podem ser resolvidos à distância; quando necessário, o atendimento presencial pode ser avaliado.'],
-            ['title' => 'Explicação simples, sem linguagem confusa', 'description' => 'A tecnologia é apresentada de forma clara, sem excesso de termos técnicos.'],
+            [
+                'title' => 'Atendimento claro e didático',
+                'description' =>
+                    'Você entende o que será feito, por que será feito e como usar melhor a solução depois da entrega.',
+            ],
+            [
+                'title' => 'Experiência com suporte, redes e sistemas',
+                'description' =>
+                    'A SophData une suporte técnico, infraestrutura, desenvolvimento e organização digital em uma visão prática.',
+            ],
+            [
+                'title' => 'Soluções sob medida',
+                'description' =>
+                    'Cada atendimento considera a realidade da empresa, o tamanho da equipe e o orçamento disponível.',
+            ],
+            [
+                'title' => 'Foco em prevenção e organização',
+                'description' =>
+                    'Além de corrigir problemas, o objetivo é reduzir riscos, retrabalho e falhas recorrentes.',
+            ],
+            [
+                'title' => 'Atendimento remoto e presencial sob consulta',
+                'description' =>
+                    'Muitos problemas podem ser resolvidos à distância; quando necessário, o atendimento presencial pode ser avaliado.',
+            ],
+            [
+                'title' => 'Explicação simples, sem linguagem confusa',
+                'description' => 'A tecnologia é apresentada de forma clara, sem excesso de termos técnicos.',
+            ],
         ];
         $technologies = [
             'Linux',
@@ -73,17 +120,15 @@
         ];
     @endphp
 
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$portal['title']" :subtitle="$portal['subtitle']" :primary-button-text="$portal['primary_cta']"
         :primary-button-url="$whatsappUrl" :secondary-button-text="$portal['secondary_cta']" secondary-button-url="#solutions" :image="$portal['image']"
-        image-alt="Soluções de tecnologia para empresas" />
+        image-alt="Soluções de tecnologia para empresas" :slides="$heroSlides" />
 
     <section id="solutions" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Qual solução sua empresa precisa?" title="O que sua empresa precisa resolver?"
-                description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa." centered />
+                description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa."
+                centered />
             <div class="swiper sd_problems">
                 <div class="swiper-wrapper my-12">
                     @foreach ($featuredProblems as $card)
@@ -101,7 +146,8 @@
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Categorias empresariais" title="Soluções organizadas por área"
-                description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação." centered />
+                description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação."
+                centered />
             <div class="swiper sd_solutions">
                 <div class="mt-12 swiper-wrapper my-12">
                     @foreach ($categories as $category)
@@ -164,6 +210,11 @@
         </div>
     </section>
 
+    <x-site.cta-section title="Sua empresa precisa de uma TI mais organizada?"
+        description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
+        button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
+        image-alt="Atendimento empresarial SophData" />
+
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Experiência técnica" title="Tecnologias e áreas"
@@ -180,71 +231,65 @@
         </div>
     </section>
 
-    <x-site.cta-section title="Sua empresa precisa de uma TI mais organizada?"
-        description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
-        button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
-        image-alt="Atendimento empresarial SophData" />
-
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
     <!-- Initialize Swiper -->
     <script>
-        var swiper = new Swiper(".sd_problems", {
-            slidesPerView: 1.1,
-            spaceBetween: 10,
-            grabCursor: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                540: {
-                    slidesPerView: 2.1,
-                    spaceBetween: 15,
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper(".sd_problems", {
+                slidesPerView: 1.1,
+                spaceBetween: 10,
+                grabCursor: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
                 },
-                768: {
-                    slidesPerView: 3.1,
-                    spaceBetween: 15,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
                 },
-                1024: {
-                    slidesPerView: 4.1,
-                    spaceBetween: 20,
+                breakpoints: {
+                    540: {
+                        slidesPerView: 2.1,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 3.1,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 4.1,
+                        spaceBetween: 20,
+                    },
                 },
-            },
 
-        });
+            });
 
-        var swiper = new Swiper(".sd_solutions", {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            grabCursor: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                540: {
-                    slidesPerView: 2.1,
-                    spaceBetween: 15,
+            var swiper = new Swiper(".sd_solutions", {
+                slidesPerView: 1,
+                spaceBetween: 10,
+                grabCursor: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
                 },
-                768: {
-                    slidesPerView: 3.1,
-                    spaceBetween: 15,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
                 },
-                1024: {
-                    slidesPerView: 4.1,
-                    spaceBetween: 20,
+                breakpoints: {
+                    540: {
+                        slidesPerView: 2.1,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 3.1,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 4.1,
+                        spaceBetween: 20,
+                    },
                 },
-            },
+            });
         });
     </script>
 
