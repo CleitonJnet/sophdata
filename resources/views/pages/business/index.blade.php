@@ -2,8 +2,7 @@
 
 @section('title', 'SophData | Soluções de TI para Empresas')
 @section('meta_description',
-    'Soluções de TI para empresas com suporte, redes, backup, sites, sistemas e automação para
-    resolver paradas, Wi-Fi instável e planilhas demais.')
+    'Suporte de TI, redes, segurança, backup, sites, sistemas, automação e computadores corporativos para pequenos negócios e instituições.')
 
 @section('content')
     @php
@@ -14,7 +13,7 @@
             'Sua empresa não tem backup?',
             'Precisa de site ou sistema?',
             'Usa planilhas demais?',
-            'Precisa renovar os computadores?',
+            'Precisa renovar computadores?',
         ];
         $problemsByTitle = collect($problemCards)->keyBy('title');
         $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
@@ -22,21 +21,21 @@
             [
                 'title' => 'Essencial',
                 'positioning' => 'Para começar',
-                'description' => 'Resolve a necessidade principal com um escopo direto e adequado para começar.',
+                'description' => 'Ideal para empresas que precisam resolver um problema específico, como computador lento, Wi-Fi instável, backup inicial ou ajustes pontuais.',
                 'items' => ['Problema prioritário', 'Entrega objetiva', 'Orientações de uso'],
                 'featured' => false,
             ],
             [
                 'title' => 'Profissional',
-                'positioning' => 'Recomendado',
-                'description' => 'Inclui o nível Essencial e acrescenta organização, segurança e acompanhamento.',
+                'positioning' => 'Mais escolhido',
+                'description' => 'Inclui a solução essencial e acrescenta mais organização, segurança e orientação para evitar que o mesmo problema volte rapidamente.',
                 'items' => ['Tudo do Essencial', 'Melhorias estruturadas', 'Acompanhamento após a entrega'],
                 'featured' => true,
             ],
             [
                 'title' => 'Completo',
                 'positioning' => 'Solução completa',
-                'description' => 'Amplia o nível Profissional com prevenção, documentação e visão de continuidade.',
+                'description' => 'Indicado para empresas que desejam acompanhamento, prevenção, documentação e uma TI mais preparada para crescer com segurança.',
                 'items' => ['Tudo do Profissional', 'Prevenção e documentação', 'Suporte ampliado'],
                 'featured' => false,
             ],
@@ -52,12 +51,12 @@
             'Instituições',
         ];
         $reasons = [
-            'Atendimento claro e didático',
-            'Experiência com suporte, redes e sistemas',
-            'Soluções sob medida',
-            'Foco em prevenção e organização',
-            'Atendimento remoto e presencial sob consulta',
-            'Explicação simples, sem linguagem confusa',
+            ['title' => 'Atendimento claro e didático', 'description' => 'Você entende o que será feito, por que será feito e como usar melhor a solução depois da entrega.'],
+            ['title' => 'Experiência com suporte, redes e sistemas', 'description' => 'A SophData une suporte técnico, infraestrutura, desenvolvimento e organização digital em uma visão prática.'],
+            ['title' => 'Soluções sob medida', 'description' => 'Cada atendimento considera a realidade da empresa, o tamanho da equipe e o orçamento disponível.'],
+            ['title' => 'Foco em prevenção e organização', 'description' => 'Além de corrigir problemas, o objetivo é reduzir riscos, retrabalho e falhas recorrentes.'],
+            ['title' => 'Atendimento remoto e presencial sob consulta', 'description' => 'Muitos problemas podem ser resolvidos à distância; quando necessário, o atendimento presencial pode ser avaliado.'],
+            ['title' => 'Explicação simples, sem linguagem confusa', 'description' => 'A tecnologia é apresentada de forma clara, sem excesso de termos técnicos.'],
         ];
         $technologies = [
             'Linux',
@@ -84,7 +83,7 @@
     <section id="solutions" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Qual solução sua empresa precisa?" title="O que sua empresa precisa resolver?"
-                description="Escolha o problema mais próximo da sua realidade e veja a solução indicada." centered />
+                description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa." centered />
             <div class="swiper sd_problems">
                 <div class="swiper-wrapper my-12">
                     @foreach ($featuredProblems as $card)
@@ -102,7 +101,7 @@
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Categorias empresariais" title="Soluções organizadas por área"
-                description="Escolha a área do problema e compare os pacotes disponíveis." centered />
+                description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação." centered />
             <div class="swiper sd_solutions">
                 <div class="mt-12 swiper-wrapper my-12">
                     @foreach ($categories as $category)
@@ -120,7 +119,7 @@
     <section class="bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Progressão comercial" title="Escolha o nível de atendimento ideal"
-                description="Cada categoria oferece três níveis progressivos. Os detalhes completos ficam na página de cada solução."
+                description="Comece resolvendo o problema principal, avance para uma solução mais organizada ou escolha acompanhamento completo."
                 centered />
             <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
                 @foreach ($packageLevels as $level)
@@ -155,7 +154,10 @@
                         <span
                             class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-100 font-bold text-brand-700"
                             aria-hidden="true">✓</span>
-                        <h3 class="font-bold leading-7 text-brand-950">{{ $reason }}</h3>
+                        <div>
+                            <h3 class="font-bold leading-7 text-brand-950">{{ $reason['title'] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ $reason['description'] }}</p>
+                        </div>
                     </article>
                 @endforeach
             </div>
@@ -179,7 +181,7 @@
     </section>
 
     <x-site.cta-section title="Sua empresa precisa de uma TI mais organizada?"
-        description="Inicie o atendimento e solicite orientação para encontrar o pacote ideal."
+        description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
         button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
         image-alt="Atendimento empresarial SophData" />
 

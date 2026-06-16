@@ -1,21 +1,21 @@
 @extends('layouts.site')
 
 @section('title', 'Escolha seu Perfil | SophData')
-@section('meta_description', 'Escolha entre o portal Para Empresas e o portal Para Você da SophData.')
+@section('meta_description', 'Escolha entre o portal Para Empresas e Para Você para encontrar as soluções certas em tecnologia da SophData.')
 
 @section('content')
     @php
         $profiles = [
             [
                 'title' => 'Para Empresas',
-                'description' => 'Suporte, redes e Wi-Fi, segurança, backup, sites, sistemas, automação e computadores para pequenos negócios e instituições.',
+                'description' => 'Soluções para pequenos negócios, igrejas, escolas, escritórios, consultórios e instituições que precisam organizar computadores, internet, backup, sites, sistemas e processos digitais.',
                 'image' => 'img/sophdata/pages/choose-business.webp',
                 'button' => 'Acessar portal empresarial',
                 'url' => route('portal.business'),
             ],
             [
                 'title' => 'Para Você',
-                'description' => 'Suporte para computador, internet, segurança digital, estudos, carreira, produtividade e montagem de PCs.',
+                'description' => 'Atendimento para quem precisa resolver problemas com computador, Wi-Fi, arquivos, segurança digital, estudos, carreira, IA ou montagem de PC.',
                 'image' => 'img/sophdata/pages/choose-personal.webp',
                 'button' => 'Acessar portal pessoal',
                 'url' => route('portal.personal'),

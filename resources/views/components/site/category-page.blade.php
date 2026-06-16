@@ -27,16 +27,16 @@
     $choices = [
         [
             'title' => 'Escolha o Essencial',
-            'description' => 'Se você precisa resolver algo pontual com uma entrega direta e objetiva.',
+            'description' => $category['choice_descriptions']['essential'] ?? 'Se você precisa resolver algo pontual com uma entrega direta e objetiva.',
         ],
         [
             'title' => 'Escolha o Profissional',
-            'description' =>
+            'description' => $category['choice_descriptions']['professional'] ??
                 'Se você quer resolver a necessidade e organizar melhor o ambiente, com melhorias e acompanhamento.',
         ],
         [
             'title' => 'Escolha o Completo',
-            'description' => 'Se você busca prevenção, acompanhamento, documentação e continuidade.',
+            'description' => $category['choice_descriptions']['complete'] ?? 'Se você busca prevenção, acompanhamento, documentação e continuidade.',
         ],
     ];
 @endphp
@@ -65,13 +65,18 @@
             description="Situações reais que podem ser organizadas com orientação e um escopo adequado." centered />
         <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($category['problems_solved'] as $problem)
+                @php
+                    $problemTitle = is_array($problem) ? $problem['title'] : $problem;
+                    $problemDescription = is_array($problem)
+                        ? $problem['description']
+                        : 'A SophData ajuda a entender a causa, organizar a solução e orientar os próximos passos sem linguagem complicada.';
+                @endphp
                 <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
                     <span class="grid size-10 place-items-center rounded-full bg-brand-100 font-bold text-brand-700"
                         aria-hidden="true">✓</span>
-                    <h3 class="mt-5 text-lg font-bold leading-7 text-brand-950">{{ $problem }}</h3>
+                    <h3 class="mt-5 text-lg font-bold leading-7 text-brand-950">{{ $problemTitle }}</h3>
                     <p class="mt-3 text-sm leading-6 text-slate-600">
-                        A SophData ajuda a entender a causa, organizar a solução e orientar os próximos passos sem
-                        linguagem complicada.
+                        {{ $problemDescription }}
                     </p>
                 </article>
             @endforeach
