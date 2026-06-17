@@ -14,12 +14,13 @@
     $logoPortalKey = $activePortalKey ?? 'business';
     $portal = $hasPortalContext ? config("sophdata_portals.{$activePortalKey}") : null;
     $categories = $hasPortalContext ? config("sophdata_services.{$activePortalKey}", []) : [];
-    $categories = $activePortalKey === 'business'
-        ? collect($categories)
-            ->sortBy(fn(array $category) => $category['slug'] === 'sites-e-sistemas' ? 0 : 1)
-            ->values()
-            ->all()
-        : $categories;
+    $categories =
+        $activePortalKey === 'business'
+            ? collect($categories)
+                ->sortBy(fn(array $category) => $category['slug'] === 'sites-e-sistemas' ? 0 : 1)
+                ->values()
+                ->all()
+            : $categories;
     $categoryRoute = $hasPortalContext ? "portal.{$activePortalKey}.category" : null;
     $activeCategorySlug = request()->route('category');
     $isAboutPage = request()->routeIs('site.about');
@@ -82,96 +83,94 @@
     ];
 @endphp
 
-<div class="sticky top-0 z-[1000] transition-transform duration-300 ease-in-out will-change-transform"
+<div class="sticky top-0 z-1000 transition-transform duration-300 ease-in-out will-change-transform"
     data-site-header-shell>
-<header class="relative border-b border-slate-200 bg-white shadow-sm" data-site-header>
-    <div class="hidden bg-brand-950 text-white lg:block">
-        <div class="mx-auto flex min-h-10 max-w-8xl items-center justify-between gap-6 px-8 text-xs">
-            <p class="font-semibold text-brand-100">Soluções em TI para pessoas e empresas</p>
-            <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
-                class="rounded-md font-bold text-gold-light hover:text-white">
-                Iniciar atendimento
-            </a>
-        </div>
-    </div>
-
-    <div class="relative z-60 mx-auto flex min-h-20 max-w-8xl items-center justify-between gap-4 bg-white px-4 py-3 sm:px-6 lg:px-8">
-        <div class="flex min-w-0 items-center gap-4 lg:gap-6">
-            <x-site.logo :portal="$logoPortalKey" class="shrink-0" />
-            <x-site.portal-switcher :active-portal="$activePortalKey" compact class="hidden w-88 lg:grid" />
-        </div>
-
-        <nav class="hidden items-center gap-1 text-sm font-semibold text-slate-700 lg:flex"
-            aria-label="Navegação principal">
-            <a href="{{ route('site.about') }}"
-                @if ($isAboutPage) aria-current="page" @endif
-                @class([
-                    'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
-                    'bg-brand-50 text-brand-900' => $isAboutPage,
-                ])>Sobre</a>
-            <a href="{{ route('site.contact') }}"
-                @if ($isContactPage) aria-current="page" @endif
-                @class([
-                    'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
-                    'bg-brand-50 text-brand-900' => $isContactPage,
-                ])>Contato</a>
-            <x-whatsapp-link>Iniciar atendimento</x-whatsapp-link>
-        </nav>
-
-        <button type="button"
-            class="relative z-60 grid size-12 shrink-0 place-items-center rounded-xl border border-slate-300 bg-white text-brand-950 shadow-sm transition hover:border-brand-400 hover:bg-brand-50 lg:hidden"
-            aria-label="Abrir menu" aria-controls="mobile-navigation" aria-expanded="false" data-menu-button>
-            <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2"
-                aria-hidden="true" data-menu-open-icon>
-                <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-            <svg viewBox="0 0 24 24" class="hidden size-6" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" aria-hidden="true" data-menu-close-icon>
-                <path d="M6 6l12 12M18 6 6 18" />
-            </svg>
-        </button>
-    </div>
-
-</header>
-@if ($hasPortalContext)
-    <div class="hidden border-t border-slate-200 bg-brand-50 lg:block"
-        data-site-service-nav>
-        <nav class="mx-auto flex h-14 max-w-8xl items-stretch gap-3 overflow-x-auto px-8 horizontal-scroll"
-            aria-label="Serviços principais do portal ativo">
-            @foreach ($categories as $category)
-                @php
-                    $isActiveCategory = $activeCategorySlug === $category['slug'];
-                    $iconPaths = $serviceIcons[$category['slug']] ?? ['M4 12h16', 'M12 4v16'];
-                @endphp
-                <a href="{{ route($categoryRoute, $category['slug']) }}"
-                    @if ($isActiveCategory) aria-current="page" @endif @class([
-                        'group relative inline-flex h-full shrink-0 items-center gap-2.5 px-3 text-sm transition after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:rounded-full after:transition',
-                        'bg-white font-bold text-brand-950 after:scale-x-100 after:bg-brand-800' => $isActiveCategory,
-                        'font-semibold text-brand-950/75 after:scale-x-0 after:bg-brand-500 hover:bg-white/60 hover:text-brand-950 hover:after:scale-x-100' => !$isActiveCategory,
-                    ])>
-                    <svg viewBox="0 0 24 24" @class([
-                        'size-4.5 shrink-0 transition',
-                        'text-brand-800' => $isActiveCategory,
-                        'text-brand-950/55 group-hover:text-brand-700' => !$isActiveCategory,
-                    ]) fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        @foreach ($iconPaths as $path)
-                            <path d="{{ $path }}" />
-                        @endforeach
-                    </svg>
-                    {{ $category['menu_title'] ?? $category['title'] }}
-                    @if ($isActiveCategory)
-                        <span class="sr-only">Serviço ativo</span>
-                    @endif
+    <header class="relative border-b border-slate-200 bg-white shadow-sm" data-site-header>
+        <div class="hidden bg-brand-950 text-white lg:block">
+            <div class="mx-auto flex min-h-10 max-w-8xl items-center justify-between gap-6 px-8 text-xs">
+                <p class="font-semibold text-brand-100">Soluções em TI para pessoas e empresas</p>
+                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
+                    class="rounded-md font-bold text-gold-light hover:text-white">
+                    Iniciar atendimento
                 </a>
-            @endforeach
-        </nav>
-    </div>
-@endif
+            </div>
+        </div>
+
+        <div
+            class="relative z-60 mx-auto flex min-h-20 max-w-8xl items-center justify-between gap-4 bg-white px-4 py-3 sm:px-6 lg:px-8">
+            <div class="flex min-w-0 items-center gap-4 lg:gap-6">
+                <x-site.logo :portal="$logoPortalKey" class="shrink-0" />
+                <x-site.portal-switcher :active-portal="$activePortalKey" compact class="hidden w-88 lg:grid" />
+            </div>
+
+            <nav class="hidden items-center gap-1 text-sm font-semibold text-slate-700 lg:flex"
+                aria-label="Navegação principal">
+                <a href="{{ route('site.about') }}" @if ($isAboutPage) aria-current="page" @endif
+                    @class([
+                        'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
+                        'bg-brand-50 text-brand-900' => $isAboutPage,
+                    ])>Sobre</a>
+                <a href="{{ route('site.contact') }}" @if ($isContactPage) aria-current="page" @endif
+                    @class([
+                        'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
+                        'bg-brand-50 text-brand-900' => $isContactPage,
+                    ])>Contato</a>
+                <x-whatsapp-link>Iniciar atendimento</x-whatsapp-link>
+            </nav>
+
+            <button type="button"
+                class="relative z-60 grid size-12 shrink-0 place-items-center rounded-xl border border-slate-300 bg-white text-brand-950 shadow-sm transition hover:border-brand-400 hover:bg-brand-50 lg:hidden"
+                aria-label="Abrir menu" aria-controls="mobile-navigation" aria-expanded="false" data-menu-button>
+                <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true" data-menu-open-icon>
+                    <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+                <svg viewBox="0 0 24 24" class="hidden size-6" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" aria-hidden="true" data-menu-close-icon>
+                    <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+            </button>
+        </div>
+
+    </header>
+    @if ($hasPortalContext)
+        <div class="hidden border-t border-slate-200 bg-brand-50 lg:block" data-site-service-nav>
+            <nav class="mx-auto flex h-14 max-w-8xl items-stretch gap-3 overflow-x-auto px-8 horizontal-scroll"
+                aria-label="Serviços principais do portal ativo">
+                @foreach ($categories as $category)
+                    @php
+                        $isActiveCategory = $activeCategorySlug === $category['slug'];
+                        $iconPaths = $serviceIcons[$category['slug']] ?? ['M4 12h16', 'M12 4v16'];
+                    @endphp
+                    <a href="{{ route($categoryRoute, $category['slug']) }}"
+                        @if ($isActiveCategory) aria-current="page" @endif @class([
+                            'group relative inline-flex h-full shrink-0 items-center gap-2.5 px-3 text-sm transition after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:rounded-full after:transition',
+                            'bg-white font-bold text-brand-950 after:scale-x-100 after:bg-brand-800' => $isActiveCategory,
+                            'font-semibold text-brand-950/75 after:scale-x-0 after:bg-brand-500 hover:bg-white/60 hover:text-brand-950 hover:after:scale-x-100' => !$isActiveCategory,
+                        ])>
+                        <svg viewBox="0 0 24 24" @class([
+                            'size-4.5 shrink-0 transition',
+                            'text-brand-800' => $isActiveCategory,
+                            'text-brand-950/55 group-hover:text-brand-700' => !$isActiveCategory,
+                        ]) fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            @foreach ($iconPaths as $path)
+                                <path d="{{ $path }}" />
+                            @endforeach
+                        </svg>
+                        {{ $category['menu_title'] ?? $category['title'] }}
+                        @if ($isActiveCategory)
+                            <span class="sr-only">Serviço ativo</span>
+                        @endif
+                    </a>
+                @endforeach
+            </nav>
+        </div>
+    @endif
 </div>
 
 <div id="mobile-navigation"
-    class="fixed inset-x-0 bottom-0 top-[var(--site-mobile-menu-top,5rem)] z-[900] hidden overflow-y-auto overscroll-contain border-t border-slate-200 bg-slate-50 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-2xl lg:hidden"
+    class="fixed inset-x-0 bottom-0 top-(--site-mobile-menu-top,5rem) z-900 hidden overflow-y-auto overscroll-contain border-t border-slate-200 bg-slate-50 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-2xl lg:hidden"
     data-mobile-menu>
     <div class="mx-auto grid min-h-full max-w-2xl content-start gap-4 pb-8">
         <section class="rounded-3xl border border-brand-100 bg-white p-4 shadow-sm" aria-label="Escolha de perfil">
@@ -182,7 +181,8 @@
             <section class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"
                 aria-labelledby="mobile-services-heading">
                 <div class="mb-3 flex items-center justify-between gap-4">
-                    <h2 id="mobile-services-heading" class="text-xs font-bold uppercase tracking-[0.16em] text-brand-700">
+                    <h2 id="mobile-services-heading"
+                        class="text-xs font-bold uppercase tracking-[0.16em] text-brand-700">
                         Serviços {{ $portal['label'] }}
                     </h2>
                     <a href="{{ route($portal['route']) }}"
@@ -198,15 +198,13 @@
 
         <nav class="grid gap-3 rounded-3xl border border-brand-100 bg-brand-50 p-4 shadow-sm"
             aria-label="Links institucionais móveis">
-            <a href="{{ route('site.about') }}"
-                @if ($isAboutPage) aria-current="page" @endif
+            <a href="{{ route('site.about') }}" @if ($isAboutPage) aria-current="page" @endif
                 @class([
                     'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
                     'border-gold text-brand-900 ring-2 ring-gold/20' => $isAboutPage,
                     'border-slate-200' => !$isAboutPage,
                 ])>Sobre</a>
-            <a href="{{ route('site.contact') }}"
-                @if ($isContactPage) aria-current="page" @endif
+            <a href="{{ route('site.contact') }}" @if ($isContactPage) aria-current="page" @endif
                 @class([
                     'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
                     'border-gold text-brand-900 ring-2 ring-gold/20' => $isContactPage,
