@@ -116,9 +116,10 @@
                         </div>
 
                         <figure class="relative mx-auto w-full max-w-180">
-                            <div class="absolute inset-8 rounded-full bg-brand-400/20 blur-3xl" aria-hidden="true"></div>
-                            <img src="{{ $resolvedImage }}" alt="{{ $resolvedImageAlt }}"
-                                width="1440" height="1040"
+                            <div class="absolute inset-8 rounded-full bg-brand-400/20 blur-3xl" aria-hidden="true">
+                            </div>
+                            <img src="{{ $resolvedImage }}" alt="{{ $resolvedImageAlt }}" width="1440"
+                                height="1040"
                                 class="relative aspect-18/13 w-full rounded-3xl object-cover shadow-2xl sm:rounded-4xl"
                                 loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async"
                                 fetchpriority="{{ $loop->first ? 'high' : 'auto' }}">
@@ -139,7 +140,7 @@
             grabCursor: true,
             loop: true,
             effect: "creative",
-            spaceBetween: 30,
+            spaceBetween: 0,
             speed: 900,
             pagination: {
                 el: ".swiper-pagination",
@@ -163,22 +164,22 @@
                     translate: ["120%", 0, -500],
                 },
             },
-            breakpoints: {
-                768: {
-                    creativeEffect: {
-                        prev: {
-                            shadow: true,
-                            translate: [0, 0, -800],
-                            rotate: [180, 0, 0],
-                        },
-                        next: {
-                            shadow: true,
-                            translate: [0, 0, -800],
-                            rotate: [-180, 0, 0],
-                        },
-                    },
-                },
-            },
+            // breakpoints: {
+            //     768: {
+            //         creativeEffect: {
+            //             prev: {
+            //                 shadow: true,
+            //                 translate: [0, 0, -800],
+            //                 rotate: [180, 0, 0],
+            //             },
+            //             next: {
+            //                 shadow: true,
+            //                 translate: [0, 0, -800],
+            //                 rotate: [-180, 0, 0],
+            //             },
+            //         },
+            //     },
+            // },
         });
     });
 </script>

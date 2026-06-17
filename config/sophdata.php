@@ -8,7 +8,7 @@ return [
         'whatsapp' => '5521972765535',
         'whatsapp_display' => '(21) 97276-5535',
         'email' => 'contato@sophdata.com.br',
-        'region' => 'Niterói/RJ e atendimento remoto',
+        'region' => 'Rio de Janeiro / Atendimento Remoto',
     ],
 
     'links' => [

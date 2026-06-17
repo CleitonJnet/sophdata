@@ -82,6 +82,8 @@
     ];
 @endphp
 
+<div class="sticky top-0 z-[1000] transition-transform duration-300 ease-in-out will-change-transform"
+    data-site-header-shell>
 <header class="relative border-b border-slate-200 bg-white shadow-sm" data-site-header>
     <div class="hidden bg-brand-950 text-white lg:block">
         <div class="mx-auto flex min-h-10 max-w-8xl items-center justify-between gap-6 px-8 text-xs">
@@ -130,61 +132,10 @@
         </button>
     </div>
 
-    <div id="mobile-navigation"
-        class="fixed inset-0 z-50 hidden overflow-y-auto overscroll-contain border-t border-slate-200 bg-slate-50 px-4 pb-5 pt-24 shadow-2xl lg:hidden"
-        data-mobile-menu>
-        <div class="mx-auto grid min-h-full max-w-2xl content-start gap-5 pb-8">
-            <section class="rounded-3xl border border-brand-100 bg-white p-4 shadow-sm"
-                aria-label="Escolha de perfil">
-                <x-site.portal-switcher :active-portal="$activePortalKey" compact />
-            </section>
-
-            @if ($hasPortalContext)
-                <section class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"
-                    aria-labelledby="mobile-services-heading">
-                    <div class="mb-3 flex items-center justify-between gap-4">
-                        <h2 id="mobile-services-heading"
-                            class="text-xs font-bold uppercase tracking-[0.16em] text-brand-700">
-                            Serviços {{ $portal['label'] }}
-                        </h2>
-                        <a href="{{ route($portal['route']) }}"
-                            class="text-xs font-bold text-brand-700 underline underline-offset-4">Ver todas</a>
-                    </div>
-                    <div class="grid gap-3">
-                        @foreach ($categories as $category)
-                            <x-site.service-menu-card :category="$category" :route-name="$categoryRoute" mobile />
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <nav class="grid gap-3 rounded-3xl border border-brand-100 bg-brand-50 p-4 shadow-sm"
-                aria-label="Links institucionais móveis">
-                <a href="{{ route('site.about') }}"
-                    @if ($isAboutPage) aria-current="page" @endif
-                    @class([
-                        'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
-                        'border-gold text-brand-900 ring-2 ring-gold/20' => $isAboutPage,
-                        'border-slate-200' => !$isAboutPage,
-                    ])>Sobre</a>
-                <a href="{{ route('site.contact') }}"
-                    @if ($isContactPage) aria-current="page" @endif
-                    @class([
-                        'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
-                        'border-gold text-brand-900 ring-2 ring-gold/20' => $isContactPage,
-                        'border-slate-200' => !$isContactPage,
-                    ])>Contato</a>
-            </nav>
-
-            <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
-                class="inline-flex min-h-16 items-center justify-center rounded-3xl bg-action-500 px-6 py-4 text-center text-sm font-bold text-white shadow-lg shadow-action-500/20 hover:bg-action-600">
-                Iniciar atendimento
-            </a>
-        </div>
-    </div>
 </header>
 @if ($hasPortalContext)
-    <div class="sticky top-0 z-999 hidden border-t border-slate-200 bg-brand-50 lg:block">
+    <div class="hidden border-t border-slate-200 bg-brand-50 lg:block"
+        data-site-service-nav>
         <nav class="mx-auto flex h-14 max-w-8xl items-stretch gap-3 overflow-x-auto px-8 horizontal-scroll"
             aria-label="Serviços principais do portal ativo">
             @foreach ($categories as $category)
@@ -217,3 +168,55 @@
         </nav>
     </div>
 @endif
+</div>
+
+<div id="mobile-navigation"
+    class="fixed inset-x-0 bottom-0 top-[var(--site-mobile-menu-top,5rem)] z-[900] hidden overflow-y-auto overscroll-contain border-t border-slate-200 bg-slate-50 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-2xl lg:hidden"
+    data-mobile-menu>
+    <div class="mx-auto grid min-h-full max-w-2xl content-start gap-4 pb-8">
+        <section class="rounded-3xl border border-brand-100 bg-white p-4 shadow-sm" aria-label="Escolha de perfil">
+            <x-site.portal-switcher :active-portal="$activePortalKey" compact />
+        </section>
+
+        @if ($hasPortalContext)
+            <section class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"
+                aria-labelledby="mobile-services-heading">
+                <div class="mb-3 flex items-center justify-between gap-4">
+                    <h2 id="mobile-services-heading" class="text-xs font-bold uppercase tracking-[0.16em] text-brand-700">
+                        Serviços {{ $portal['label'] }}
+                    </h2>
+                    <a href="{{ route($portal['route']) }}"
+                        class="text-xs font-bold text-brand-700 underline underline-offset-4">Ver todas</a>
+                </div>
+                <div class="grid gap-3">
+                    @foreach ($categories as $category)
+                        <x-site.service-menu-card :category="$category" :route-name="$categoryRoute" mobile />
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
+        <nav class="grid gap-3 rounded-3xl border border-brand-100 bg-brand-50 p-4 shadow-sm"
+            aria-label="Links institucionais móveis">
+            <a href="{{ route('site.about') }}"
+                @if ($isAboutPage) aria-current="page" @endif
+                @class([
+                    'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
+                    'border-gold text-brand-900 ring-2 ring-gold/20' => $isAboutPage,
+                    'border-slate-200' => !$isAboutPage,
+                ])>Sobre</a>
+            <a href="{{ route('site.contact') }}"
+                @if ($isContactPage) aria-current="page" @endif
+                @class([
+                    'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
+                    'border-gold text-brand-900 ring-2 ring-gold/20' => $isContactPage,
+                    'border-slate-200' => !$isContactPage,
+                ])>Contato</a>
+        </nav>
+
+        <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
+            class="inline-flex min-h-16 items-center justify-center rounded-3xl bg-action-500 px-6 py-4 text-center text-sm font-bold text-white shadow-lg shadow-action-500/20 hover:bg-action-600">
+            Iniciar atendimento
+        </a>
+    </div>
+</div>

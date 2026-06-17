@@ -41,7 +41,7 @@
     @fonts
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-WZ_USdrN.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-E0ZpIv2j.css') }}">
 </head>
 
 <body class="font-sans text-slate-900 antialiased relative">
@@ -57,7 +57,7 @@
     <x-site.whatsapp-floating />
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-    <script src="{{ asset('build/assets/app-B4ChJD6V.js') }}"></script>
+    <script src="{{ asset('build/assets/app-DY4kbdw9.js') }}"></script>
 </body>
 
 </html>

@@ -1,5 +1,8 @@
 const menuButton = document.querySelector('[data-menu-button]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
+const siteHeaderShell = document.querySelector('[data-site-header-shell]');
+const siteHeader = document.querySelector('[data-site-header]');
+let setHeaderVisibility = () => {};
 let closeMobileMenu = () => {};
 
 if (menuButton && mobileMenu) {
@@ -22,6 +25,10 @@ if (menuButton && mobileMenu) {
     menuButton.addEventListener('click', () => {
         const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
         const nextIsOpen = !isOpen;
+
+        if (nextIsOpen) {
+            setHeaderVisibility(true);
+        }
 
         menuButton.setAttribute('aria-expanded', String(nextIsOpen));
         menuButton.setAttribute('aria-label', isOpen ? 'Abrir menu' : 'Fechar menu');
@@ -108,6 +115,56 @@ document.addEventListener('click', (event) => {
         closeAllMegaMenus();
     }
 });
+
+if (siteHeaderShell && siteHeader) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let headerHeight = Math.ceil(siteHeader.getBoundingClientRect().height);
+    let isHeaderVisible = true;
+
+    setHeaderVisibility = (isVisible) => {
+        isHeaderVisible = isVisible;
+        const offset = isVisible ? 0 : -headerHeight;
+
+        siteHeaderShell.style.transform = isVisible ? '' : `translateY(${offset}px)`;
+    };
+
+    const syncHeaderHeight = () => {
+        headerHeight = Math.ceil(siteHeader.getBoundingClientRect().height);
+        document.documentElement.style.setProperty('--site-mobile-menu-top', `${headerHeight}px`);
+        setHeaderVisibility(isHeaderVisible || window.scrollY <= 8);
+    };
+
+    const updateHeaderOnScroll = () => {
+        const currentScrollY = Math.max(window.scrollY, 0);
+        const scrollDelta = currentScrollY - lastScrollY;
+        const isMobileMenuOpen = menuButton?.getAttribute('aria-expanded') === 'true';
+
+        if (isMobileMenuOpen || currentScrollY <= 8) {
+            setHeaderVisibility(true);
+        } else if (Math.abs(scrollDelta) > 6) {
+            setHeaderVisibility(scrollDelta < 0);
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    };
+
+    syncHeaderHeight();
+
+    window.addEventListener(
+        'scroll',
+        () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateHeaderOnScroll);
+                ticking = true;
+            }
+        },
+        { passive: true },
+    );
+
+    window.addEventListener('resize', syncHeaderHeight);
+}
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {

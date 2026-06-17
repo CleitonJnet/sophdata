@@ -94,15 +94,6 @@
             'Segurança de contas e dados',
             'Atendimento remoto e presencial sob consulta',
         ];
-        $technologies = [
-            'Informática',
-            'Redes',
-            'Backup',
-            'Segurança Digital',
-            'IA',
-            'Produtividade',
-            'Montagem de Computadores',
-        ];
     @endphp
 
     <x-site.hero-banner eyebrow="Portal Para Você" :title="$portal['title']" :subtitle="$portal['subtitle']" :primary-button-text="$portal['primary_cta']" :primary-button-url="$whatsappUrl"
@@ -229,21 +220,6 @@
         description="Inicie o atendimento e escolha o pacote mais adequado para sua necessidade."
         button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal da SophData" />
 
-    <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Experiência prática" title="Tecnologias e áreas"
-                description="Computador, Wi-Fi, backup, segurança, estudos, carreira, IA e montagem de PC." centered />
-            <div class="mt-10 flex flex-wrap justify-center gap-3">
-                @foreach ($technologies as $technology)
-                    <span
-                        class="rounded-full border border-brand-200 bg-white px-5 py-3 text-sm font-bold text-brand-800 shadow-sm">
-                        {{ $technology }}
-                    </span>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     <!-- Initialize Swiper -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -303,6 +279,7 @@
                     },
                 },
             });
+
         });
     </script>
 

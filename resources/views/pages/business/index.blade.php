@@ -100,7 +100,7 @@
                     'Você entende o que será feito, por que será feito e como usar melhor a solução depois da entrega.',
             ],
             [
-                'title' => 'Experiência com suporte, redes e sistemas',
+                'title' => 'Visão integrada de suporte, redes e sistemas',
                 'description' =>
                     'A SophData une suporte técnico, infraestrutura, desenvolvimento e organização digital em uma visão prática.',
             ],
@@ -124,19 +124,6 @@
                 'description' => 'A tecnologia é apresentada de forma clara, sem excesso de termos técnicos.',
             ],
         ];
-        $technologies = [
-            'Linux',
-            'Laravel',
-            'PHP',
-            'MySQL',
-            'PostgreSQL',
-            'Java',
-            'Spring Boot',
-            'Redes',
-            'Backup',
-            'Segurança Digital',
-            'Montagem de Computadores',
-        ];
         $contractingOptions = [
             [
                 'title' => 'Serviço pontual',
@@ -150,8 +137,15 @@
             [
                 'title' => 'Contrato mensal',
                 'label' => 'Dourado',
-                'description' => 'Para empresas que precisam de acompanhamento recorrente, prevenção e evolução contínua.',
-                'items' => ['Suporte contínuo', 'Prevenção', 'Backup recorrente', 'Manutenção', 'Evolução de sites, sistemas e processos'],
+                'description' =>
+                    'Para empresas que precisam de acompanhamento recorrente, prevenção e evolução contínua.',
+                'items' => [
+                    'Suporte contínuo',
+                    'Prevenção',
+                    'Backup recorrente',
+                    'Manutenção',
+                    'Evolução de sites, sistemas e processos',
+                ],
                 'cta' => 'Solicitar proposta mensal',
                 'url' => sophdata_whatsapp_url('Olá, quero solicitar proposta mensal para minha empresa.'),
                 'featured' => true,
@@ -216,7 +210,9 @@
                         <span @class([
                             'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]',
                             'bg-gold text-brand-950' => $option['featured'],
-                            'border border-slate-300 bg-slate-50 text-slate-700' => !$option['featured'],
+                            'border border-slate-300 bg-slate-50 text-slate-700' => !$option[
+                                'featured'
+                            ],
                         ])>
                             {{ $option['label'] }}
                         </span>
@@ -234,11 +230,12 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <a href="{{ $option['url'] }}" target="_blank" rel="noopener noreferrer" @class([
-                            'mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 py-3 text-center text-sm font-bold transition sm:w-fit',
-                            'bg-brand-600 text-white hover:bg-brand-700' => $option['featured'],
-                            'bg-action-500 text-white hover:bg-action-600' => !$option['featured'],
-                        ])>
+                        <a href="{{ $option['url'] }}" target="_blank" rel="noopener noreferrer"
+                            @class([
+                                'mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 py-3 text-center text-sm font-bold transition sm:w-fit',
+                                'bg-brand-600 text-white hover:bg-brand-700' => $option['featured'],
+                                'bg-action-500 text-white hover:bg-action-600' => !$option['featured'],
+                            ])>
                             {{ $option['cta'] }}
                         </a>
                     </article>
@@ -300,22 +297,6 @@
         button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
         image-alt="Atendimento empresarial da SophData" />
 
-    <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Experiência técnica" title="Tecnologias e áreas"
-                description="Suporte, redes, backup, sites, sistemas, dados e computadores para a rotina da empresa."
-                centered />
-            <div class="mt-10 flex flex-wrap justify-center gap-3">
-                @foreach ($technologies as $technology)
-                    <span
-                        class="rounded-full border border-brand-200 bg-white px-5 py-3 text-sm font-bold text-brand-800 shadow-sm">
-                        {{ $technology }}
-                    </span>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     <!-- Initialize Swiper -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -375,6 +356,7 @@
                     },
                 },
             });
+
         });
     </script>
 

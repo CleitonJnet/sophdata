@@ -7,15 +7,6 @@
 @section('content')
     @php
         $whatsappUrl = sophdata_whatsapp_url('Olá, quero iniciar atendimento com a SophData.');
-        $areas = [
-            'Suporte técnico para pessoas e empresas',
-            'Redes, Wi-Fi e infraestrutura',
-            'Linux, servidores e hospedagem',
-            'Desenvolvimento web com Laravel, PHP e banco de dados',
-            'Sites, sistemas e automação de processos',
-            'Backup, segurança digital e organização de dados',
-            'Montagem, manutenção e upgrade de computadores',
-        ];
         $steps = [
             [
                 'title' => 'Entendemos o problema',
@@ -83,33 +74,6 @@
                 </p>
                 <p class="mt-5 leading-8 text-brand-100/80">{{ config('sophdata.brand.slogan') }}</p>
             </article>
-        </div>
-    </section>
-
-    <section class="bg-slate-50 py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Experiência aplicada" title="Experiência aplicada à rotina real"
-                description="A SophData reúne experiência em suporte técnico, redes, Linux, desenvolvimento web, banco de dados, manutenção de sistemas, montagem de computadores e atendimento a pequenos negócios e instituições. A proposta é unir conhecimento técnico com explicação simples e atendimento responsável."
-                centered />
-            <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($areas as $area)
-                    <article class="rounded-2xl border border-slate-200 bg-white p-6 font-bold text-brand-950 shadow-sm">
-                        {{ $area }}</article>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-white py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Experiência técnica" title="Tecnologias e áreas conectadas ao atendimento"
-                description="Suporte, redes, sistemas, Linux, desenvolvimento, backup, segurança e computadores aplicados a necessidades reais." centered />
-            <div class="mt-10 flex flex-wrap justify-center gap-3">
-                @foreach (config('sophdata.technologies') as $technology)
-                    <span
-                        class="rounded-full border border-brand-200 bg-brand-50 px-5 py-3 text-sm font-bold text-brand-800">{{ $technology }}</span>
-                @endforeach
-            </div>
         </div>
     </section>
 
