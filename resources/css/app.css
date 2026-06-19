@@ -76,7 +76,9 @@ a {
 }
 
 html.menu-open,
-html.menu-open body {
+html.menu-open body,
+html.profile-gate-open,
+html.profile-gate-open body {
     overflow: hidden;
 }
 

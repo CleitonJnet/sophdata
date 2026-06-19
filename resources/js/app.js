@@ -1,9 +1,132 @@
+import Swiper from 'swiper';
+import { Autoplay, EffectCreative, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-creative';
+
 const menuButton = document.querySelector('[data-menu-button]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
 const siteHeaderShell = document.querySelector('[data-site-header-shell]');
 const siteHeader = document.querySelector('[data-site-header]');
 let setHeaderVisibility = () => {};
 let closeMobileMenu = () => {};
+
+const initializeSwipers = () => {
+    document.querySelectorAll('[data-sophdata-swiper]').forEach((container) => {
+        const swiperElement = container.querySelector('.swiper');
+        const nextButton = container.querySelector('[data-swiper-next]');
+        const prevButton = container.querySelector('[data-swiper-prev]');
+        const pagination = container.querySelector('[data-swiper-pagination]');
+        const type = container.dataset.swiperType;
+
+        if (!swiperElement || swiperElement.swiper) {
+            return;
+        }
+
+        if (type === 'hero') {
+            new Swiper(swiperElement, {
+                modules: [Autoplay, EffectCreative, Navigation, Pagination],
+                grabCursor: true,
+                rewind: true,
+                effect: 'creative',
+                spaceBetween: 0,
+                speed: 900,
+                pagination: {
+                    el: pagination,
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: nextButton,
+                    prevEl: prevButton,
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: true,
+                },
+                creativeEffect: {
+                    prev: {
+                        shadow: true,
+                        translate: ['-120%', 0, -500],
+                    },
+                    next: {
+                        shadow: true,
+                        translate: ['120%', 0, -500],
+                    },
+                },
+            });
+
+            return;
+        }
+
+        new Swiper(swiperElement, {
+            modules: [Navigation, Pagination],
+            slidesPerView: 1.1,
+            spaceBetween: 10,
+            grabCursor: true,
+            pagination: {
+                el: pagination,
+                clickable: true,
+            },
+            navigation: {
+                nextEl: nextButton,
+                prevEl: prevButton,
+            },
+            breakpoints: {
+                540: {
+                    slidesPerView: 2.1,
+                    spaceBetween: 15,
+                },
+                768: {
+                    slidesPerView: 3.1,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 4.1,
+                    spaceBetween: 20,
+                },
+            },
+        });
+    });
+};
+
+const initializeProfileGate = () => {
+    const storageKey = 'sophdata_profile_selected';
+    const profileGate = document.querySelector('[data-profile-gate]');
+
+    if (!profileGate || window.localStorage?.getItem(storageKey)) {
+        return;
+    }
+
+    const choices = [...profileGate.querySelectorAll('[data-profile-choice]')];
+    const firstChoice = choices[0];
+
+    profileGate.classList.remove('hidden');
+    profileGate.classList.add('flex');
+    document.documentElement.classList.add('profile-gate-open');
+
+    window.requestAnimationFrame(() => firstChoice?.focus());
+
+    choices.forEach((choice) => {
+        choice.addEventListener('click', () => {
+            window.localStorage?.setItem(storageKey, choice.dataset.profileChoice);
+            window.location.href = choice.dataset.profileUrl;
+        });
+    });
+};
+
+const initializeFounderPhotoFallback = () => {
+    document.querySelectorAll('[data-founder-photo]').forEach((image) => {
+        image.addEventListener('error', () => {
+            image.classList.add('hidden');
+            image.nextElementSibling?.classList.remove('hidden');
+        });
+    });
+};
+
+initializeSwipers();
+initializeProfileGate();
+initializeFounderPhotoFallback();
 
 if (menuButton && mobileMenu) {
     const menuOpenIcon = menuButton.querySelector('[data-menu-open-icon]');

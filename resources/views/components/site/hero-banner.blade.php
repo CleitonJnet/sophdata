@@ -48,7 +48,8 @@
         'bg-brand-50 text-brand-950' => $isLight,
         'hero-grid bg-brand-950 text-white' => !$isLight,
     ]) }}>
-    <div class="swiper site-hero-carousel">
+    <div class="site-hero-carousel" data-sophdata-swiper data-swiper-type="hero">
+        <div class="swiper">
         <div class="swiper-wrapper">
             @foreach ($heroSlides as $slide)
                 @php
@@ -74,10 +75,17 @@
                             ])>
                                 {{ $slide['eyebrow'] ?? $eyebrow }}
                             </p>
-                            <h1
-                                class="mt-4 max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:mt-5 sm:text-5xl xl:text-6xl">
-                                {{ $slide['title'] ?? $title }}
-                            </h1>
+                            @if ($loop->first)
+                                <h1
+                                    class="mt-4 max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:mt-5 sm:text-5xl xl:text-6xl">
+                                    {{ $slide['title'] ?? $title }}
+                                </h1>
+                            @else
+                                <h2
+                                    class="mt-4 max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:mt-5 sm:text-5xl xl:text-6xl">
+                                    {{ $slide['title'] ?? $title }}
+                                </h2>
+                            @endif
                             <p @class([
                                 'mt-6 max-w-2xl text-lg leading-8 sm:text-xl',
                                 'text-slate-600' => $isLight,
@@ -128,58 +136,9 @@
                 </div>
             @endforeach
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        </div>
+        <div class="swiper-pagination" data-swiper-pagination></div>
+        <div class="swiper-button-next" data-swiper-next></div>
+        <div class="swiper-button-prev" data-swiper-prev></div>
     </div>
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var siteHeroCarousel = new Swiper(".site-hero-carousel", {
-            grabCursor: true,
-            loop: true,
-            effect: "creative",
-            spaceBetween: 0,
-            speed: 900,
-            pagination: {
-                el: ".swiper-pagination",
-                dynamicBullets: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: true,
-            },
-            creativeEffect: {
-                prev: {
-                    shadow: true,
-                    translate: ["-120%", 0, -500],
-                },
-                next: {
-                    shadow: true,
-                    translate: ["120%", 0, -500],
-                },
-            },
-            // breakpoints: {
-            //     768: {
-            //         creativeEffect: {
-            //             prev: {
-            //                 shadow: true,
-            //                 translate: [0, 0, -800],
-            //                 rotate: [180, 0, 0],
-            //             },
-            //             next: {
-            //                 shadow: true,
-            //                 translate: [0, 0, -800],
-            //                 rotate: [-180, 0, 0],
-            //             },
-            //         },
-            //     },
-            // },
-        });
-    });
-</script>

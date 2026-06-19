@@ -88,11 +88,36 @@
             'Pessoas que querem melhorar seu computador',
         ];
         $reasons = [
-            'Atendimento didático',
-            'Ajuda para quem não entende termos técnicos',
-            'Organização de computador e arquivos',
-            'Segurança de contas e dados',
-            'Atendimento remoto e presencial sob consulta',
+            [
+                'title' => 'Atendimento didático',
+                'description' =>
+                    'Você entende o que foi feito e recebe orientações simples para usar melhor seus equipamentos e ferramentas digitais.',
+            ],
+            [
+                'title' => 'Ajuda para quem não entende termos técnicos',
+                'description' =>
+                    'Explico os problemas de forma clara, sem complicar com linguagem técnica desnecessária.',
+            ],
+            [
+                'title' => 'Organização de computador e arquivos',
+                'description' =>
+                    'Ajudo a deixar seu computador, documentos, fotos e ferramentas mais organizados e fáceis de usar.',
+            ],
+            [
+                'title' => 'Segurança de contas e dados',
+                'description' =>
+                    'Oriento na proteção de senhas, e-mails, WhatsApp, redes sociais, fotos, documentos e backups.',
+            ],
+            [
+                'title' => 'Atendimento remoto e presencial sob consulta',
+                'description' =>
+                    'Sempre que possível, o atendimento pode ser feito remotamente. Casos específicos podem ser avaliados para atendimento presencial.',
+            ],
+            [
+                'title' => 'Experiência profissional aplicada ao atendimento pessoal',
+                'description' =>
+                    'A mesma experiência usada em ambientes corporativos, servidores, redes e sistemas é aplicada para resolver problemas pessoais com zelo e responsabilidade.',
+            ],
         ];
     @endphp
 
@@ -104,16 +129,18 @@
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Qual solução você precisa?" title="O que você precisa resolver hoje?"
                 description="Escolha o problema mais próximo da sua necessidade e encontre a solução adequada." centered />
-            <div class="swiper sd_problems">
-                <div class="swiper-wrapper my-12">
+            <div class="sd_problems" data-sophdata-swiper data-swiper-type="cards">
+                <div class="swiper">
+                    <div class="swiper-wrapper my-12">
                     @foreach ($featuredProblems as $card)
                         <x-site.category-card :title="$card['title']" :description="$card['description']" :image="$card['image']" :url="route('portal.personal.category', $card['target_category_slug'])"
                             :cta-label="$card['cta_label']" />
                     @endforeach
+                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination" data-swiper-pagination></div>
+                <div class="swiper-button-next" data-swiper-next></div>
+                <div class="swiper-button-prev" data-swiper-prev></div>
             </div>
         </div>
     </section>
@@ -122,19 +149,23 @@
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
             <x-site.section-heading eyebrow="Categorias pessoais" title="Soluções organizadas por área"
                 description="Escolha a solução mais próxima do seu problema e veja os pacotes." centered />
-            <div class="swiper sd_solutions">
-                <div class="mt-12 swiper-wrapper my-12">
+            <div class="sd_solutions" data-sophdata-swiper data-swiper-type="cards">
+                <div class="swiper">
+                    <div class="mt-12 swiper-wrapper my-12">
                     @foreach ($categories as $category)
                         <x-site.category-card :title="$category['title']" :description="$category['short_description']" :image="$category['image']" :url="route('portal.personal.category', $category['slug'])"
                             :items="array_slice($category['benefits'], 0, 3)" cta-label="Ver pacotes" />
                     @endforeach
+                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination" data-swiper-pagination></div>
+                <div class="swiper-button-next" data-swiper-next></div>
+                <div class="swiper-button-prev" data-swiper-prev></div>
             </div>
         </div>
     </section>
+
+    <x-site.authority-section class="bg-white" />
 
     <section id="packages" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -209,7 +240,10 @@
                         <span
                             class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-100 font-bold text-brand-700"
                             aria-hidden="true">✓</span>
-                        <h3 class="font-bold leading-7 text-brand-950">{{ $reason }}</h3>
+                        <div>
+                            <h3 class="font-bold leading-7 text-brand-950">{{ $reason['title'] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ $reason['description'] }}</p>
+                        </div>
                     </article>
                 @endforeach
             </div>
@@ -219,68 +253,4 @@
     <x-site.cta-section title="Quer resolver um problema de tecnologia sem complicação?"
         description="Inicie o atendimento e escolha o pacote mais adequado para sua necessidade."
         button-text="Quero atendimento" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')" image-alt="Atendimento pessoal da SophData" />
-
-    <!-- Initialize Swiper -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var swiper = new Swiper(".sd_problems", {
-                slidesPerView: 1.1,
-                spaceBetween: 10,
-                grabCursor: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                breakpoints: {
-                    540: {
-                        slidesPerView: 2.1,
-                        spaceBetween: 15,
-                    },
-                    768: {
-                        slidesPerView: 3.1,
-                        spaceBetween: 15,
-                    },
-                    1024: {
-                        slidesPerView: 4.1,
-                        spaceBetween: 20,
-                    },
-                },
-
-            });
-
-            var swiper = new Swiper(".sd_solutions", {
-                slidesPerView: 1,
-                spaceBetween: 10,
-                grabCursor: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                breakpoints: {
-                    540: {
-                        slidesPerView: 2.1,
-                        spaceBetween: 15,
-                    },
-                    768: {
-                        slidesPerView: 3.1,
-                        spaceBetween: 15,
-                    },
-                    1024: {
-                        slidesPerView: 4.1,
-                        spaceBetween: 20,
-                    },
-                },
-            });
-
-        });
-    </script>
-
 @endsection

@@ -162,16 +162,18 @@
             <x-site.section-heading eyebrow="Qual solução sua empresa precisa?" title="O que sua empresa precisa resolver?"
                 description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa."
                 centered />
-            <div class="swiper sd_problems">
-                <div class="swiper-wrapper mt-12">
+            <div class="sd_problems" data-sophdata-swiper data-swiper-type="cards">
+                <div class="swiper">
+                    <div class="swiper-wrapper mt-12">
                     @foreach ($featuredProblems as $card)
                         <x-site.category-card :title="$card['title']" :description="$card['description']" :image="$card['image']" :url="route('portal.business.category', $card['target_category_slug'])"
                             :cta-label="$card['cta_label']" />
                     @endforeach
+                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination" data-swiper-pagination></div>
+                <div class="swiper-button-next" data-swiper-next></div>
+                <div class="swiper-button-prev" data-swiper-prev></div>
             </div>
         </div>
     </section>
@@ -181,19 +183,23 @@
             <x-site.section-heading eyebrow="Categorias empresariais" title="Soluções organizadas por área"
                 description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação."
                 centered />
-            <div class="swiper sd_solutions">
-                <div class="mt-12 swiper-wrapper">
+            <div class="sd_solutions" data-sophdata-swiper data-swiper-type="cards">
+                <div class="swiper">
+                    <div class="mt-12 swiper-wrapper">
                     @foreach ($featuredCategories as $category)
                         <x-site.category-card :title="$category['title']" :description="$category['short_description']" :image="$category['image']" :url="route('portal.business.category', $category['slug'])"
                             :items="array_slice($category['benefits'], 0, 3)" cta-label="Conhecer serviço" />
                     @endforeach
+                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination" data-swiper-pagination></div>
+                <div class="swiper-button-next" data-swiper-next></div>
+                <div class="swiper-button-prev" data-swiper-prev></div>
             </div>
         </div>
     </section>
+
+    <x-site.authority-section class="bg-brand-50" />
 
     <section class="bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -296,68 +302,4 @@
         description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
         button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
         image-alt="Atendimento empresarial da SophData" />
-
-    <!-- Initialize Swiper -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var swiper = new Swiper(".sd_problems", {
-                slidesPerView: 1.1,
-                spaceBetween: 10,
-                grabCursor: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                breakpoints: {
-                    540: {
-                        slidesPerView: 2.1,
-                        spaceBetween: 15,
-                    },
-                    768: {
-                        slidesPerView: 3.1,
-                        spaceBetween: 15,
-                    },
-                    1024: {
-                        slidesPerView: 4.1,
-                        spaceBetween: 20,
-                    },
-                },
-
-            });
-
-            var swiper = new Swiper(".sd_solutions", {
-                slidesPerView: 1,
-                spaceBetween: 10,
-                grabCursor: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                breakpoints: {
-                    540: {
-                        slidesPerView: 2.1,
-                        spaceBetween: 15,
-                    },
-                    768: {
-                        slidesPerView: 3.1,
-                        spaceBetween: 15,
-                    },
-                    1024: {
-                        slidesPerView: 4.1,
-                        spaceBetween: 20,
-                    },
-                },
-            });
-
-        });
-    </script>
-
 @endsection
