@@ -11,14 +11,19 @@ test('final public routes respond with the expected status codes', function () {
         '/para-voce',
         '/escolher-perfil',
         '/sobre',
-        '/contato',
         '/politica-de-privacidade',
     ] as $path) {
         $this->get($path)->assertOk();
     }
 
+    $response = $this->get('/contato')->assertRedirect();
+
+    expect($response->headers->get('Location'))
+        ->toStartWith('https://wa.me/')
+        ->toContain(rawurlencode(config('sophdata.whatsapp_messages.neutral')));
+
     foreach (config('sophdata_services.business') as $category) {
-        $this->get('/para-empresas/'.$category['slug'])->assertOk();
+        $this->get('/para-empresas/'.$category['slug'])->assertStatus(301);
     }
 
     foreach (config('sophdata_services.personal') as $category) {
@@ -51,7 +56,6 @@ test('mvp does not expose login admin database migrations or functional forms', 
         '/para-voce',
         '/escolher-perfil',
         '/sobre',
-        '/contato',
         '/politica-de-privacidade',
     ] as $path) {
         $content = $this->get($path)->assertOk()->getContent();
@@ -69,9 +73,11 @@ test('mvp does not expose login admin database migrations or functional forms', 
 test('portal home pages sell by customer problem and category pages sell by packages', function () {
     $this->get('/para-empresas')
         ->assertOk()
-        ->assertSee('O que sua empresa precisa resolver?')
-        ->assertSee('Computadores parando?')
-        ->assertSee('Sua empresa não tem backup?');
+        ->assertSee('Tecnologia organizada para empresas')
+        ->assertSee('Soluções empresariais organizadas por necessidade')
+        ->assertSee('Desenvolvimento de Software')
+        ->assertSee('Infraestrutura Corporativa Gerenciada')
+        ->assertSee('Servidores e Ambientes Corporativos');
 
     $this->get('/para-voce')
         ->assertOk()
@@ -79,20 +85,19 @@ test('portal home pages sell by customer problem and category pages sell by pack
         ->assertSee('Meu computador está lento')
         ->assertSee('Preciso organizar estudos ou carreira');
 
-    foreach ([
-        '/para-empresas/suporte-de-ti',
-        '/para-voce/computador-lento',
-    ] as $path) {
-        $this->get($path)
-            ->assertOk()
-            ->assertSee('Escolha o pacote ideal')
-            ->assertSee('Essencial')
-            ->assertSee('Profissional')
-            ->assertSee('Completo')
-            ->assertSee('Compare os pacotes')
-            ->assertSee('<table', false)
-            ->assertSee('<caption', false);
-    }
+    $this->get('/para-empresas/suporte-de-ti')
+        ->assertStatus(301)
+        ->assertRedirect('/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal');
+
+    $this->get('/para-voce/computador-lento')
+        ->assertOk()
+        ->assertSee('Escolha o pacote ideal')
+        ->assertSee('Essencial')
+        ->assertSee('Profissional')
+        ->assertSee('Completo')
+        ->assertSee('Compare os pacotes')
+        ->assertSee('<table', false)
+        ->assertSee('<caption', false);
 });
 
 test('sitemap and gitignore are ready for initial publication', function () {
@@ -100,15 +105,16 @@ test('sitemap and gitignore are ready for initial publication', function () {
     $gitignore = file_get_contents(base_path('.gitignore'));
 
     foreach ([
-        'https://sophdata.com.br/',
-        'https://sophdata.com.br/para-empresas',
-        'https://sophdata.com.br/para-voce',
-        'https://sophdata.com.br/sobre',
-        'https://sophdata.com.br/contato',
-        'https://sophdata.com.br/politica-de-privacidade',
+        config('app.url').'/',
+        config('app.url').'/para-empresas',
+        config('app.url').'/para-voce',
+        config('app.url').'/sobre',
+        config('app.url').'/politica-de-privacidade',
     ] as $url) {
         expect($sitemap)->toContain("<loc>{$url}</loc>");
     }
+
+    expect($sitemap)->not->toContain('<loc>'.config('app.url').'/contato</loc>');
 
     expect($gitignore)
         ->toContain('/vendor')

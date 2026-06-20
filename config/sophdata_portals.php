@@ -10,7 +10,7 @@ return [
         'subtitle' => 'Mantenha computadores, internet, sistemas, arquivos e processos funcionando com mais organização, segurança e confiança. A SophData ajuda sua empresa a resolver problemas técnicos, reduzir retrabalho e melhorar a rotina digital.',
         'audience' => 'Empresas, igrejas, escolas, escritórios, consultórios, prestadores de serviço e instituições.',
         'primary_cta' => 'Solicitar atendimento empresarial',
-        'secondary_cta' => 'Ver soluções',
+        'secondary_cta' => 'Ver solucoes',
         'image' => 'img/sophdata/portals/business-hero.webp',
     ],
 

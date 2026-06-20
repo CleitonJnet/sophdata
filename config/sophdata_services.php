@@ -271,7 +271,7 @@ $personalServiceFormats = [
         ],
         'follow_up' => [
             'title' => 'Retorno ou orientação complementar',
-            'description' => 'Para aprofundar dúvidas, praticar ferramentas ou avaliar orientação recorrente sob consulta.',
+            'description' => 'Para aprofundar dúvidas, práticar ferramentas ou avaliar orientação recorrente sob consulta.',
             'items' => ['Orientação complementar', 'Prática guiada', 'Retorno sob consulta'],
             'cta_label' => 'Solicitar orientação',
             'whatsapp_message' => 'Olá, quero orientação complementar para estudos, carreira e IA.',
@@ -329,6 +329,7 @@ $category = static function (
         'description' => $description,
         'menu_description' => $menuDescription,
         'image' => $images['category']($portal, $slug),
+        ...($portal === 'business' ? ['image_alt' => "Serviço empresarial de {$menuTitle}"] : []),
         'menu_image' => $images['menu']($portal, $slug),
         'mobile_image' => $images['mobile']($portal, $slug),
         'hero_image' => $images['hero']($portal, $slug),
@@ -341,6 +342,112 @@ $category = static function (
         'faq' => [],
     ];
 };
+
+$personalContact = [
+    'slug' => 'contato',
+    'title' => 'Contato Para Você',
+    'subtitle' => 'Atendimento técnico para computador, notebook, internet, impressora e suporte pessoal.',
+    'description' => 'Conte o que está acontecendo com seu equipamento ou ambiente doméstico. A SophData orienta o melhor caminho para atendimento remoto ou presencial, quando aplicável.',
+    'route' => '/para-voce/contato',
+    'image' => 'img/sophdata/cta/contact-banner.webp',
+    'image_alt' => 'Atendimento técnico da SophData para pessoa física',
+    'seo' => [
+        'title' => 'Contato Para Você | Atendimento Técnico SophData',
+        'description' => 'Fale com a SophData para atendimento técnico pessoal em computador, notebook, internet, Wi-Fi, impressora, backup e suporte doméstico.',
+        'canonical' => '/para-voce/contato',
+        'og_image' => 'img/sophdata/cta/contact-banner.webp',
+    ],
+    'primary_cta' => [
+        'label' => 'Chamar no WhatsApp',
+        'url' => null,
+        'whatsapp_message' => 'Olá! Quero atendimento técnico para pessoa física com a SophData.',
+    ],
+    'secondary_cta' => [
+        'label' => 'Ver serviços Para Você',
+        'url' => '/para-voce',
+    ],
+    'needs' => [
+        [
+            'title' => 'Computador ou notebook lento',
+            'description' => 'Avaliação de lentidão, travamentos, inicialização demorada, falta de espaço e problemas de desempenho.',
+            'whatsapp_message' => 'Olá! Meu computador ou notebook está lento e quero atendimento da SophData.',
+        ],
+        [
+            'title' => 'Formatação e instalação de programas',
+            'description' => 'Reinstalação do sistema, organização inicial, instalação de programas básicos e preparação para uso.',
+            'whatsapp_message' => 'Olá! Quero atendimento para formatação ou instalação de programas.',
+        ],
+        [
+            'title' => 'Internet, Wi-Fi e roteador',
+            'description' => 'Ajuda com Wi-Fi fraco, roteador, conexão instável, configuração básica e orientação para melhorar o uso em casa.',
+            'whatsapp_message' => 'Olá! Quero ajuda com internet, Wi-Fi ou roteador em casa.',
+        ],
+        [
+            'title' => 'Impressora e dispositivos',
+            'description' => 'Configuração de impressora, scanner, periféricos e pequenos ajustes para uso doméstico.',
+            'whatsapp_message' => 'Olá! Quero ajuda para configurar impressora ou dispositivo.',
+        ],
+        [
+            'title' => 'Backup e arquivos pessoais',
+            'description' => 'Orientação para organizar arquivos, salvar documentos importantes e reduzir risco de perda de dados.',
+            'whatsapp_message' => 'Olá! Quero orientação sobre backup e organização de arquivos pessoais.',
+        ],
+        [
+            'title' => 'Orientação técnica pessoal',
+            'description' => 'Ajuda para entender o problema, escolher o melhor caminho e evitar gastos desnecessários.',
+            'whatsapp_message' => 'Olá! Quero uma orientação técnica pessoal com a SophData.',
+        ],
+    ],
+    'first_contact_checklist' => [
+        'Qual equipamento precisa de atendimento: computador, notebook, impressora, roteador ou outro',
+        'Marca e modelo, se souber',
+        'Qual problema está acontecendo',
+        'Quando o problema começou',
+        'Se aparece alguma mensagem de erro',
+        'Se o atendimento pode ser remoto ou precisa ser presencial',
+        'Bairro ou cidade, se precisar de atendimento presencial',
+        'Melhor horário para retorno',
+    ],
+    'initial_flow' => [
+        [
+            'title' => 'Você explica o problema',
+            'description' => 'Conte o que está acontecendo e envie fotos ou mensagens de erro, se houver.',
+        ],
+        [
+            'title' => 'A SophData avalia o caminho',
+            'description' => 'Verificamos se o caso pode ser orientado remotamente ou se precisa de atendimento presencial.',
+        ],
+        [
+            'title' => 'Combinamos a próxima etapa',
+            'description' => 'Quando possível, alinhamos o tipo de atendimento, disponibilidade, valor e próximos passos.',
+        ],
+        [
+            'title' => 'O atendimento é realizado',
+            'description' => 'O serviço é feito com orientação clara, cuidado com seus dados e explicação do que foi realizado.',
+        ],
+    ],
+    'commercial_notes' => [
+        'O primeiro contato não substitui diagnóstico técnico completo.',
+        'Atendimentos presenciais dependem de disponibilidade e localização.',
+        'Peças, licenças, equipamentos e serviços de terceiros não estão inclusos, salvo combinação prévia.',
+        'Alguns problemas podem exigir backup, reinstalação ou troca de peça.',
+        'A SophData não solicita senhas pessoais sem necessidade clara para o atendimento.',
+        'Sempre que possível, será explicado o que será feito antes da execução.',
+    ],
+    'business_redirect' => [
+        'title' => 'Atendimento para empresa?',
+        'description' => 'Se você precisa de suporte para empresa, infraestrutura, servidores, rede corporativa, backup empresarial ou desenvolvimento de software, acesse o contato empresarial.',
+        'label' => 'Ir para contato empresarial',
+        'url' => '/para-empresas/contato',
+    ],
+    'final_cta' => [
+        'title' => 'Quer atendimento técnico pessoal?',
+        'description' => 'Envie uma mensagem contando o problema. A SophData orienta o melhor caminho para suporte remoto ou presencial, quando aplicável.',
+        'label' => 'Chamar no WhatsApp',
+        'whatsapp_message' => 'Olá! Quero atendimento técnico para pessoa física com a SophData.',
+        'image' => 'img/sophdata/cta/contact-banner.webp',
+    ],
+];
 
 return [
     'portal_faq' => [
@@ -355,6 +462,8 @@ return [
             ['question' => 'O atendimento pode ser remoto?', 'answer' => 'Sim. Quando o problema exigir presença, o atendimento presencial pode ser combinado.'],
         ],
     ],
+
+    'personal_contact' => $personalContact,
 
     'business' => [
         array_replace(
@@ -458,7 +567,7 @@ return [
                     ['title' => 'Rede sem organização', 'description' => 'Organizamos computadores, impressoras, compartilhamentos e acessos para facilitar o uso da rede interna.'],
                     ['title' => 'Falta de rede para visitantes', 'description' => 'Configuramos uma rede separada para clientes, alunos, visitantes ou prestadores de serviço, quando o equipamento permitir.'],
                     ['title' => 'Impressoras e arquivos sem compartilhamento', 'description' => 'Ajudamos a configurar impressoras e pastas compartilhadas de forma mais prática e segura.'],
-                    ['title' => 'Acesso remoto sem segurança', 'description' => 'Orientamos formas mais seguras de acessar arquivos ou sistemas fora da empresa, evitando soluções improvisadas.'],
+                    ['title' => 'Acesso remoto sem segurança', 'description' => 'Orientamos formas mais seguras de acessar arquivos ou sistemas fora da empresa, evitando solucoes improvisadas.'],
                 ],
                 [$problemCard('Internet ou Wi-Fi instável?', 'Organize sua rede, melhore o sinal Wi-Fi e reduza interrupções no trabalho.', 'redes-e-wifi', 'business')],
                 []
@@ -881,7 +990,7 @@ return [
                     ['title' => 'Sistema desorganizado', 'description' => 'Organizamos arquivos, programas e atalhos para deixar o uso mais simples e limpo.'],
                     ['title' => 'Programas com erro', 'description' => 'Ajustamos instalações, atualizações e configurações de aplicativos usados no dia a dia.'],
                     ['title' => 'Impressora ou periféricos com falha', 'description' => 'Configuramos impressoras, scanners, webcam, microfone e outros dispositivos.'],
-                    ['title' => 'Dúvidas de uso', 'description' => 'Explicamos o que foi feito e orientamos como evitar que o problema volte rapidamente.'],
+                    ['title' => 'Dúvidas de uso', 'description' => 'Explicamos o que foi feito e orientamos como evitar que o problema volte rápidamente.'],
                 ],
                 [$problemCard('Meu computador está lento', 'Corrija lentidão, travamentos, erros, programas e impressoras.', 'computador-lento', 'personal')],
                 []

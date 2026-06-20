@@ -1,16 +1,29 @@
 @props([
     'floating' => false,
-    'message' => 'Olá, gostaria de conhecer as soluções da SophData.',
+    'message' => null,
+    'fallbackUrl' => null,
 ])
 
 @php
+    $message = $message ?? match (true) {
+        request()->is('para-empresas*') => config('sophdata.whatsapp_messages.business'),
+        request()->is('para-voce*') => config('sophdata.whatsapp_messages.personal'),
+        default => config('sophdata.whatsapp_messages.neutral'),
+    };
     $whatsappUrl = sophdata_whatsapp_url($message);
+    $fallbackUrl = $fallbackUrl ?? match (true) {
+        request()->is('para-voce*') && Route::has('personal.contact') => route('personal.contact'),
+        request()->is('para-empresas*') && Route::has('business.contact') => route('business.contact'),
+        Route::has('portal.choose') => route('portal.choose'),
+        default => '/',
+    };
+    $url = $whatsappUrl ?: $fallbackUrl;
+    $isExternal = $whatsappUrl && str_starts_with($whatsappUrl, 'https://wa.me/');
 @endphp
 
 <a
-    href="{{ $whatsappUrl }}"
-    target="_blank"
-    rel="noopener noreferrer"
+    href="{{ $url }}"
+    @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
     {{ $attributes->class([
         'inline-flex items-center gap-2 rounded-full bg-action-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-action-500/20 transition hover:bg-action-600 focus:outline-none focus:ring-4 focus:ring-action-400/30',
         'fixed right-4 bottom-4 z-50 size-14 justify-center p-0 sm:right-6 sm:bottom-6' => $floating,

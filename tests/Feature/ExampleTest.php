@@ -19,7 +19,6 @@ test('public routes keep portuguese slugs and english internal names', function 
         'portal.personal.category' => 'para-voce/{category}',
         'portal.choose' => 'escolher-perfil',
         'site.about' => 'sobre',
-        'site.contact' => 'contato',
         'site.privacy' => 'politica-de-privacidade',
     ];
 
@@ -39,7 +38,6 @@ test('mvp remains static without authentication database admin or forms', functi
         'portal.personal',
         'portal.choose',
         'site.about',
-        'site.contact',
         'site.privacy',
     ] as $routeName) {
         $content = $this->get(route($routeName))->assertOk()->getContent();
@@ -50,4 +48,10 @@ test('mvp remains static without authentication database admin or forms', functi
             ->not->toContain('Chamar no WhatsApp')
             ->not->toContain('Mandar WhatsApp');
     }
+
+    $response = $this->get('/contato')->assertRedirect();
+
+    expect($response->headers->get('Location'))
+        ->toStartWith('https://wa.me/')
+        ->toContain(rawurlencode(config('sophdata.whatsapp_messages.neutral')));
 });

@@ -16,6 +16,19 @@ class PortalController extends Controller
         return $this->show('personal');
     }
 
+    public function personalContact(): View
+    {
+        $page = config('sophdata_services.personal_contact', []);
+
+        abort_unless(is_array($page), 500);
+
+        return view('pages.personal.contact', [
+            'page' => $page,
+            'portal' => config('sophdata_portals.personal'),
+            'seo' => $page['seo'] ?? [],
+        ]);
+    }
+
     public function choose(): View
     {
         return view('pages.choose-portal');
@@ -46,6 +59,10 @@ class PortalController extends Controller
             'portal' => config("sophdata_portals.{$portalKey}"),
             'problemCards' => $problemCards,
         ];
+
+        if ($portalKey === 'business') {
+            $data['seo'] = config('sophdata_empresa.seo', []);
+        }
 
         return $portalKey === 'business'
             ? view('pages.business.index', $data)

@@ -7,299 +7,173 @@
 
 @section('content')
     @php
-        /** @var array $portal */
-        $whatsappUrl = sophdata_whatsapp_url('Olá, quero solicitar atendimento empresarial.');
-        $problemOrder = [
-            'Precisa de site ou sistema?',
-            'Computadores parando?',
-            'Internet ou Wi-Fi instável?',
-            'Sua empresa não tem backup?',
-            'Usa planilhas demais?',
-            'Precisa renovar computadores?',
+        $empresa = config('sophdata_empresa');
+        $hero = $empresa['hero'];
+        $mainBlocks = collect($empresa['main_blocks'] ?? []);
+        $businessPains = $empresa['business_pains'] ?? [];
+        $methodSteps = $empresa['method_summary'] ?? [];
+        $authority = $empresa['authority'] ?? [];
+        $cta = $empresa['cta'];
+        $heroPrimaryUrl = filled($hero['primary_cta']['whatsapp_message'] ?? null)
+            ? (sophdata_whatsapp_url($hero['primary_cta']['whatsapp_message']) ?: $hero['primary_cta']['url'])
+            : $hero['primary_cta']['url'];
+        $finalCtaUrl = filled($cta['whatsapp_message'] ?? null)
+            ? (sophdata_whatsapp_url($cta['whatsapp_message']) ?: $cta['primary_url'])
+            : $cta['primary_url'];
+
+        $blockDescriptions = [
+            'desenvolvimento-de-software' => 'Sites, sistemas e automações para organizar processos, substituir planilhas e melhorar a presença digital da empresa.',
+            'infraestrutura-corporativa-gerenciada' => 'Computadores, redes, Wi-Fi e suporte mensal organizados para dar mais estabilidade à operação.',
+            'servidores-e-ambientes-corporativos' => 'Ambientes para centralizar arquivos, controlar acessos, proteger dados e apoiar a continuidade da empresa.',
         ];
-        $problemsByTitle = collect($problemCards)->keyBy('title');
-        $featuredProblems = collect($problemOrder)->map(fn(string $title) => $problemsByTitle->get($title))->filter();
-        $categoriesBySlug = collect($categories)->keyBy('slug');
-        $featuredCategories = collect(['sites-e-sistemas'])
-            ->map(fn(string $slug) => $categoriesBySlug->get($slug))
-            ->filter()
-            ->merge(collect($categories)->reject(fn(array $category) => $category['slug'] === 'sites-e-sistemas'))
-            ->values();
-        $serviceHeroSlides = $featuredCategories
-            ->map(
-                fn(array $service) => [
-                    'eyebrow' => 'Portal Para Empresas',
-                    'title' => $service['title'],
-                    'subtitle' => $service['description'],
-                    'primaryButtonText' => 'Conhecer serviço',
-                    'primaryButtonUrl' => route('portal.business.category', $service['slug']),
-                    'secondaryButtonText' => $portal['primary_cta'],
-                    'secondaryButtonUrl' => $whatsappUrl,
-                    'image' => $service['hero_image'],
-                    'imageAlt' => 'Solução empresarial de ' . $service['title'],
-                ],
-            )
-            ->values()
-            ->all();
-        $heroSlides = array_merge(
-            [
-                [
-                    'eyebrow' => 'Portal Para Empresas',
-                    'title' => $portal['title'],
-                    'subtitle' => $portal['subtitle'],
-                    'primaryButtonText' => $portal['primary_cta'],
-                    'primaryButtonUrl' => $whatsappUrl,
-                    'secondaryButtonText' => $portal['secondary_cta'],
-                    'secondaryButtonUrl' => '#solutions',
-                    'image' => $portal['image'],
-                    'imageAlt' => 'Soluções de tecnologia para empresas',
-                ],
-            ],
-            $serviceHeroSlides,
-        );
-        $packageLevels = [
-            [
-                'title' => 'Essencial',
-                'positioning' => 'Para começar',
-                'description' =>
-                    'Ideal para empresas que precisam resolver um problema específico, como computador lento, Wi-Fi instável, backup inicial ou ajustes pontuais.',
-                'items' => ['Problema prioritário', 'Entrega objetiva', 'Orientações de uso'],
-                'featured' => false,
-            ],
-            [
-                'title' => 'Profissional',
-                'positioning' => 'Mais escolhido',
-                'description' =>
-                    'Inclui a solução essencial e acrescenta mais organização, segurança e orientação para evitar que o mesmo problema volte rapidamente.',
-                'items' => ['Tudo do Essencial', 'Melhorias estruturadas', 'Acompanhamento após a entrega'],
-                'featured' => true,
-            ],
-            [
-                'title' => 'Completo',
-                'positioning' => 'Solução completa',
-                'description' =>
-                    'Indicado para empresas que desejam acompanhamento, prevenção, documentação e uma TI mais preparada para crescer com segurança.',
-                'items' => ['Tudo do Profissional', 'Prevenção e documentação', 'Suporte ampliado'],
-                'featured' => false,
-            ],
+
+        $blockCtas = [
+            'desenvolvimento-de-software' => 'Ver soluções de software',
+            'infraestrutura-corporativa-gerenciada' => 'Ver infraestrutura gerenciada',
+            'servidores-e-ambientes-corporativos' => 'Ver servidores e ambientes',
         ];
-        $businessTypes = [
-            'Igrejas',
-            'Escolas',
-            'Escritórios',
-            'Consultórios',
-            'Lojas',
-            'Prestadores de serviço',
-            'Pequenas empresas',
-            'Instituições',
-        ];
-        $reasons = [
-            [
-                'title' => 'Atendimento claro e didático',
-                'description' =>
-                    'Você entende o que será feito, por que será feito e como usar melhor a solução depois da entrega.',
-            ],
-            [
-                'title' => 'Visão integrada de suporte, redes e sistemas',
-                'description' =>
-                    'A SophData une suporte técnico, infraestrutura, desenvolvimento e organização digital em uma visão prática.',
-            ],
-            [
-                'title' => 'Soluções sob medida',
-                'description' =>
-                    'Cada atendimento considera a realidade da empresa, o tamanho da equipe e o orçamento disponível.',
-            ],
-            [
-                'title' => 'Foco em prevenção e organização',
-                'description' =>
-                    'Além de corrigir problemas, o objetivo é reduzir riscos, retrabalho e falhas recorrentes.',
-            ],
-            [
-                'title' => 'Atendimento remoto e presencial sob consulta',
-                'description' =>
-                    'Muitos problemas podem ser resolvidos à distância; quando necessário, o atendimento presencial pode ser avaliado.',
-            ],
-            [
-                'title' => 'Explicação simples, sem linguagem confusa',
-                'description' => 'A tecnologia é apresentada de forma clara, sem excesso de termos técnicos.',
-            ],
-        ];
+
         $contractingOptions = [
             [
-                'title' => 'Serviço pontual',
-                'label' => 'Prata',
-                'description' => 'Para resolver uma necessidade específica da empresa com escopo definido.',
-                'items' => ['Correção de problema', 'Configuração', 'Implantação', 'Revisão', 'Melhoria específica'],
-                'cta' => 'Solicitar atendimento pontual',
-                'url' => sophdata_whatsapp_url('Olá, quero solicitar atendimento pontual para minha empresa.'),
-                'featured' => false,
+                'title' => 'Diagnóstico',
+                'description' => 'Para entender o cenário e recomendar o melhor caminho.',
             ],
             [
-                'title' => 'Contrato mensal',
-                'label' => 'Dourado',
-                'description' =>
-                    'Para empresas que precisam de acompanhamento recorrente, prevenção e evolução contínua.',
-                'items' => [
-                    'Suporte contínuo',
-                    'Prevenção',
-                    'Backup recorrente',
-                    'Manutenção',
-                    'Evolução de sites, sistemas e processos',
-                ],
-                'cta' => 'Solicitar proposta mensal',
-                'url' => sophdata_whatsapp_url('Olá, quero solicitar proposta mensal para minha empresa.'),
-                'featured' => true,
+                'title' => 'Projeto fechado',
+                'description' => 'Para entregas com escopo definido, prazo e critérios de aceite.',
+            ],
+            [
+                'title' => 'Implantação',
+                'description' => 'Para organizar servidores, redes, computadores, backup ou ambientes.',
+            ],
+            [
+                'title' => 'Administração mensal',
+                'description' => 'Para manter suporte, acompanhamento, documentação e melhorias contínuas.',
+            ],
+            [
+                'title' => 'Evolução',
+                'description' => 'Para sistemas, sites e ambientes que precisam crescer com a operação.',
+            ],
+        ];
+
+        $recommendedPaths = [
+            [
+                'title' => 'Presença Digital',
+                'description' => 'Para empresas que precisam de site, página comercial, landing page ou portal.',
+                'image' => 'img/sophdata/services/business/sites-e-sistemas.webp',
+                'image_alt' => 'Presença digital com site e portal empresarial',
+                'url' => '/para-empresas/desenvolvimento-de-software/sites-e-portais',
+            ],
+            [
+                'title' => 'Sistema Administrativo',
+                'description' => 'Para empresas que desejam sair das planilhas e organizar processos internos.',
+                'image' => 'img/sophdata/services/business/sites-e-sistemas-hero.webp',
+                'image_alt' => 'Sistema administrativo para organizar processos internos',
+                'url' => '/para-empresas/desenvolvimento-de-software/sistemas-sob-medida',
+            ],
+            [
+                'title' => 'Infraestrutura Gerenciada',
+                'description' => 'Para empresas que precisam organizar computadores, rede, Wi-Fi e suporte mensal.',
+                'image' => 'img/sophdata/services/business/suporte-de-ti-hero.webp',
+                'image_alt' => 'Infraestrutura gerenciada com suporte e rede corporativa',
+                'url' => '/para-empresas/infraestrutura-corporativa-gerenciada',
+            ],
+            [
+                'title' => 'Arquivos e Backup',
+                'description' => 'Para empresas que precisam centralizar documentos, controlar acessos e proteger dados.',
+                'image' => 'img/sophdata/services/business/seguranca-e-backup.webp',
+                'image_alt' => 'Arquivos e backup empresarial para proteger dados',
+                'url' => '/para-empresas/servidores-e-ambientes-corporativos',
+            ],
+            [
+                'title' => 'Diagnóstico Empresarial',
+                'description' => 'Para empresas que ainda não sabem qual solução contratar primeiro.',
+                'image' => $cta['image'],
+                'image_alt' => $cta['image_alt'] ?? 'Atendimento empresarial da SophData',
+                'url' => '/para-empresas/contato',
             ],
         ];
     @endphp
 
-    <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$portal['title']" :subtitle="$portal['subtitle']" :primary-button-text="$portal['primary_cta']"
-        :primary-button-url="$whatsappUrl" :secondary-button-text="$portal['secondary_cta']" secondary-button-url="#solutions" :image="$portal['image']"
-        image-alt="Soluções de tecnologia para empresas" :slides="$heroSlides" />
+    <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$hero['title']" :subtitle="$hero['subtitle']"
+        :primary-button-text="$hero['primary_cta']['label']" :primary-button-url="$heroPrimaryUrl"
+        :secondary-button-text="$hero['secondary_cta']['label']" :secondary-button-url="$hero['secondary_cta']['url']"
+        :image="$hero['image']" image-alt="Soluções de tecnologia para empresas" />
 
-    <section id="solutions" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24">
+    <section id="dores-empresariais" class="scroll-mt-48 bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="dores-empresariais-title">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Qual solução sua empresa precisa?" title="O que sua empresa precisa resolver?"
-                description="Escolha o problema mais próximo da sua realidade e veja a solução indicada para sua empresa."
-                centered />
-            <div class="sd_problems" data-sophdata-swiper data-swiper-type="cards">
-                <div class="swiper">
-                    <div class="swiper-wrapper mt-12">
-                    @foreach ($featuredProblems as $card)
-                        <x-site.category-card :title="$card['title']" :description="$card['description']" :image="$card['image']" :url="route('portal.business.category', $card['target_category_slug'])"
-                            :cta-label="$card['cta_label']" />
-                    @endforeach
-                    </div>
-                </div>
-                <div class="swiper-pagination" data-swiper-pagination></div>
-                <div class="swiper-button-next" data-swiper-next></div>
-                <div class="swiper-button-prev" data-swiper-prev></div>
-            </div>
+            <x-site.section-heading eyebrow="Dores empresariais" title="Sua empresa sente algum desses problemas?"
+                description="A tecnologia deve sustentar a operação, não ser mais uma fonte de improviso." centered title-id="dores-empresariais-title" />
+
+            <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ($businessPains as $pain)
+                    <li class="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-100 font-bold text-brand-700"
+                            aria-hidden="true">✓</span>
+                        <p class="font-semibold leading-7 text-brand-950">{{ $pain }}</p>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </section>
+
+    <section id="solucoes" class="scroll-mt-48 bg-brand-50 py-16 sm:py-20 lg:py-24" aria-labelledby="solucoes-title">
+        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+            <x-site.section-heading eyebrow="Catálogo empresarial"
+                title="Soluções empresariais organizadas por necessidade"
+                description="Escolha a frente que melhor representa o momento da sua empresa." centered title-id="solucoes-title" />
+
+            <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                @foreach ($mainBlocks as $block)
+                    <li>
+                        <x-site.category-card :title="$block['title']" :description="$blockDescriptions[$block['slug']] ?? $block['description']" :image="$block['image']"
+                            :url="$block['route']" :items="array_slice($block['pains'] ?? [], 0, 3)" :image-alt="$block['image_alt'] ?? null" :cta-label="$blockCtas[$block['slug']] ?? $block['cta']['label']" />
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </section>
+
+    <x-site.authority-section class="bg-white" :authority="$authority" />
 
     <section class="bg-brand-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Categorias empresariais" title="Soluções organizadas por área"
-                description="Serviços enxutos e objetivos para empresas que precisam de tecnologia funcionando sem complicação."
+            <x-site.section-heading eyebrow="Formas de contratação"
+                title="Contratação conforme a necessidade da empresa"
+                description="Nem todo cliente precisa começar por um projeto grande. A SophData organiza a solução em etapas, conforme o cenário e a prioridade."
                 centered />
-            <div class="sd_solutions" data-sophdata-swiper data-swiper-type="cards">
-                <div class="swiper">
-                    <div class="mt-12 swiper-wrapper">
-                    @foreach ($featuredCategories as $category)
-                        <x-site.category-card :title="$category['title']" :description="$category['short_description']" :image="$category['image']" :url="route('portal.business.category', $category['slug'])"
-                            :items="array_slice($category['benefits'], 0, 3)" cta-label="Conhecer serviço" />
-                    @endforeach
-                    </div>
-                </div>
-                <div class="swiper-pagination" data-swiper-pagination></div>
-                <div class="swiper-button-next" data-swiper-next></div>
-                <div class="swiper-button-prev" data-swiper-prev></div>
-            </div>
-        </div>
-    </section>
 
-    <x-site.authority-section class="bg-brand-50" />
-
-    <section class="bg-white py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Formas de contratação" title="Como sua empresa pode contratar"
-                description="Escolha entre resolver uma demanda específica ou manter acompanhamento recorrente conforme a rotina da empresa."
-                centered />
-            <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
-                @foreach ($contractingOptions as $option)
-                    <article @class([
-                        'relative flex h-full flex-col rounded-3xl bg-white p-7 shadow-sm sm:p-8',
-                        'border-2 border-gold shadow-brand-900/10' => $option['featured'],
-                        'border border-slate-300' => !$option['featured'],
-                    ])>
-                        <span @class([
-                            'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]',
-                            'bg-gold text-brand-950' => $option['featured'],
-                            'border border-slate-300 bg-slate-50 text-slate-700' => !$option[
-                                'featured'
-                            ],
-                        ])>
-                            {{ $option['label'] }}
-                        </span>
-                        <h2 class="mt-5 text-2xl font-bold text-brand-950">{{ $option['title'] }}</h2>
-                        <p class="mt-4 leading-7 text-slate-600">{{ $option['description'] }}</p>
-                        <ul class="mt-6 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-2">
-                            @foreach ($option['items'] as $item)
-                                <li class="flex gap-3">
-                                    <span @class([
-                                        'mt-0.5 grid size-5 shrink-0 place-items-center rounded-full text-xs font-bold',
-                                        'bg-gold text-brand-950' => $option['featured'],
-                                        'bg-slate-200 text-slate-700' => !$option['featured'],
-                                    ]) aria-hidden="true">✓</span>
-                                    {{ $item }}
-                                </li>
-                            @endforeach
-                        </ul>
-                        <a href="{{ $option['url'] }}" target="_blank" rel="noopener noreferrer"
-                            @class([
-                                'mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full px-6 py-3 text-center text-sm font-bold transition sm:w-fit',
-                                'bg-brand-600 text-white hover:bg-brand-700' => $option['featured'],
-                                'bg-action-500 text-white hover:bg-action-600' => !$option['featured'],
-                            ])>
-                            {{ $option['cta'] }}
-                        </a>
-                    </article>
-                @endforeach
-            </div>
+            <x-site.process-steps :steps="$contractingOptions" class="mt-12 lg:grid-cols-5" />
         </div>
     </section>
 
     <section class="bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Progressão comercial" title="Escolha o nível de atendimento ideal"
-                description="Comece resolvendo o problema principal, avance para uma solução mais organizada ou escolha acompanhamento completo."
+            <x-site.section-heading eyebrow="Método de trabalho" title="Como trabalhamos"
+                description="Tecnologia empresarial precisa de método. Primeiro entendemos, depois planejamos, implantamos e acompanhamos."
                 centered />
-            <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
-                @foreach ($packageLevels as $level)
-                    <x-site.portal-level-card :level="$level" />
-                @endforeach
-            </div>
+
+            <x-site.process-steps :steps="$methodSteps" class="mt-12 lg:grid-cols-5" />
         </div>
     </section>
 
     <section class="bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Perfis atendidos" title="Para quais negócios?"
-                description="Atendimento para rotinas reais de pequenos negócios, equipes e instituições." centered />
-            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ($businessTypes as $businessType)
-                    <article
-                        class="rounded-2xl border border-slate-200 bg-white p-5 text-center font-bold text-brand-950 shadow-sm">
-                        {{ $businessType }}
-                    </article>
+            <x-site.section-heading eyebrow="Caminhos recomendados" title="Caminhos recomendados para começar"
+                description="A escolha depende do momento da empresa: presença digital, organização interna, infraestrutura ou ambiente corporativo."
+                centered />
+
+            <ul class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
+                @foreach ($recommendedPaths as $path)
+                    <li>
+                        <x-site.category-card :title="$path['title']" :description="$path['description']" :image="$path['image']" :url="$path['url']"
+                            :image-alt="$path['image_alt'] ?? null" cta-label="Ver caminho" />
+                    </li>
                 @endforeach
-            </div>
+            </ul>
         </div>
     </section>
 
-    <section class="bg-white py-16 sm:py-20 lg:py-24">
-        <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Diferenciais" title="Por que contratar a SophData?"
-                description="Correção de problemas, organização da rotina e orientação em linguagem simples." centered />
-            <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                @foreach ($reasons as $reason)
-                    <article class="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                        <span
-                            class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-100 font-bold text-brand-700"
-                            aria-hidden="true">✓</span>
-                        <div>
-                            <h3 class="font-bold leading-7 text-brand-950">{{ $reason['title'] }}</h3>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ $reason['description'] }}</p>
-                        </div>
-                    </article>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <x-site.cta-section title="Sua empresa precisa de uma TI mais organizada?"
-        description="Inicie o atendimento e receba orientação para escolher a solução mais adequada para sua empresa."
-        button-text="Solicitar atendimento empresarial" :button-url="$whatsappUrl" :image="config('sophdata.images.banner')"
-        image-alt="Atendimento empresarial da SophData" />
+    <x-site.cta-section :title="$cta['title']" :description="$cta['description']" :button-text="$cta['primary_label']"
+        :button-url="$finalCtaUrl" :image="$cta['image']" :image-alt="$cta['image_alt'] ?? 'Atendimento empresarial da SophData'" />
 @endsection

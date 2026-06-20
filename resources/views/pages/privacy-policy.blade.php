@@ -5,7 +5,8 @@
 
 @section('content')
     @php
-        $whatsappUrl = sophdata_whatsapp_url('Olá, quero atendimento sobre privacidade e dados pessoais.');
+        $whatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.neutral')) ?: route('portal.choose');
+        $isWhatsappExternal = str_starts_with($whatsappUrl, 'https://wa.me/');
         $sections = [
             [
                 'title' => 'Visão geral',
@@ -76,7 +77,7 @@
             <article class="mt-10 rounded-3xl bg-brand-950 p-7 text-white sm:p-8">
                 <h2 class="text-2xl font-bold">Precisa iniciar um atendimento?</h2>
                 <p class="mt-3 leading-7 text-brand-100/80">Entre em contato e informe sua necessidade de forma simples e objetiva.</p>
-                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex min-h-12 items-center rounded-full bg-action-500 px-6 py-3 text-sm font-bold text-white hover:bg-action-600">
+                <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif class="mt-6 inline-flex min-h-12 items-center rounded-full bg-action-500 px-6 py-3 text-sm font-bold text-white hover:bg-action-600">
                     Iniciar atendimento
                 </a>
             </article>

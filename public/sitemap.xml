@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Domínio provisório: altere as URLs abaixo quando o domínio oficial mudar. -->
+<!-- Sitemap estatico alinhado ao APP_URL provisorio. Publique/divulgue somente quando SOPHDATA_INDEXABLE=true. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://sophdata.com.br/</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/suporte-de-ti</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/redes-e-wifi</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/seguranca-e-backup</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/sites-e-sistemas</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/automacao-e-dados</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-empresas/computadores-corporativos</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce/computador-lento</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce/wifi-e-casa-conectada</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce/backup-e-seguranca</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce/estudos-carreira-e-ia</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/para-voce/montagem-e-upgrade-de-pc</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/sobre</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/contato</loc>
-    </url>
-    <url>
-        <loc>https://sophdata.com.br/politica-de-privacidade</loc>
-    </url>
+    <url><loc>https://sophdata.escolagenebra.com.br/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/diagnostico-e-discovery</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/sites-e-portais</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/lojas-e-catalogos-digitais</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/sistemas-sob-medida</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/sistemas-por-segmento</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/portais-area-logada-pwa</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/automacoes-e-integracoes</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/deploy-hospedagem</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/desenvolvimento-de-software/sustentacao-e-evolucao</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada/hardware-corporativo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada/redes-corporativas</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada/wifi-corporativo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos/servidor-de-arquivos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos/active-directory</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos/backup-empresarial</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos/vpn-e-trabalho-remoto</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/servidores-e-ambientes-corporativos/virtualizacao</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/planos</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/como-trabalhamos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-empresas/contato</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/computador-lento</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/wifi-e-casa-conectada</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/backup-e-seguranca</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/estudos-carreira-e-ia</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/montagem-e-upgrade-de-pc</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/para-voce/contato</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+    <url><loc>https://sophdata.escolagenebra.com.br/sobre</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+    <url><loc>https://sophdata.escolagenebra.com.br/politica-de-privacidade</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

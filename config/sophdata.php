@@ -11,12 +11,37 @@ return [
         'region' => 'Rio de Janeiro / Atendimento Remoto',
     ],
 
+    'contact' => [
+        'whatsapp_number' => env('SOPHDATA_WHATSAPP_NUMBER', env('SOPHDATA_WHATSAPP', '5521972765535')),
+        'whatsapp_url' => env('SOPHDATA_WHATSAPP_URL'),
+    ],
+
+    'whatsapp_messages' => [
+        'neutral' => 'Olá! Quero iniciar atendimento com a SophData.',
+        'business' => 'Olá! Quero atendimento empresarial com a SophData.',
+        'business_diagnosis' => 'Olá! Quero solicitar um diagnóstico empresarial com a SophData.',
+        'business_software' => 'Olá! Quero falar sobre desenvolvimento de software para minha empresa.',
+        'business_infrastructure' => 'Olá! Quero avaliar a infraestrutura de TI da minha empresa.',
+        'business_servers' => 'Olá! Quero avaliar servidores, backup ou ambiente corporativo para minha empresa.',
+        'personal' => 'Olá! Quero atendimento técnico para pessoa física com a SophData.',
+        'personal_computer' => 'Olá! Meu computador ou notebook está lento e quero atendimento da SophData.',
+        'personal_wifi' => 'Olá! Quero ajuda com internet, Wi-Fi ou roteador em casa.',
+        'personal_backup' => 'Olá! Quero orientação sobre backup e organização de arquivos pessoais.',
+    ],
+
     'links' => [
         ['label' => 'Para Empresas', 'route' => 'portal.business'],
         ['label' => 'Para Você', 'route' => 'portal.personal'],
         ['label' => 'Escolher perfil', 'route' => 'portal.choose'],
         ['label' => 'Sobre', 'route' => 'site.about'],
-        ['label' => 'Contato', 'route' => 'site.contact'],
+    ],
+
+    'seo' => [
+        'indexable' => (bool) env('SOPHDATA_INDEXABLE', false),
+        'site_url' => env('APP_URL', 'http://localhost'),
+        'default_title' => 'SophData',
+        'default_description' => 'Soluções de tecnologia para empresas e pessoas.',
+        'default_og_image' => 'img/sophdata/portals/business-hero.webp',
     ],
 
     'differentials' => [

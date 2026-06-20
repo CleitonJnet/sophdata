@@ -5,11 +5,10 @@
 
 @section('content')
     @php
-        $whatsappMessage =
-            'Olá! Quero iniciar atendimento com a SophData. Meu atendimento é para: [pessoa física/empresa]. Preciso resolver: [descreva]. Urgência: [sim/não]. Pode ser remoto: [sim/não]. Pacote de interesse: [se houver].';
-        $whatsappUrl = sophdata_whatsapp_url($whatsappMessage);
-        $businessWhatsappUrl = sophdata_whatsapp_url('Olá, quero solicitar atendimento empresarial com a SophData.');
-        $personalWhatsappUrl = sophdata_whatsapp_url('Olá, quero atendimento para uma necessidade pessoal.');
+        $whatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.neutral')) ?: route('portal.choose');
+        $businessWhatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.business')) ?: route('business.contact');
+        $personalWhatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.personal')) ?: route('personal.contact');
+        $isWhatsappExternal = str_starts_with($whatsappUrl, 'https://wa.me/');
         $questions = [
             'O atendimento é para pessoa física ou empresa?',
             'Qual problema deseja resolver?',
@@ -31,7 +30,7 @@
                 <h2 class="text-2xl font-bold text-brand-950">Atendimento</h2>
                 <p class="mt-3 leading-7 text-slate-600">Canal principal para explicar sua necessidade e solicitar
                     orientação.</p>
-                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
+                <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif
                     class="mt-7 inline-flex min-h-12 items-center rounded-full bg-action-500 px-5 py-3 text-sm font-bold text-white hover:bg-action-600">
                     Iniciar atendimento
                 </a>
@@ -82,7 +81,7 @@
                         </article>
                     @endforeach
                 </div>
-                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
+                <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif
                     class="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-action-500 px-6 py-3 text-center text-sm font-bold text-white hover:bg-action-600">
                     Solicitar atendimento
                 </a>

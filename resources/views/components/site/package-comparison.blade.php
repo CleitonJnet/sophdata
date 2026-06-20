@@ -1,12 +1,13 @@
 @props([
-    'packages',
+    'packages' => [],
 ])
 
 @php
+    $packages = collect($packages)->filter(fn ($package): bool => is_array($package))->values()->all();
     $comparisonRows = [
         [
             'label' => 'Indicado para',
-            'values' => array_column($packages, 'best_for'),
+            'values' => array_map(fn (array $package): string => $package['best_for'] ?? '', $packages),
         ],
         [
             'label' => 'Nível de atendimento',
@@ -35,6 +36,7 @@
     ];
 @endphp
 
+@if (filled($packages))
 <div {{ $attributes->class(['overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm']) }}>
     <table class="w-full min-w-[760px] border-collapse text-left">
         <caption class="sr-only">Comparação entre os pacotes Essencial, Profissional e Completo</caption>
@@ -44,10 +46,10 @@
                 @foreach ($packages as $package)
                     <th scope="col" @class([
                         'px-5 py-4 text-sm font-bold',
-                        'bg-brand-700' => $package['featured'],
+                        'bg-brand-700' => (bool) ($package['featured'] ?? false),
                     ])>
-                        {{ $package['level_label'] }}
-                        @if ($package['featured'])
+                        {{ $package['level_label'] ?? $package['name'] ?? $package['title'] ?? 'Pacote' }}
+                        @if ($package['featured'] ?? false)
                             <span class="mt-1 block text-xs font-semibold text-brand-100">Mais escolhido</span>
                         @endif
                     </th>
@@ -66,3 +68,4 @@
         </tbody>
     </table>
 </div>
+@endif

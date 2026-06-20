@@ -3,35 +3,53 @@
 
 <head>
     @php
-        $seoTitle = trim($__env->yieldContent('title', config('sophdata.brand.name')));
-        $seoDescription = trim(
-            $__env->yieldContent('meta_description', 'Soluções de tecnologia para pessoas e empresas.'),
-        );
+        $seo = is_array($seo ?? null) ? $seo : [];
+        $indexable = (bool) config('sophdata.seo.indexable', false);
+        $seoTitle = trim($seo['title'] ?? $__env->yieldContent('title', config('sophdata.seo.default_title', config('sophdata.brand.name'))));
+        $seoDescription = trim($seo['description'] ?? $__env->yieldContent('meta_description', config('sophdata.seo.default_description', 'Soluções de tecnologia para pessoas e empresas.')));
+        $seoCanonical = $seo['canonical'] ?? null;
+        $seoCanonicalUrl = $seoCanonical
+            ? (str_starts_with($seoCanonical, 'http://') || str_starts_with($seoCanonical, 'https://')
+                ? $seoCanonical
+                : url($seoCanonical))
+            : url()->current();
+        $seoOgTitle = $seo['og_title'] ?? $seoTitle;
+        $seoOgDescription = $seo['og_description'] ?? $seoDescription;
+        $seoRobots = $indexable ? ($seo['robots'] ?? 'index, follow') : 'noindex, nofollow';
         $logoPath = config('sophdata.logos.symbol', 'favicon.svg');
         $logoUrl = asset($logoPath);
+        $ogImagePath = $seo['og_image'] ?? config('sophdata.seo.default_og_image');
+        if ($ogImagePath && ! str_starts_with($ogImagePath, 'http://') && ! str_starts_with($ogImagePath, 'https://') && ! file_exists(public_path(ltrim($ogImagePath, '/')))) {
+            $ogImagePath = config('sophdata.seo.default_og_image', 'img/sophdata/portals/business-hero.webp');
+        }
+        $ogImageUrl = $ogImagePath
+            ? (str_starts_with($ogImagePath, 'http://') || str_starts_with($ogImagePath, 'https://')
+                ? $ogImagePath
+                : asset($ogImagePath))
+            : $logoUrl;
     @endphp
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{ $seoDescription }}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ $seoRobots }}">
 
     <title>{{ $seoTitle }}</title>
-    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="canonical" href="{{ $seoCanonicalUrl }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $seoTitle }}">
-    <meta property="og:image" content="{{ $logoUrl }}">
-    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonicalUrl }}">
+    <meta property="og:title" content="{{ $seoOgTitle }}">
+    <meta property="og:image" content="{{ $ogImageUrl }}">
+    <meta property="og:description" content="{{ $seoOgDescription }}">
     <meta property="og:site_name" content="{{ config('sophdata.brand.name') }}">
     <meta property="og:locale" content="pt_BR">
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ $seoTitle }}">
-    <meta name="twitter:description" content="{{ $seoDescription }}">
-    <meta name="twitter:image" content="{{ $logoUrl }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoOgTitle }}">
+    <meta name="twitter:description" content="{{ $seoOgDescription }}">
+    <meta name="twitter:image" content="{{ $ogImageUrl }}">
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="mask-icon" href="{{ asset('favicon.svg') }}" color="#0B1F4D">

@@ -3,7 +3,7 @@
 ])
 
 @php
-    $isBusinessPortal = request()->routeIs('portal.business*');
+    $isBusinessPortal = request()->routeIs('portal.business*') || request()->routeIs('business.*');
     $isPersonalPortal = request()->routeIs('portal.personal*');
     $detectedPortalContext = $isBusinessPortal ? 'business' : ($isPersonalPortal ? 'personal' : 'neutral');
     $portalContext = in_array($portalContext, ['business', 'personal', 'neutral'], true)
@@ -13,19 +13,61 @@
     $hasPortalContext = $activePortalKey !== null;
     $logoPortalKey = $activePortalKey ?? 'business';
     $portal = $hasPortalContext ? config("sophdata_portals.{$activePortalKey}") : null;
-    $categories = $hasPortalContext ? config("sophdata_services.{$activePortalKey}", []) : [];
-    $categories =
-        $activePortalKey === 'business'
-            ? collect($categories)
-                ->sortBy(fn(array $category) => $category['slug'] === 'sites-e-sistemas' ? 0 : 1)
-                ->values()
-                ->all()
-            : $categories;
+    $categories = [];
+
+    if ($activePortalKey === 'business') {
+        $businessMenuDescriptions = [
+            'desenvolvimento-de-software' => 'Sites, sistemas, automações e soluções digitais.',
+            'infraestrutura-corporativa-gerenciada' => 'Computadores, rede, Wi-Fi e suporte mensal.',
+            'servidores-e-ambientes-corporativos' => 'Arquivos, permissões, backup e ambientes corporativos.',
+            'planos' => 'Planos e pacotes empresariais.',
+            'como-trabalhamos' => 'Método de diagnóstico, proposta e implantação.',
+            'contato' => 'Solicite atendimento empresarial.',
+        ];
+
+        $categories = collect(config('sophdata_empresa_menu', []))
+            ->filter(fn($item): bool => is_array($item))
+            ->map(fn(array $item): array => [
+                'slug' => $item['slug'],
+                'title' => $item['label'],
+                'menu_title' => $item['label'],
+                'menu_description' => $businessMenuDescriptions[$item['slug']] ?? $item['label'],
+                'route' => $item['route'],
+            ])
+            ->values()
+            ->all();
+    } elseif ($activePortalKey === 'personal') {
+        $categories = [
+            ...config('sophdata_services.personal', []),
+            [
+                'slug' => 'contato',
+                'title' => 'Contato',
+                'menu_title' => 'Contato',
+                'menu_description' => 'Inicie atendimento para tecnologia pessoal.',
+                'route' => '/para-voce/contato',
+                'menu_image' => config('sophdata.images.banner'),
+                'mobile_image' => config('sophdata.images.banner'),
+                'image_alt' => 'Contato para atendimento pessoal SophData',
+            ],
+        ];
+    }
+
     $categoryRoute = $hasPortalContext ? "portal.{$activePortalKey}.category" : null;
     $activeCategorySlug = request()->route('category');
+    $currentPath = '/'.trim(request()->path(), '/');
     $isAboutPage = request()->routeIs('site.about');
-    $isContactPage = request()->routeIs('site.contact');
-    $whatsappUrl = sophdata_whatsapp_url('Olá, quero iniciar um atendimento com a SophData.');
+    $whatsappMessage = match ($activePortalKey) {
+        'business' => config('sophdata.whatsapp_messages.business'),
+        'personal' => config('sophdata.whatsapp_messages.personal'),
+        default => config('sophdata.whatsapp_messages.neutral'),
+    };
+    $whatsappFallbackUrl = match ($activePortalKey) {
+        'business' => route('business.contact'),
+        'personal' => route('personal.contact'),
+        default => route('portal.choose'),
+    };
+    $whatsappUrl = sophdata_whatsapp_url($whatsappMessage) ?: $whatsappFallbackUrl;
+    $isWhatsappExternal = str_starts_with($whatsappUrl, 'https://wa.me/');
     $serviceIcons = [
         'suporte-de-ti' => [
             'M9.75 17 9 21h6l-.75-4',
@@ -53,6 +95,36 @@
             'M4 5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75v8.5A2.75 2.75 0 0 1 17.25 17H6.75A2.75 2.75 0 0 1 4 14.25v-8.5Z',
             'M9 21h6',
             'M12 17v4',
+        ],
+        'desenvolvimento-de-software' => [
+            'M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25V6.75Z',
+            'M4.5 8h15',
+            'm10 12-2 2 2 2',
+            'm14 12 2 2-2 2',
+        ],
+        'infraestrutura-corporativa-gerenciada' => [
+            'M9.75 17 9 21h6l-.75-4',
+            'M4 5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75v7.5A2.75 2.75 0 0 1 17.25 16H6.75A2.75 2.75 0 0 1 4 13.25v-7.5Z',
+        ],
+        'servidores-e-ambientes-corporativos' => [
+            'M12 21s7-3.5 7-10V5.8L12 3 5 5.8V11c0 6.5 7 10 7 10Z',
+            'M9.5 12.3 11.2 14l3.5-4',
+        ],
+        'planos' => [
+            'M5 4h14v16H5z',
+            'M8 8h8',
+            'M8 12h8',
+            'M8 16h5',
+        ],
+        'como-trabalhamos' => [
+            'M4 7h4v4H4z',
+            'M10 9h10',
+            'M4 15h4v4H4z',
+            'M10 17h10',
+        ],
+        'contato' => [
+            'M4 6h16v12H4z',
+            'm4 7 4 4 4-4',
         ],
         'computador-lento' => [
             'M4 5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75v7.5A2.75 2.75 0 0 1 17.25 16H6.75A2.75 2.75 0 0 1 4 13.25v-7.5Z',
@@ -89,10 +161,12 @@
         <div class="hidden bg-brand-950 text-white lg:block">
             <div class="mx-auto flex min-h-10 max-w-8xl items-center justify-between gap-6 px-8 text-xs">
                 <p class="font-semibold text-brand-100">Soluções em TI para pessoas e empresas</p>
-                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
-                    class="rounded-md font-bold text-gold-light hover:text-white">
-                    Iniciar atendimento
-                </a>
+                @if ($whatsappUrl)
+                    <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif
+                        class="rounded-md font-bold text-gold-light hover:text-white">
+                        Iniciar atendimento
+                    </a>
+                @endif
             </div>
         </div>
 
@@ -110,12 +184,7 @@
                         'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
                         'bg-brand-50 text-brand-900' => $isAboutPage,
                     ])>Sobre</a>
-                <a href="{{ route('site.contact') }}" @if ($isContactPage) aria-current="page" @endif
-                    @class([
-                        'rounded-xl px-3 py-2.5 hover:bg-brand-50 hover:text-brand-800',
-                        'bg-brand-50 text-brand-900' => $isContactPage,
-                    ])>Contato</a>
-                <x-whatsapp-link>Iniciar atendimento</x-whatsapp-link>
+                <x-whatsapp-link :message="$whatsappMessage" :fallback-url="$whatsappFallbackUrl">Iniciar atendimento</x-whatsapp-link>
             </nav>
 
             <button type="button"
@@ -139,10 +208,15 @@
                 aria-label="Serviços principais do portal ativo">
                 @foreach ($categories as $category)
                     @php
-                        $isActiveCategory = $activeCategorySlug === $category['slug'];
+                        $categoryUrl = $activePortalKey === 'business'
+                            ? $category['route']
+                            : ($category['route'] ?? route($categoryRoute, $category['slug']));
+                        $isActiveCategory = $activePortalKey === 'business'
+                            ? ($currentPath === $categoryUrl || str_starts_with($currentPath, $categoryUrl.'/'))
+                            : (($currentPath === $categoryUrl || str_starts_with($currentPath, $categoryUrl.'/')) || $activeCategorySlug === $category['slug']);
                         $iconPaths = $serviceIcons[$category['slug']] ?? ['M4 12h16', 'M12 4v16'];
                     @endphp
-                    <a href="{{ route($categoryRoute, $category['slug']) }}"
+                    <a href="{{ $categoryUrl }}"
                         @if ($isActiveCategory) aria-current="page" @endif @class([
                             'group relative inline-flex h-full shrink-0 items-center gap-2.5 px-3 text-sm transition after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:rounded-full after:transition',
                             'bg-white font-bold text-brand-950 after:scale-x-100 after:bg-brand-800' => $isActiveCategory,
@@ -178,7 +252,7 @@
         </section>
 
         @if ($hasPortalContext)
-            <section class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"
+            <nav class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"
                 aria-labelledby="mobile-services-heading">
                 <div class="mb-3 flex items-center justify-between gap-4">
                     <h2 id="mobile-services-heading"
@@ -188,12 +262,36 @@
                     <a href="{{ route($portal['route']) }}"
                         class="text-xs font-bold text-brand-700 underline underline-offset-4">Ver todas</a>
                 </div>
-                <div class="grid gap-3">
+                <ul class="grid gap-3">
                     @foreach ($categories as $category)
-                        <x-site.service-menu-card :category="$category" :route-name="$categoryRoute" mobile />
+                        <li>
+                        @if ($activePortalKey === 'business')
+                            @php
+                                $categoryUrl = $category['route'];
+                                $isActiveCategory = $currentPath === $categoryUrl || str_starts_with($currentPath, $categoryUrl.'/');
+                            @endphp
+                            <a href="{{ $categoryUrl }}"
+                                @if ($isActiveCategory) aria-current="page" @endif @class([
+                                    'group rounded-2xl transition focus-visible:outline-none flex min-h-16 items-center justify-between border bg-white px-4 py-3 font-semibold shadow-sm hover:border-brand-300 hover:bg-brand-50',
+                                    'border-gold text-brand-900 ring-2 ring-gold/20' => $isActiveCategory,
+                                    'border-slate-200 text-slate-700' => !$isActiveCategory,
+                                ])>
+                                <span>
+                                    <strong class="block text-sm text-brand-950">{{ $category['menu_title'] }}</strong>
+                                    <span class="mt-1 line-clamp-2 block text-xs leading-5 text-slate-500">{{ $category['menu_description'] }}</span>
+                                    @if ($isActiveCategory)
+                                        <span class="mt-1 block text-xs font-bold text-brand-700">Item ativo</span>
+                                    @endif
+                                </span>
+                                <span class="text-brand-700" aria-hidden="true">→</span>
+                            </a>
+                        @else
+                            <x-site.service-menu-card :category="$category" :route-name="isset($category['route']) ? null : $categoryRoute" mobile />
+                        @endif
+                        </li>
                     @endforeach
-                </div>
-            </section>
+                </ul>
+            </nav>
         @endif
 
         <nav class="grid gap-3 rounded-3xl border border-brand-100 bg-brand-50 p-4 shadow-sm"
@@ -204,17 +302,13 @@
                     'border-gold text-brand-900 ring-2 ring-gold/20' => $isAboutPage,
                     'border-slate-200' => !$isAboutPage,
                 ])>Sobre</a>
-            <a href="{{ route('site.contact') }}" @if ($isContactPage) aria-current="page" @endif
-                @class([
-                    'flex min-h-16 items-center justify-between rounded-2xl border bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 hover:text-brand-900',
-                    'border-gold text-brand-900 ring-2 ring-gold/20' => $isContactPage,
-                    'border-slate-200' => !$isContactPage,
-                ])>Contato</a>
         </nav>
 
-        <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
-            class="inline-flex min-h-16 items-center justify-center rounded-3xl bg-action-500 px-6 py-4 text-center text-sm font-bold text-white shadow-lg shadow-action-500/20 hover:bg-action-600">
-            Iniciar atendimento
-        </a>
+        @if ($whatsappUrl)
+            <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif
+                class="inline-flex min-h-16 items-center justify-center rounded-3xl bg-action-500 px-6 py-4 text-center text-sm font-bold text-white shadow-lg shadow-action-500/20 hover:bg-action-600">
+                Iniciar atendimento
+            </a>
+        @endif
     </div>
 </div>

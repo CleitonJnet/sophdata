@@ -1,7 +1,17 @@
+@props([
+    'message' => null,
+])
+
 @php
-    $whatsappUrl = sophdata_whatsapp_url('Olá, gostaria de conhecer as soluções da SophData.');
+    $message = $message ?? match (true) {
+        request()->is('para-empresas*') => config('sophdata.whatsapp_messages.business'),
+        request()->is('para-voce*') => config('sophdata.whatsapp_messages.personal'),
+        default => config('sophdata.whatsapp_messages.neutral'),
+    };
+    $whatsappUrl = sophdata_whatsapp_url($message);
 @endphp
 
+@if ($whatsappUrl)
 <a
     href="{{ $whatsappUrl }}"
     target="_blank"
@@ -14,3 +24,4 @@
         <path d="M9 8.5c.4 2.5 2 4.1 4.5 4.8l1-1c.2-.2.5-.2.7-.1l2 .9"/>
     </svg>
 </a>
+@endif

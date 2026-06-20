@@ -8,7 +8,7 @@
 @section('content')
     @php
         /** @var array $portal */
-        $whatsappUrl = sophdata_whatsapp_url('Olá, quero atendimento para uma necessidade pessoal.');
+        $whatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.personal')) ?: route('personal.contact');
         $problemOrder = [
             'Meu computador está lento',
             'Meu Wi-Fi está ruim',
@@ -57,7 +57,7 @@
                 'description' => 'Para resolver um problema específico sem transformar o atendimento em plano.',
                 'examples' => ['Computador lento', 'Wi-Fi ruim', 'Erro de programa', 'Impressora'],
                 'cta' => 'Quero resolver este problema',
-                'url' => sophdata_whatsapp_url('Olá, quero resolver um problema pontual de tecnologia.'),
+                'url' => sophdata_whatsapp_url(config('sophdata.whatsapp_messages.personal')) ?: route('personal.contact'),
                 'highlight' => false,
             ],
             [
@@ -66,7 +66,7 @@
                 'description' => 'Para revisar, organizar e deixar o ambiente digital mais estável.',
                 'examples' => ['Arquivos', 'Backup', 'Contas', 'Configurações e orientações'],
                 'cta' => 'Escolher este atendimento',
-                'url' => sophdata_whatsapp_url('Olá, quero uma organização completa do meu ambiente digital.'),
+                'url' => sophdata_whatsapp_url(config('sophdata.whatsapp_messages.personal')) ?: route('personal.contact'),
                 'highlight' => true,
             ],
             [
@@ -75,7 +75,7 @@
                 'description' => 'Para quem deseja aprender, receber orientação ou fazer uma revisão depois do atendimento.',
                 'examples' => ['Estudos', 'Carreira', 'IA', 'Segurança ou uso do computador'],
                 'cta' => 'Solicitar orientação',
-                'url' => sophdata_whatsapp_url('Olá, quero orientação complementar de tecnologia.'),
+                'url' => sophdata_whatsapp_url(config('sophdata.whatsapp_messages.personal')) ?: route('personal.contact'),
                 'highlight' => false,
             ],
         ];

@@ -30,7 +30,7 @@ Site institucional da SophData, organizado como MVP comercial com dois portais p
 - `/para-voce/{category}`
 - `/escolher-perfil`
 - `/sobre`
-- `/contato`
+- `/contato` redireciona para o atendimento via WhatsApp quando configurado; sem WhatsApp, cai em `/para-empresas/contato`.
 - `/politica-de-privacidade`
 
 ## Onde Editar Conteúdos
@@ -49,6 +49,19 @@ php artisan key:generate
 npm run dev
 php artisan serve
 ```
+
+## Configuração de ambiente
+
+1. Copie `.env.example` para `.env`.
+2. Gere a chave da aplicação com `php artisan key:generate`.
+3. Ajuste `APP_URL`, banco de dados e contatos conforme o ambiente.
+4. Em ambiente público, use `APP_DEBUG=false`.
+5. Mantenha `SOPHDATA_INDEXABLE=false` em homologação ou domínio provisório; altere para `true` somente quando o domínio de produção estiver definido.
+6. Use `APP_LOCALE=pt_BR`.
+
+## Atendimento via WhatsApp
+
+Os CTAs de atendimento usam `SOPHDATA_WHATSAPP_NUMBER` ou `SOPHDATA_WHATSAPP_URL`. As mensagens base ficam centralizadas em `config/sophdata.php`, separadas por contexto: neutro, Empresarial e Para Você. Não há formulário funcional nesta fase.
 
 ## Como Gerar Build
 

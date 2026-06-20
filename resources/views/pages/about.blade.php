@@ -6,7 +6,8 @@
 
 @section('content')
     @php
-        $whatsappUrl = sophdata_whatsapp_url('Olá, quero iniciar atendimento com a SophData.');
+        $whatsappUrl = sophdata_whatsapp_url(config('sophdata.whatsapp_messages.neutral')) ?: route('portal.choose');
+        $isWhatsappExternal = str_starts_with($whatsappUrl, 'https://wa.me/');
         $steps = [
             [
                 'title' => 'Entendemos o problema',
@@ -48,7 +49,7 @@
                 <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
                     Tecnologia com clareza, organização e confiança para pessoas, pequenos negócios e instituições.
                 </p>
-                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
+                <a href="{{ $whatsappUrl }}" @if ($isWhatsappExternal) target="_blank" rel="noopener noreferrer" @endif
                     class="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-action-500 px-6 py-3 text-sm font-bold text-white hover:bg-action-600">
                     Iniciar atendimento
                 </a>

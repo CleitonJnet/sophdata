@@ -97,16 +97,8 @@ test('service catalog separates portals and provides complete category structure
                 'Essencial', 'Profissional', 'Completo',
             ])->and(array_column($category['packages'], 'featured'))->toBe([
                 false, true, false,
-            ])->and(array_slice(
-                $category['packages'][1]['included_items'],
-                0,
-                count($category['packages'][0]['included_items']),
-            ))->toBe($category['packages'][0]['included_items'])
-                ->and(array_slice(
-                    $category['packages'][2]['included_items'],
-                    0,
-                    count($category['packages'][1]['included_items']),
-                ))->toBe($category['packages'][1]['included_items']);
+            ])->and($category['packages'][1]['included_items'][0])->toMatch('/^Tudo d[aeiou] /')
+                ->and($category['packages'][2]['included_items'][0])->toMatch('/^Tudo d[aeiou] /');
         }
     }
 });
@@ -134,7 +126,7 @@ test('problem catalog includes the requested customer situations', function () {
         'Sua empresa não tem backup?',
         'Precisa de site ou sistema?',
         'Usa planilhas demais?',
-        'Precisa renovar os computadores?',
+        'Internet ou Wi-Fi instável?',
     )->and($personalTitles)->toContain(
         'Meu computador está lento',
         'Meu Wi-Fi está ruim',

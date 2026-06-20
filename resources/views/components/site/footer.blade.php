@@ -26,9 +26,9 @@
 
     $primaryLinks = [
         [
-            'label' => 'Sites e sistemas',
-            'description' => 'Presença digital e sistemas sob medida para organizar serviços, dados e processos.',
-            'href' => route('portal.business.category', 'sites-e-sistemas'),
+            'label' => 'Desenvolvimento de Software',
+            'description' => 'Sites, sistemas, automações e soluções digitais para organizar serviços, dados e processos.',
+            'href' => route('business.software.index'),
             'icon' => 'code',
             'tone' => 'brand',
             'image' => 'img/sophdata/services/business/sites-e-sistemas.webp',
@@ -50,9 +50,9 @@
             'image' => 'img/sophdata/portals/personal-hero.webp',
         ],
         [
-            'label' => 'Segurança e backup',
-            'description' => 'Proteção de arquivos, acessos e rotinas para reduzir riscos e retrabalho.',
-            'href' => route('portal.business.category', 'seguranca-e-backup'),
+            'label' => 'Servidores e Ambientes',
+            'description' => 'Arquivos, permissões, backup e ambientes corporativos para reduzir riscos e retrabalho.',
+            'href' => route('business.servers.index'),
             'icon' => 'shield',
             'tone' => 'gold',
             'image' => 'img/sophdata/services/business/seguranca-e-backup.webp',
