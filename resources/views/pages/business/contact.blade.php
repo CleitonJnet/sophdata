@@ -1,15 +1,19 @@
 @extends('layouts.site')
 
-@section('title', ($page['title'] ?? 'Contato Empresarial') . ' | SophData')
+@section('title', ($page['title'] ?? 'Solicitar atendimento empresarial') . ' | SophData')
 @section('meta_description', $page['description'] ?? 'Contato empresarial SophData.')
 
 @section('content')
     @php
         $primaryCta = $page['primary_cta'] ?? [];
         $secondaryCta = $page['secondary_cta'] ?? [];
+        $finalCta = $page['final_cta'] ?? [];
         $primaryUrl = filled($primaryCta['whatsapp_message'] ?? null)
             ? (sophdata_whatsapp_url($primaryCta['whatsapp_message']) ?: ($primaryCta['url'] ?? '/para-empresas/contato'))
             : ($primaryCta['url'] ?? '/para-empresas/contato');
+        $finalCtaUrl = filled($finalCta['whatsapp_message'] ?? null)
+            ? (sophdata_whatsapp_url($finalCta['whatsapp_message']) ?: ($finalCta['url'] ?? $primaryUrl))
+            : ($finalCta['url'] ?? $primaryUrl);
         $heroSubtitle = trim(implode(' ', array_filter([
             $page['subtitle'] ?? null,
             $page['description'] ?? null,
@@ -19,10 +23,10 @@
             ->values();
     @endphp
 
-    <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$page['title'] ?? 'Contato Empresarial'" :subtitle="$heroSubtitle"
-        :primary-button-text="$primaryCta['label'] ?? 'Chamar no WhatsApp'" :primary-button-url="$primaryUrl"
+    <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$page['title'] ?? 'Solicitar atendimento empresarial'" :subtitle="$heroSubtitle"
+        :primary-button-text="$primaryCta['label'] ?? 'Iniciar atendimento empresarial'" :primary-button-url="$primaryUrl"
         :secondary-button-text="$secondaryCta['label'] ?? 'Ver planos empresariais'" :secondary-button-url="$secondaryCta['url'] ?? '/para-empresas/planos'"
-        :image="$page['image'] ?? 'img/sophdata/cta/contact-banner.webp'" :image-alt="$page['image_alt'] ?? ($page['title'] ?? 'Contato Empresarial SophData')" />
+        :image="$page['image'] ?? 'img/sophdata/cta/contact-banner.webp'" :image-alt="$page['image_alt'] ?? ($page['title'] ?? 'Solicitar atendimento empresarial SophData')" />
 
     @if ($channels->isNotEmpty())
         <section class="bg-white py-16 sm:py-20 lg:py-24">
@@ -60,8 +64,8 @@
     @if (filled($page['needs'] ?? []))
         <section class="bg-slate-50 py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                <x-site.section-heading eyebrow="Necessidade" title="Sobre o que voce quer falar?"
-                    description="Escolha o assunto mais proximo da necessidade da sua empresa." centered />
+                <x-site.section-heading eyebrow="Necessidade" title="Sobre o que você quer falar?"
+                    description="Escolha o assunto mais próximo da necessidade da sua empresa." centered />
                 <ul class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
                     @foreach ($page['needs'] as $need)
                         @php
@@ -96,7 +100,7 @@
             @if (filled($page['first_contact_checklist'] ?? []))
                 <div>
                     <x-site.section-heading eyebrow="Primeiro contato" title="O que enviar no primeiro contato"
-                        description="Quanto mais claro for o cenário inicial, melhor sera a orientação da SophData." />
+                        description="Quanto mais claro for o cenário inicial, melhor será a orientação da SophData." />
                     <ul class="mt-8 grid gap-3 text-sm leading-6 text-slate-600">
                         @foreach ($page['first_contact_checklist'] as $item)
                             <li class="flex gap-3">
@@ -139,8 +143,8 @@
         <x-site.authority-section :authority="$empresa['authority']" compact />
     @endif
 
-    <x-site.cta-section title="Pronto para organizar a tecnologia da sua empresa?"
-        description="Envie uma mensagem contando o cenário atual. A SophData ajuda a identificar o melhor caminho entre software, infraestrutura, servidores e suporte mensal."
-        :button-text="$primaryCta['label'] ?? 'Solicitar diagnóstico empresarial'" :button-url="$primaryUrl"
+    <x-site.cta-section :title="$finalCta['title'] ?? 'Pronto para organizar a tecnologia da sua empresa?'"
+        :description="$finalCta['description'] ?? 'Envie uma mensagem contando o cenário atual. A SophData ajuda a identificar o melhor caminho entre software, infraestrutura, servidores e suporte mensal.'"
+        :button-text="$finalCta['label'] ?? 'Solicitar diagnóstico empresarial'" :button-url="$finalCtaUrl"
         :image="$page['image'] ?? 'img/sophdata/cta/contact-banner.webp'" :image-alt="$page['image_alt'] ?? 'Contato empresarial SophData'" />
 @endsection

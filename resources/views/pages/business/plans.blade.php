@@ -20,14 +20,14 @@
 
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$plans['title'] ?? 'Planos Empresariais'" :subtitle="$heroSubtitle"
         :primary-button-text="$cta['label'] ?? 'Solicitar diagnóstico empresarial'" :primary-button-url="$ctaPrimaryUrl"
-        secondary-button-text="Como trabalhamos" secondary-button-url="/para-empresas/como-trabalhamos" :image="$plans['image'] ?? 'img/sophdata/cta/contact-banner.webp'"
+        secondary-button-text="Método de atendimento" secondary-button-url="/para-empresas/como-trabalhamos" :image="$plans['image'] ?? 'img/sophdata/cta/contact-banner.webp'"
         :image-alt="$plans['image_alt'] ?? ($plans['title'] ?? 'Planos Empresariais SophData')" />
 
     @if (filled($plans['selection_guide'] ?? []))
         <section class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                <x-site.section-heading eyebrow="Guia de escolha" title="Qual caminho faz mais sentido agora?"
-                    description="Use os sinais abaixo para chegar mais rapido ao tipo de plano que combina com a necessidade atual da empresa."
+                <x-site.section-heading eyebrow="Guia de escolha" title="Qual caminho faz mais sentido para sua empresa?"
+                    description="A melhor contratação depende do problema principal: presença digital, processos internos, infraestrutura, servidores ou continuidade."
                     centered />
                 <ul class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
                     @foreach ($plans['selection_guide'] as $guide)

@@ -26,13 +26,13 @@ test('portal configuration defines both commercial identities', function () {
             'label' => 'Para Empresas',
             'route' => 'portal.business',
             'url' => '/para-empresas',
-            'primary_cta' => 'Solicitar atendimento empresarial',
+            'primary_cta' => 'Iniciar atendimento empresarial',
         ])->and($portals['personal'])->toMatchArray([
             'key' => 'personal',
             'label' => 'Para Você',
             'route' => 'portal.personal',
             'url' => '/para-voce',
-            'primary_cta' => 'Quero atendimento',
+            'primary_cta' => 'Iniciar atendimento pessoal',
         ]);
 });
 

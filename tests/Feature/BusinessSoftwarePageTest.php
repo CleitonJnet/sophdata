@@ -35,7 +35,7 @@ test('software internal category pages render configured content', function (str
         ->assertSee('Voltar para Desenvolvimento de Software')
         ->assertSee('Problemas que essa solução ajuda a resolver')
         ->assertSee($expectedContent)
-        ->assertSee('Categorias relacionadas')
+        ->assertSee('Outras soluções de Desenvolvimento de Software')
         ->assertSee('/para-empresas/contato', false);
 })->with([
     ['diagnostico-e-discovery', 'Diagnóstico Digital Express'],

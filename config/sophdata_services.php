@@ -345,25 +345,25 @@ $category = static function (
 
 $personalContact = [
     'slug' => 'contato',
-    'title' => 'Contato Para Você',
-    'subtitle' => 'Atendimento técnico para computador, notebook, internet, impressora e suporte pessoal.',
-    'description' => 'Conte o que está acontecendo com seu equipamento ou ambiente doméstico. A SophData orienta o melhor caminho para atendimento remoto ou presencial, quando aplicável.',
+    'title' => 'Solicitar atendimento pessoal',
+    'subtitle' => 'Atendimento para computador, notebook, internet, Wi-Fi, impressora, backup e orientação técnica pessoal.',
+    'description' => 'Informe o problema e a SophData retorna para orientar o melhor caminho de atendimento.',
     'route' => '/para-voce/contato',
     'image' => 'img/sophdata/cta/contact-banner.webp',
     'image_alt' => 'Atendimento técnico da SophData para pessoa física',
     'seo' => [
-        'title' => 'Contato Para Você | Atendimento Técnico SophData',
+        'title' => 'Solicitar atendimento pessoal | Atendimento Técnico SophData',
         'description' => 'Fale com a SophData para atendimento técnico pessoal em computador, notebook, internet, Wi-Fi, impressora, backup e suporte doméstico.',
         'canonical' => '/para-voce/contato',
         'og_image' => 'img/sophdata/cta/contact-banner.webp',
     ],
     'primary_cta' => [
-        'label' => 'Chamar no WhatsApp',
+        'label' => 'Iniciar atendimento pessoal',
         'url' => null,
         'whatsapp_message' => 'Olá! Quero atendimento técnico para pessoa física com a SophData.',
     ],
     'secondary_cta' => [
-        'label' => 'Ver serviços Para Você',
+        'label' => 'Ver serviços para você',
         'url' => '/para-voce',
     ],
     'needs' => [
@@ -442,8 +442,8 @@ $personalContact = [
     ],
     'final_cta' => [
         'title' => 'Quer atendimento técnico pessoal?',
-        'description' => 'Envie uma mensagem contando o problema. A SophData orienta o melhor caminho para suporte remoto ou presencial, quando aplicável.',
-        'label' => 'Chamar no WhatsApp',
+        'description' => 'Informe o problema e a SophData retorna para orientar o melhor caminho de atendimento.',
+        'label' => 'Iniciar atendimento pessoal',
         'whatsapp_message' => 'Olá! Quero atendimento técnico para pessoa física com a SophData.',
         'image' => 'img/sophdata/cta/contact-banner.webp',
     ],
@@ -567,7 +567,7 @@ return [
                     ['title' => 'Rede sem organização', 'description' => 'Organizamos computadores, impressoras, compartilhamentos e acessos para facilitar o uso da rede interna.'],
                     ['title' => 'Falta de rede para visitantes', 'description' => 'Configuramos uma rede separada para clientes, alunos, visitantes ou prestadores de serviço, quando o equipamento permitir.'],
                     ['title' => 'Impressoras e arquivos sem compartilhamento', 'description' => 'Ajudamos a configurar impressoras e pastas compartilhadas de forma mais prática e segura.'],
-                    ['title' => 'Acesso remoto sem segurança', 'description' => 'Orientamos formas mais seguras de acessar arquivos ou sistemas fora da empresa, evitando solucoes improvisadas.'],
+                    ['title' => 'Acesso remoto sem segurança', 'description' => 'Orientamos formas mais seguras de acessar arquivos ou sistemas fora da empresa, evitando soluções improvisadas.'],
                 ],
                 [$problemCard('Internet ou Wi-Fi instável?', 'Organize sua rede, melhore o sinal Wi-Fi e reduza interrupções no trabalho.', 'redes-e-wifi', 'business')],
                 []
@@ -978,11 +978,11 @@ return [
                 'slow_computer',
                 'computador-lento',
                 'personal',
-                'Computador Lento',
+                'Computador lento ou travando',
                 'Seu computador funcionando melhor',
                 'Correção de lentidão, travamentos, erros, programas pesados e desorganização do sistema para quem precisa usar o computador com mais tranquilidade.',
                 'Seu computador está demorando para ligar, travando durante o uso ou abrindo programas com lentidão? A SophData ajuda a identificar a causa e melhorar o desempenho com orientação clara.',
-                'Computador Lento',
+                'Computador lento ou travando',
                 'Lentidão, travamentos, programas e impressoras.',
                 ['Mais desempenho no uso diário', 'Programas corrigidos', 'Organização básica do computador'],
                 [
@@ -996,7 +996,7 @@ return [
                 []
             ),
             [
-                'meta_title' => 'Computador Lento | SophData',
+                'meta_title' => 'Computador lento ou travando | SophData',
                 'meta_description' => 'Correção de computador lento, travamentos, erros, organização do sistema e orientação para melhorar desempenho.',
                 'choice_descriptions' => [
                     'essential' => 'Escolha o Essencial para resolver um problema pontual.',
@@ -1022,7 +1022,7 @@ return [
                         'featured' => false,
                         'badge' => 'Para começar',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Computador Lento.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Computador lento ou travando.',
                     ],
                     [
                         'level' => 'professional',
@@ -1037,7 +1037,7 @@ return [
                         'featured' => true,
                         'badge' => 'Mais escolhido',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Computador Lento.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Computador lento ou travando.',
                     ],
                     [
                         'level' => 'complete',
@@ -1052,7 +1052,7 @@ return [
                         'featured' => false,
                         'badge' => 'Solução completa',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Computador Lento.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Computador lento ou travando.',
                     ],
                 ],
             ],
@@ -1062,11 +1062,11 @@ return [
                 'connected_home_wifi',
                 'wifi-e-casa-conectada',
                 'personal',
-                'Wi-Fi e Casa Conectada',
+                'Internet, Wi-Fi e dispositivos',
                 'Internet melhor em casa',
                 'Melhoria do Wi-Fi, configuração de roteador, impressora, smart TV, celular, notebook e dispositivos conectados para uma rotina digital mais estável em casa.',
                 'Se a internet cai, o sinal não chega nos cômodos ou seus dispositivos não conectam corretamente, a SophData ajuda a organizar sua casa conectada.',
-                'Wi-Fi e Casa Conectada',
+                'Internet, Wi-Fi e dispositivos',
                 'Roteador, Wi-Fi, impressora, TV e dispositivos.',
                 ['Sinal melhor nos cômodos principais', 'Dispositivos conectados corretamente', 'Home office mais estável'],
                 [
@@ -1080,7 +1080,7 @@ return [
                 []
             ),
             [
-                'meta_title' => 'Wi-Fi e Casa Conectada | SophData',
+                'meta_title' => 'Internet, Wi-Fi e dispositivos | SophData',
                 'meta_description' => 'Configuração de Wi-Fi, roteador, impressora, smart TV, dispositivos conectados e home office para pessoa física.',
                 'choice_descriptions' => [
                     'essential' => 'Escolha o Essencial para corrigir Wi-Fi.',
@@ -1106,7 +1106,7 @@ return [
                         'featured' => false,
                         'badge' => 'Para começar',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Wi-Fi e Casa Conectada.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Internet, Wi-Fi e dispositivos.',
                     ],
                     [
                         'level' => 'professional',
@@ -1121,7 +1121,7 @@ return [
                         'featured' => true,
                         'badge' => 'Mais escolhido',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Wi-Fi e Casa Conectada.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Internet, Wi-Fi e dispositivos.',
                     ],
                     [
                         'level' => 'complete',
@@ -1136,7 +1136,7 @@ return [
                         'featured' => false,
                         'badge' => 'Solução completa',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Wi-Fi e Casa Conectada.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Internet, Wi-Fi e dispositivos.',
                     ],
                 ],
             ],
@@ -1146,11 +1146,11 @@ return [
                 'backup_security',
                 'backup-e-seguranca',
                 'personal',
-                'Backup e Segurança',
+                'Backup, senhas e segurança',
                 'Fotos, contas e documentos protegidos',
                 'Proteção de fotos, documentos, contas, senhas, e-mail, WhatsApp e arquivos importantes para reduzir riscos de perda de dados e golpes digitais.',
                 'Se você tem medo de perder fotos, documentos ou acesso às suas contas, a SophData ajuda a organizar backup, senhas e segurança digital de forma simples.',
-                'Backup e Segurança',
+                'Backup, senhas e segurança',
                 'Fotos, documentos, contas, senhas e WhatsApp.',
                 ['Arquivos com cópia segura', 'Contas mais protegidas', 'Orientação contra golpes'],
                 [
@@ -1164,7 +1164,7 @@ return [
                 []
             ),
             [
-                'meta_title' => 'Backup e Segurança Pessoal | SophData',
+                'meta_title' => 'Backup, senhas e segurança pessoal | SophData',
                 'meta_description' => 'Backup de fotos e documentos, proteção de contas, senhas, e-mail, WhatsApp e segurança digital para pessoa física.',
                 'choice_descriptions' => [
                     'essential' => 'Escolha o Essencial para proteger arquivos.',
@@ -1190,7 +1190,7 @@ return [
                         'featured' => false,
                         'badge' => 'Para começar',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Backup e Segurança.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Backup, senhas e segurança.',
                     ],
                     [
                         'level' => 'professional',
@@ -1205,7 +1205,7 @@ return [
                         'featured' => true,
                         'badge' => 'Mais escolhido',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Backup e Segurança.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Backup, senhas e segurança.',
                     ],
                     [
                         'level' => 'complete',
@@ -1220,7 +1220,7 @@ return [
                         'featured' => false,
                         'badge' => 'Solução completa',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Backup e Segurança.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Backup, senhas e segurança.',
                     ],
                 ],
             ],
@@ -1230,11 +1230,11 @@ return [
                 'studies_career_ai',
                 'estudos-carreira-e-ia',
                 'personal',
-                'Estudos, Carreira e IA',
+                'Estudos, carreira e IA',
                 'Organização digital para crescer',
                 'Organização digital para estudos, produtividade, currículo, LinkedIn e uso prático de inteligência artificial no dia a dia acadêmico e profissional.',
                 'Use melhor a tecnologia para estudar, organizar documentos, melhorar sua presença profissional e aplicar IA de forma prática, segura e produtiva.',
-                'Estudos, Carreira e IA',
+                'Estudos, carreira e IA',
                 'Estudos, currículo, LinkedIn, produtividade e IA.',
                 ['Materiais e arquivos organizados', 'Ferramentas de estudo configuradas', 'IA aplicada a tarefas reais'],
                 [
@@ -1248,7 +1248,7 @@ return [
                 []
             ),
             [
-                'meta_title' => 'Estudos, Carreira e IA | SophData',
+                'meta_title' => 'Estudos, carreira e IA | SophData',
                 'meta_description' => 'Organização digital para estudos, currículo, LinkedIn, produtividade e uso prático de inteligência artificial.',
                 'choice_descriptions' => [
                     'essential' => 'Escolha o Essencial para organizar estudos.',
@@ -1274,7 +1274,7 @@ return [
                         'featured' => false,
                         'badge' => 'Para começar',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Estudos, Carreira e IA.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Estudos, carreira e IA.',
                     ],
                     [
                         'level' => 'professional',
@@ -1289,7 +1289,7 @@ return [
                         'featured' => true,
                         'badge' => 'Mais escolhido',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Estudos, Carreira e IA.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Estudos, carreira e IA.',
                     ],
                     [
                         'level' => 'complete',
@@ -1304,7 +1304,7 @@ return [
                         'featured' => false,
                         'badge' => 'Solução completa',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Estudos, Carreira e IA.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Estudos, carreira e IA.',
                     ],
                 ],
             ],
@@ -1314,11 +1314,11 @@ return [
                 'pc_build_upgrade',
                 'montagem-e-upgrade-de-pc',
                 'personal',
-                'Montagem e Upgrade de PC',
+                'Montagem e upgrade de PC',
                 'Desempenho para seu objetivo',
                 'Montagem de computador, troca de SSD, memória RAM, limpeza, melhoria de desempenho e orientação de compra para quem quer um PC mais rápido e adequado ao uso.',
                 'Quer melhorar seu computador ou montar uma máquina nova? A SophData ajuda a escolher peças, avaliar upgrade e preparar o PC conforme sua necessidade.',
-                'Montagem e Upgrade de PC',
+                'Montagem e upgrade de PC',
                 'SSD, memória, limpeza, montagem e compra.',
                 ['Melhor desempenho', 'Peças compatíveis', 'Compra orientada pelo uso real'],
                 [
@@ -1332,7 +1332,7 @@ return [
                 []
             ),
             [
-                'meta_title' => 'Montagem e Upgrade de PC | SophData',
+                'meta_title' => 'Montagem e upgrade de PC | SophData',
                 'meta_description' => 'Montagem de computador, upgrade com SSD e memória, orientação de peças, limpeza e melhoria de desempenho.',
                 'choice_descriptions' => [
                     'essential' => 'Escolha o Essencial para melhorar o PC atual.',
@@ -1358,7 +1358,7 @@ return [
                         'featured' => false,
                         'badge' => 'Para começar',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Montagem e Upgrade de PC.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Essencial de Montagem e upgrade de PC.',
                     ],
                     [
                         'level' => 'professional',
@@ -1373,7 +1373,7 @@ return [
                         'featured' => true,
                         'badge' => 'Mais escolhido',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Montagem e Upgrade de PC.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Profissional de Montagem e upgrade de PC.',
                     ],
                     [
                         'level' => 'complete',
@@ -1388,7 +1388,7 @@ return [
                         'featured' => false,
                         'badge' => 'Solução completa',
                         'cta_label' => 'Escolher este pacote',
-                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Montagem e Upgrade de PC.',
+                        'whatsapp_message' => 'Olá, quero receber orientação sobre o pacote Completo de Montagem e upgrade de PC.',
                     ],
                 ],
             ],

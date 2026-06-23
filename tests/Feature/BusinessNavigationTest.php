@@ -42,8 +42,8 @@ test('personal portal service navigation keeps the personal catalog menu', funct
     $navigation = serviceNavigationMarkup($content);
 
     expect($navigation)
-        ->toContain('Computador Lento')
-        ->toContain('Wi-Fi e Casa Conectada')
+        ->toContain('Computador lento ou travando')
+        ->toContain('Internet, Wi-Fi e dispositivos')
         ->toContain('Contato')
         ->toContain('/para-voce/contato')
         ->not->toContain('href="/contato"')

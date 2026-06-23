@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', $page['seo']['title'] ?? 'Contato Para Você | Atendimento Técnico SophData')
-@section('meta_description', $page['seo']['description'] ?? ($page['description'] ?? 'Contato Para Você SophData.'))
+@section('title', $page['seo']['title'] ?? 'Solicitar atendimento pessoal | Atendimento Técnico SophData')
+@section('meta_description', $page['seo']['description'] ?? ($page['description'] ?? 'Solicitar atendimento pessoal SophData.'))
 
 @section('content')
     @php
@@ -21,8 +21,8 @@
             : null;
     @endphp
 
-    <x-site.hero-banner eyebrow="Portal Para Você" :title="$page['title'] ?? 'Contato Para Você'" :subtitle="$heroSubtitle"
-        :primary-button-text="$primaryCta['label'] ?? 'Chamar no WhatsApp'" :primary-button-url="$primaryUrl"
+    <x-site.hero-banner eyebrow="Portal Para Você" :title="$page['title'] ?? 'Solicitar atendimento pessoal'" :subtitle="$heroSubtitle"
+        :primary-button-text="$primaryCta['label'] ?? 'Iniciar atendimento pessoal'" :primary-button-url="$primaryUrl"
         :secondary-button-text="$secondaryCta['label'] ?? 'Ver serviços Para Você'" :secondary-button-url="$secondaryCta['url'] ?? '/para-voce'"
         :image="$page['image'] ?? 'img/sophdata/cta/contact-banner.webp'" :image-alt="$page['image_alt'] ?? 'Atendimento técnico da SophData para pessoa física'" />
 
@@ -113,7 +113,7 @@
     @endif
 
     <x-site.cta-section :title="$finalCta['title'] ?? 'Quer atendimento técnico pessoal?'" :description="$finalCta['description'] ?? 'Envie uma mensagem contando o problema. A SophData orienta o melhor caminho para suporte remoto ou presencial, quando aplicável.'"
-        :button-text="$finalCta['label'] ?? 'Chamar no WhatsApp'" :button-url="$finalCtaUrl ?: $primaryUrl"
+        :button-text="$finalCta['label'] ?? 'Iniciar atendimento pessoal'" :button-url="$finalCtaUrl ?: $primaryUrl"
         :secondary-button-text="$secondaryCta['label'] ?? 'Ver serviços Para Você'" :secondary-button-url="$secondaryCta['url'] ?? '/para-voce'"
         :image="$finalCta['image'] ?? ($page['image'] ?? 'img/sophdata/cta/contact-banner.webp')" :image-alt="$page['image_alt'] ?? 'Atendimento técnico da SophData para pessoa física'" />
 @endsection

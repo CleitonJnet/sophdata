@@ -1,6 +1,6 @@
 <?php
 
-test('servers internal category pages render configured content', function (string $slug, string $title, string $expectedContent) {
+test('servers internal category pages render configured content', function (string $slug, string $title, string $expectedContent, string $cta) {
     $this->get("/para-empresas/servidores-e-ambientes-corporativos/{$slug}")
         ->assertOk()
         ->assertSee('Voltar para Servidores e Ambientes Corporativos')
@@ -9,13 +9,14 @@ test('servers internal category pages render configured content', function (stri
         ->assertSee($expectedContent)
         ->assertSee('Observações importantes')
         ->assertSee('Outras soluções de Servidores e Ambientes Corporativos')
-        ->assertSee('/para-empresas/contato', false);
+        ->assertSee('/para-empresas/contato', false)
+        ->assertSee($cta);
 })->with([
-    ['servidor-de-arquivos', 'Servidor de Arquivos', 'Compartilhamento básico de arquivos'],
-    ['active-directory', 'Active Directory', 'Usuários e permissões'],
-    ['backup-empresarial', 'Backup Empresarial', 'Backup Profissional - 250 GB'],
-    ['vpn-e-trabalho-remoto', 'VPN e Trabalho Remoto', 'Usuários remotos'],
-    ['virtualizacao', 'Virtualização', 'Máquinas virtuais'],
+    ['servidor-de-arquivos', 'Servidor de Arquivos', 'Compartilhamento básico de arquivos', 'Centralizar meus arquivos'],
+    ['active-directory', 'Active Directory', 'Usuários e permissões', 'Organizar usuários e permissões'],
+    ['backup-empresarial', 'Backup Empresarial', 'Backup Profissional - 250 GB', 'Proteger meus dados'],
+    ['vpn-e-trabalho-remoto', 'VPN e Trabalho Remoto', 'Usuários remotos', 'Liberar acesso remoto seguro'],
+    ['virtualizacao', 'Virtualização', 'Máquinas virtuais', 'Avaliar virtualização'],
 ]);
 
 test('servers backup page renders monthly backup plan details', function () {
@@ -24,6 +25,15 @@ test('servers backup page renders monthly backup plan details', function () {
         ->assertSee('Acompanhamento mensal')
         ->assertSee('Armazenamento')
         ->assertSee('Nível')
+        ->assertSee('Backup Essencial - 250 GB')
+        ->assertSee('Backup Essencial - 500 GB')
+        ->assertSee('Backup Essencial - 1 TB')
+        ->assertSee('Backup Profissional - 250 GB')
+        ->assertSee('Backup Profissional - 500 GB')
+        ->assertSee('Backup Profissional - 1 TB')
+        ->assertSee('Backup Corporativo - 1 TB')
+        ->assertSee('Backup Corporativo - 2 TB')
+        ->assertSee('Backup Corporativo - 5 TB')
         ->assertSee('Teste de restauração')
         ->assertSee('Proteger meus dados');
 });

@@ -18,18 +18,18 @@
                 'positioning_description' => 'Antes de escrever código, entendemos o problema, o fluxo de trabalho e o resultado esperado.',
                 'logic_title' => 'Como este bloco organiza a operação',
                 'logic_description' => 'A estrutura abaixo resume o papel deste conjunto de soluções dentro da empresa.',
-                'categories_eyebrow' => 'Desenvolvimento de Software',
+                'categories_eyebrow' => 'Sites, Sistemas e Automações',
                 'categories_title' => 'O que podemos desenvolver para sua empresa',
-                'categories_description' => 'Escolha o caminho mais proximo da sua necessidade: presença digital, sistema interno, automação ou sustentação.',
+                'categories_description' => 'Escolha o caminho mais próximo da sua necessidade: presença digital, sistema interno, automação ou sustentação.',
                 'method_title' => 'Como conduzimos um projeto de desenvolvimento',
-                'method_description' => 'Um bom sistema comeca com clareza de escopo e termina com acompanhamento para contínuar util.',
+                'method_description' => 'Um bom sistema começa com clareza de escopo e termina com acompanhamento para continuar útil.',
                 'packages_title' => 'Caminhos comerciais para começar',
                 'packages_description' => 'A SophData pode começar com uma presença digital enxuta, um sistema administrativo ou uma plataforma em fases.',
                 'rules_title' => 'Clareza antes de desenvolver',
-                'rules_description' => 'Projetos digitais precisam de escopo, critérios de aceite e combinacao clara sobre o que está incluso.',
+                'rules_description' => 'Projetos digitais precisam de escopo, critérios de aceite e combinação clara sobre o que está incluso.',
                 'cta_title' => 'Quer tirar uma ideia do papel ou organizar um sistema existente?',
                 'cta_description' => 'Solicite um diagnóstico digital. A SophData ajuda a entender se sua empresa precisa de site, sistema, automação, integração ou sustentação.',
-                'cta_alt' => 'Desenvolvimento de Software SophData',
+                'cta_alt' => 'Sites, Sistemas e Automações SophData',
                 'secondary_label' => 'Ver soluções de software',
                 'secondary_url' => '#categorias',
             ],
@@ -37,10 +37,10 @@
                 'pains_title' => 'Sua empresa perde tempo com infraestrutura desorganizada?',
                 'pains_description' => 'Quando computadores, rede e suporte funcionam no improviso, a operação perde produtividade e previsibilidade.',
                 'positioning_title' => 'Infraestrutura pensada para a rotina da empresa',
-                'positioning_description' => 'A SophData organiza a base tecnologica para que computadores, rede, Wi-Fi e suporte tenham mais previsibilidade.',
+                'positioning_description' => 'A SophData organiza a base tecnológica para que computadores, rede, Wi-Fi e suporte tenham mais previsibilidade.',
                 'logic_title' => 'Como a infraestrutura se encaixa na operação',
-                'logic_description' => 'Cada parte da infraestrutura cumpre um papel. Quando tudo esta organizado, a empresa trabalha melhor.',
-                'categories_eyebrow' => 'Infraestrutura Corporativa Gerenciada',
+                'logic_description' => 'Cada parte da infraestrutura cumpre um papel. Quando tudo está organizado, a empresa trabalha melhor.',
+                'categories_eyebrow' => 'Suporte, Rede e Infraestrutura',
                 'categories_title' => 'A base de TI da sua empresa em ordem',
                 'categories_description' => 'Organize computadores, rede, Wi-Fi e suporte mensal com uma estrutura mais previsível.',
                 'packages_title' => 'Pacotes integrados por porte de empresa',
@@ -53,7 +53,7 @@
                 'rules_description' => 'Infraestrutura envolve ambiente físico, equipamentos, licenças e operação. Por isso, cada proposta precisa ter limites bem definidos.',
                 'cta_title' => 'Quer organizar a infraestrutura da sua empresa?',
                 'cta_description' => 'Solicite um diagnóstico de infraestrutura. A SophData ajuda a avaliar computadores, rede, Wi-Fi, suporte e administração mensal conforme a realidade da sua operação.',
-                'cta_alt' => 'Infraestrutura Corporativa Gerenciada SophData',
+                'cta_alt' => 'Suporte, Rede e Infraestrutura SophData',
                 'secondary_label' => 'Ver pacotes de infraestrutura',
                 'secondary_url' => '/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados',
             ],
@@ -64,7 +64,7 @@
                 'positioning_description' => 'A SophData organiza servidores, arquivos, permissões, backup e acesso remoto para que a empresa trabalhe com mais segurança operacional.',
                 'logic_title' => 'Como os servidores sustentam a operação',
                 'logic_description' => 'Cada recurso tem uma função: organizar, proteger, controlar acesso e manter a continuidade do ambiente.',
-                'categories_eyebrow' => 'Servidores e Ambientes Corporativos',
+                'categories_eyebrow' => 'Servidores, Backup e Acessos',
                 'categories_title' => 'Ambientes corporativos com mais controle e continuidade',
                 'categories_description' => 'Centralize arquivos, organize permissões, proteja dados e prepare o ambiente para crescer com segurança.',
                 'packages_title' => 'Caminhos recomendados para organizar seu ambiente',
@@ -75,7 +75,7 @@
                 'rules_description' => 'Servidores envolvem dados importantes, acesso de usuários, segurança e continuidade. Por isso, cada proposta deve ser feita com diagnóstico e limites bem definidos.',
                 'cta_title' => 'Quer organizar servidores, arquivos ou backup da sua empresa?',
                 'cta_description' => 'Solicite uma avaliação do ambiente. A SophData ajuda a entender o melhor caminho para centralizar arquivos, controlar acessos, proteger dados e estruturar trabalho remoto com mais segurança.',
-                'cta_alt' => 'Servidores e Ambientes Corporativos SophData',
+                'cta_alt' => 'Servidores, Backup e Acessos SophData',
                 'secondary_label' => 'Ver soluções de servidores',
                 'secondary_url' => '#categorias',
             ],
@@ -87,7 +87,7 @@
             'packages_title' => 'Caminhos comerciais para começar',
             'packages_description' => 'Escolha um caminho inicial conforme o momento da empresa.',
             'rules_title' => 'Regras comerciais',
-            'rules_description' => 'Cada proposta deve alinhar escopo, responsabilidades e limites antes da execucao.',
+            'rules_description' => 'Cada proposta deve alinhar escopo, responsabilidades e limites antes da execução.',
             'cta_title' => $cta['label'] ?? 'Solicitar atendimento empresarial',
             'cta_description' => $catalog['description'] ?? 'Converse com a SophData para avaliar o melhor caminho para sua empresa.',
             'cta_alt' => $catalog['title'] ?? 'SophData',
@@ -134,7 +134,7 @@
     @endphp
 
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$catalog['title']" :subtitle="$heroSubtitle ?: ($catalog['description'] ?? $catalog['subtitle'] ?? '')"
-        :primary-button-text="$cta['label'] ?? 'Solicitar diagnóstico'" :primary-button-url="$ctaPrimaryUrl"
+        :primary-button-text="$cta['label'] ?? 'Solicitar análise inicial'" :primary-button-url="$ctaPrimaryUrl"
         :secondary-button-text="$sectionCopy['secondary_label']" :secondary-button-url="$sectionCopy['secondary_url']" :image="$catalog['image']" :image-alt="$catalog['image_alt'] ?? $catalog['title']" />
 
     @if (filled($catalog['pains'] ?? []))
@@ -180,7 +180,7 @@
     @if (filled($catalog['logic'] ?? []))
         <section class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                <x-site.section-heading eyebrow="Logica comercial" :title="$sectionCopy['logic_title'] ?? 'Como este bloco organiza a operação'"
+                <x-site.section-heading eyebrow="Lógica comercial" :title="$sectionCopy['logic_title'] ?? 'Como este bloco organiza a operação'"
                     :description="$sectionCopy['logic_description'] ?? 'A estrutura abaixo resume o papel deste conjunto de soluções dentro da empresa.'"
                     centered />
                 <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
@@ -275,7 +275,7 @@
                 <div class="mt-12 grid gap-5 md:grid-cols-3">
                     @foreach ($commercialCombinations as $combination)
                         <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                            <h3 class="text-xl font-bold text-brand-950">{{ $combination['title'] ?? $combination['name'] ?? 'Combinacao empresarial' }}</h3>
+                            <h3 class="text-xl font-bold text-brand-950">{{ $combination['title'] ?? $combination['name'] ?? 'Combinação empresarial' }}</h3>
                             <dl class="mt-5 grid gap-3 text-sm text-slate-600">
                                 @foreach ($combination as $key => $value)
                                     @continue(in_array($key, ['title', 'name'], true) || is_array($value))
@@ -347,6 +347,6 @@
     @endif
 
     <x-site.cta-section :title="$sectionCopy['cta_title']" :description="$sectionCopy['cta_description']"
-        :button-text="$cta['label'] ?? 'Solicitar diagnóstico'" :button-url="$ctaPrimaryUrl" :image="$catalog['image']"
+        :button-text="$cta['label'] ?? 'Solicitar análise inicial'" :button-url="$ctaPrimaryUrl" :image="$catalog['image']"
         :image-alt="$sectionCopy['cta_alt']" />
 @endsection

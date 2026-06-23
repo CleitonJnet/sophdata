@@ -102,7 +102,7 @@
             @if (filled($page['scope_rules'] ?? []))
                 <div>
                     <x-site.section-heading eyebrow="Escopo" title="Escopo claro evita surpresa"
-                        description="Antes de iniciar, buscamos alinhar o que sera feito, o que não está incluso, prazos, responsabilidades e critérios de aceite." />
+                        description="Antes de iniciar, buscamos alinhar o que será feito, o que não está incluso, prazos, responsabilidades e critérios de aceite." />
                     <ul class="mt-8 grid gap-3 text-sm leading-6 text-slate-600">
                         @foreach ($page['scope_rules'] as $rule)
                             <li class="flex gap-3">

@@ -72,7 +72,7 @@
                 'url' => '/para-empresas/desenvolvimento-de-software/sistemas-sob-medida',
             ],
             [
-                'title' => 'Infraestrutura Gerenciada',
+                'title' => 'Suporte, Rede e Infraestrutura',
                 'description' => 'Para empresas que precisam organizar computadores, rede, Wi-Fi e suporte mensal.',
                 'image' => 'img/sophdata/services/business/suporte-de-ti-hero.webp',
                 'image_alt' => 'Infraestrutura gerenciada com suporte e rede corporativa',
@@ -96,7 +96,7 @@
     @endphp
 
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$hero['title']" :subtitle="$hero['subtitle']"
-        :primary-button-text="$hero['primary_cta']['label']" :primary-button-url="$heroPrimaryUrl"
+        primary-button-text="Solicitar diagnóstico empresarial" :primary-button-url="$heroPrimaryUrl"
         :secondary-button-text="$hero['secondary_cta']['label']" :secondary-button-url="$hero['secondary_cta']['url']"
         :image="$hero['image']" image-alt="Soluções de tecnologia para empresas" />
 
@@ -149,7 +149,7 @@
 
     <section class="bg-white py-16 sm:py-20 lg:py-24">
         <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <x-site.section-heading eyebrow="Método de trabalho" title="Como trabalhamos"
+            <x-site.section-heading eyebrow="Método de atendimento" title="Como trabalhamos"
                 description="Tecnologia empresarial precisa de método. Primeiro entendemos, depois planejamos, implantamos e acompanhamos."
                 centered />
 
@@ -174,6 +174,6 @@
         </div>
     </section>
 
-    <x-site.cta-section :title="$cta['title']" :description="$cta['description']" :button-text="$cta['primary_label']"
+    <x-site.cta-section :title="$cta['title']" :description="$cta['description']" button-text="Solicitar diagnóstico empresarial"
         :button-url="$finalCtaUrl" :image="$cta['image']" :image-alt="$cta['image_alt'] ?? 'Atendimento empresarial da SophData'" />
 @endsection

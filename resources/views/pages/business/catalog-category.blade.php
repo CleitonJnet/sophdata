@@ -30,6 +30,12 @@
             ->values();
         $isInfrastructure = ($catalog['slug'] ?? null) === 'infraestrutura-corporativa-gerenciada';
         $isServers = ($catalog['slug'] ?? null) === 'servidores-e-ambientes-corporativos';
+        $relatedTitle = match ($catalog['slug'] ?? null) {
+            'desenvolvimento-de-software' => 'Outras soluções de Desenvolvimento de Software',
+            'infraestrutura-corporativa-gerenciada' => 'Outras soluções de Infraestrutura Corporativa Gerenciada',
+            'servidores-e-ambientes-corporativos' => 'Outras soluções de Servidores e Ambientes Corporativos',
+            default => 'Categorias relacionadas',
+        };
         $heroSubtitle = trim(implode(' ', array_filter([
             $category['subtitle'] ?? null,
             $category['description'] ?? null,
@@ -107,8 +113,8 @@
             'profile' => 'Perfil',
             'indicated_for' => 'Indicado para',
             'delivery' => 'Entrega',
-            'criteria' => 'Criterio',
-            'criterion' => 'Criterio',
+            'criteria' => 'Critério',
+            'criterion' => 'Critério',
             'limit' => 'Limite',
             'limits' => 'Limites',
             'deadline' => 'Prazo',
@@ -140,14 +146,14 @@
             'monthly_price' => 'Mensalidade',
             'monthly_total' => 'Total mensal',
             'hours' => 'Horas',
-            'hours_per_month' => 'Horas por mes',
+            'hours_per_month' => 'Horas por mês',
             'recommended_use' => 'Uso recomendado',
             'recommended_for' => 'Indicado para',
             'need' => 'Necessidade',
             'suggested_package' => 'Pacote sugerido',
             'implementation' => 'Implantação',
             'maintenance' => 'Manutenção',
-            'inventory' => 'Inventario',
+            'inventory' => 'Inventário',
             'documentation' => 'Documentação',
             'wired_network' => 'Rede cabeada',
             'wifi' => 'Wi-Fi',
@@ -176,14 +182,14 @@
     </nav>
 
     <x-site.hero-banner eyebrow="Portal Para Empresas" :title="$category['title']" :subtitle="$heroSubtitle ?: ($category['description'] ?? $category['subtitle'] ?? null)"
-        :primary-button-text="$cta['label'] ?? 'Solicitar diagnóstico'" :primary-button-url="$primaryUrl" secondary-button-text="Ver opções"
+        :primary-button-text="$cta['label'] ?? 'Solicitar análise inicial'" :primary-button-url="$primaryUrl" secondary-button-text="Ver opções"
         secondary-button-url="#opcoes" :image="$heroImage" :image-alt="$category['image_alt'] ?? $category['title']" />
 
     @if (filled($category['pains'] ?? []))
         <section class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 <x-site.section-heading eyebrow="Dores atendidas" title="Problemas que essa solução ajuda a resolver"
-                    :description="$isInfrastructure ? 'A infraestrutura deve sustentar a rotina da empresa, não criar interrupcoes constantes.' : ($isServers ? 'O ambiente corporativo deve proteger informações, organizar acessos e dar continuidade para a operação.' : 'Antes de contratar tecnologia, e importante entender qual dor ela precisa resolver.')"
+                    :description="$isInfrastructure ? 'A infraestrutura deve sustentar a rotina da empresa, não criar interrupções constantes.' : ($isServers ? 'O ambiente corporativo deve proteger informações, organizar acessos e dar continuidade para a operação.' : 'Antes de contratar tecnologia, é importante entender qual dor ela precisa resolver.')"
                     centered />
                 <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                     @foreach ($category['pains'] as $pain)
@@ -199,7 +205,14 @@
 
     <div id="opcoes" class="scroll-mt-48">
         @foreach ($serviceGroups as $group)
-            @php $items = $category[$group['key']] ?? []; @endphp
+            @php
+                $items = $category[$group['key']] ?? [];
+
+                if ($isInfrastructure && ($category['slug'] ?? null) === 'pacotes-integrados' && $group['key'] === 'integrated_packages') {
+                    $items = $catalog['integrated_packages'] ?? $items;
+                }
+            @endphp
+            @continue($isInfrastructure && ($category['slug'] ?? null) === 'pacotes-integrados' && $group['key'] === 'implementation_packages')
             @if (filled($items))
                 <section @class([
                     'py-16 sm:py-20 lg:py-24',
@@ -212,7 +225,7 @@
                             @foreach ($items as $item)
                                 @php
                                     $item = is_array($item) ? $item : ['name' => $item];
-                                    $title = $item['name'] ?? $item['title'] ?? $item['segment'] ?? 'Opcao';
+                                    $title = $item['name'] ?? $item['title'] ?? $item['segment'] ?? 'Opção';
                                     $summary = $textValue($item['description'] ?? $item['includes'] ?? null);
                                     $featuredDetail = $textValue($item['best_for'] ?? $item['recommended_for'] ?? $item['profile'] ?? $item['indicated_for'] ?? $item['recommended_use'] ?? null);
                                 @endphp
@@ -322,16 +335,24 @@
         </section>
     @endif
 
-    @if (filled($category['commercial_combinations'] ?? []))
+    @php
+        $commercialCombinations = $category['commercial_combinations'] ?? [];
+
+        if ($isInfrastructure && ($category['slug'] ?? null) === 'pacotes-integrados' && ! filled($commercialCombinations)) {
+            $commercialCombinations = $catalog['commercial_combinations'] ?? [];
+        }
+    @endphp
+
+    @if (filled($commercialCombinations))
         <section class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 <x-site.section-heading eyebrow="Combinações comerciais" title="Caminhos de contratação"
                     description="Combinações simples ajudam a visualizar implantação, acompanhamento e continuidade em uma proposta mais clara." centered />
                 <div class="mt-12 grid gap-5 md:grid-cols-3">
-                    @foreach ($category['commercial_combinations'] as $combination)
+                    @foreach ($commercialCombinations as $combination)
                         @php
                             $combination = is_array($combination) ? $combination : ['name' => $combination];
-                            $combinationTitle = $combination['name'] ?? $combination['title'] ?? 'Combinacao comercial';
+                            $combinationTitle = $combination['name'] ?? $combination['title'] ?? 'Combinação comercial';
                         @endphp
                         <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
                             <h3 class="text-xl font-bold text-brand-950">{{ $combinationTitle }}</h3>
@@ -369,7 +390,7 @@
                 <x-site.section-heading eyebrow="Combinados comerciais" title="Observações importantes"
                     description="Valores e escopo podem variar conforme diagnóstico, porte do ambiente, equipamentos existentes e materiais necessários." centered />
                 <div class="mt-12 grid gap-5 lg:grid-cols-2">
-                    @foreach (['Observações comerciais' => $category['commercial_notes'] ?? [], 'Limites de escopo' => $category['scope_limits'] ?? [], 'Não incluso por padrao' => $notIncluded] as $title => $notes)
+                    @foreach (['Observações comerciais' => $category['commercial_notes'] ?? [], 'Limites de escopo' => $category['scope_limits'] ?? [], 'Não incluso por padrão' => $notIncluded] as $title => $notes)
                         @if (filled($notes))
                             <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                                 <h3 class="text-xl font-bold text-brand-950">{{ $title }}</h3>
@@ -392,7 +413,7 @@
     @if ($relatedCategories->isNotEmpty())
         <section class="bg-white py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                <x-site.section-heading eyebrow="{{ $parentTitle }}" :title="$isInfrastructure ? 'Outras soluções de Infraestrutura Corporativa Gerenciada' : ($isServers ? 'Outras soluções de Servidores e Ambientes Corporativos' : 'Categorias relacionadas')"
+                <x-site.section-heading eyebrow="{{ $parentTitle }}" :title="$relatedTitle"
                     description="Outras frentes que podem complementar essa necessidade dentro do mesmo bloco empresarial." centered />
                 <nav class="mt-12" aria-label="Categorias relacionadas">
                     <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -408,7 +429,7 @@
         </section>
     @endif
 
-    <x-site.cta-section :title="$cta['label'] ?? 'Solicitar diagnóstico empresarial'"
+    <x-site.cta-section :title="$cta['label'] ?? 'Iniciar atendimento empresarial'"
         :description="$category['subtitle'] ?? $category['description'] ?? 'Converse com a SophData para entender o melhor caminho para organizar essa necessidade da empresa.'"
-        :button-text="$cta['label'] ?? 'Solicitar diagnóstico'" :button-url="$primaryUrl" :image="$heroImage" :image-alt="$category['image_alt'] ?? $category['title']" />
+        :button-text="$cta['label'] ?? 'Solicitar análise inicial'" :button-url="$primaryUrl" :image="$heroImage" :image-alt="$category['image_alt'] ?? $category['title']" />
 @endsection

@@ -3,9 +3,9 @@
 test('personal contact page renders the personal support flow', function () {
     $content = $this->get('/para-voce/contato')
         ->assertOk()
-        ->assertSee('Contato Para Você')
-        ->assertSee('Atendimento técnico para computador, notebook, internet, impressora e suporte pessoal.')
-        ->assertSee('Chamar no WhatsApp')
+        ->assertSee('Solicitar atendimento pessoal')
+        ->assertSee('Atendimento para computador, notebook, internet, Wi-Fi, impressora, backup e orientação técnica pessoal.')
+        ->assertSee('Iniciar atendimento pessoal')
         ->assertSee('Computador ou notebook lento')
         ->assertSee('Internet, Wi-Fi e roteador')
         ->assertSee('O que enviar no primeiro contato')
@@ -26,7 +26,7 @@ test('contact routes stay separated by profile', function () {
     $this->get('/para-empresas/contato')
         ->assertOk()
         ->assertSee('Contato Empresarial')
-        ->assertDontSee('Contato Para Você');
+        ->assertDontSee('Solicitar atendimento pessoal');
 
     $response = $this->get('/contato')->assertRedirect();
 

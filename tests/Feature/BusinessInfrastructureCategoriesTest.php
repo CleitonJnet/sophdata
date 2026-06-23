@@ -39,6 +39,20 @@ test('infrastructure monthly administration page renders plans and indicated pro
         ->assertSee('Igreja pequena');
 });
 
+test('infrastructure integrated packages page renders catalog packages and combinations', function () {
+    $this->get('/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados')
+        ->assertOk()
+        ->assertSee('Pacotes integrados')
+        ->assertSee('Infraestrutura Starter')
+        ->assertSee('Infraestrutura Business')
+        ->assertSee('Infraestrutura Professional')
+        ->assertSee('Infraestrutura Corporativa')
+        ->assertSee('Rede Básica Organizada')
+        ->assertSee('Escritório Conectado')
+        ->assertSee('Rede Corporativa Gerenciada')
+        ->assertSee('Escolher pacote empresarial');
+});
+
 test('infrastructure category returns not found for unknown slug', function () {
     $this->get('/para-empresas/infraestrutura-corporativa-gerenciada/categoria-inexistente')
         ->assertNotFound();

@@ -3,7 +3,7 @@
 function finalBusinessRegressionPages(): array
 {
     return [
-        ['/para-empresas', 'Tecnologia organizada para empresas'],
+        ['/para-empresas', 'Organize software, infraestrutura e servidores da sua empresa'],
         ['/para-empresas/desenvolvimento-de-software', 'Desenvolvimento de Software'],
         ['/para-empresas/infraestrutura-corporativa-gerenciada', 'Infraestrutura Corporativa Gerenciada'],
         ['/para-empresas/servidores-e-ambientes-corporativos', 'Servidores e Ambientes Corporativos'],
@@ -76,5 +76,5 @@ test('final business catalog preserves legacy redirects invalid slugs and person
     $this->get('/para-voce')
         ->assertOk()
         ->assertSee('Portal Para Você')
-        ->assertDontSee('Soluções empresariais organizadas por necessidade');
+        ->assertDontSee('Escolha por onde sua empresa precisa começar');
 });

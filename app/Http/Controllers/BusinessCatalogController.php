@@ -111,7 +111,7 @@ class BusinessCatalogController extends Controller
             'menu' => config('sophdata_empresa_menu', []),
             'catalog' => $catalog,
             'category' => $category,
-            'parentTitle' => $catalog['title'] ?? 'Catalogo empresarial',
+            'parentTitle' => $catalog['title'] ?? 'Catálogo empresarial',
             'parentUrl' => $catalog['route'] ?? '/para-empresas',
             'seo' => $this->seoForCategory($catalog, $category),
         ]);

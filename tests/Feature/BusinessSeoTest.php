@@ -21,13 +21,13 @@ test('business main pages expose configured seo metadata', function (
         ->toContain('property="og:image" content="'.asset($ogImage).'"')
         ->toContain('name="twitter:card" content="summary_large_image"');
 })->with([
-    ['/para-empresas', 'SophData para Empresas | Software, Infraestrutura e Servidores', 'A SophData ajuda empresas a organizar tecnologia com desenvolvimento de software, infraestrutura gerenciada, servidores, backup e suporte mensal.', 'img/sophdata/portals/business-hero.webp'],
+    ['/para-empresas', 'SophData para Empresas | Sites, Infraestrutura e Servidores', 'A SophData ajuda empresas a organizar tecnologia com sites, sistemas, automações, suporte, infraestrutura, servidores, backup e acompanhamento.', 'img/sophdata/portals/business-hero.webp'],
     ['/para-empresas/desenvolvimento-de-software', 'Desenvolvimento de Software para Empresas | SophData', 'Sites, sistemas, automações, integrações e sustentação para empresas que precisam organizar processos, substituir planilhas e reduzir retrabalho.', 'img/sophdata/services/business/sites-e-sistemas-hero.webp'],
     ['/para-empresas/infraestrutura-corporativa-gerenciada', 'Infraestrutura Corporativa Gerenciada | SophData', 'Organização de computadores, redes, Wi-Fi, suporte, documentação e administração mensal para empresas que precisam de mais estabilidade.', 'img/sophdata/services/business/suporte-de-ti-hero.webp'],
     ['/para-empresas/servidores-e-ambientes-corporativos', 'Servidores e Ambientes Corporativos | SophData', 'Servidor de arquivos, Active Directory, backup empresarial, VPN e virtualização para empresas que precisam proteger dados e organizar acessos.', 'img/sophdata/services/business/seguranca-e-backup-hero.webp'],
-    ['/para-empresas/planos', 'Planos Empresariais de TI | SophData', 'Planos empresariais para diagnóstico, desenvolvimento de software, infraestrutura gerenciada, servidores, backup e suporte mensal.', 'img/sophdata/portals/business-hero.webp'],
-    ['/para-empresas/como-trabalhamos', 'Como Trabalhamos | Método Empresarial SophData', 'Conheça o método da SophData para diagnóstico, planejamento, escopo, implantação, documentação e acompanhamento de soluções empresariais.', 'img/sophdata/portals/business-hero.webp'],
-    ['/para-empresas/contato', 'Contato Empresarial | Solicite Diagnóstico SophData', 'Fale com a SophData para solicitar diagnóstico empresarial em software, infraestrutura, servidores, backup ou suporte mensal.', 'img/sophdata/cta/contact-banner.webp'],
+    ['/para-empresas/planos', 'Planos Empresariais de TI | SophData', 'Planos empresariais para diagnóstico, desenvolvimento de software, infraestrutura gerenciada, servidores, backup e suporte mensal.', 'img/sophdata/cta/contact-banner.webp'],
+    ['/para-empresas/como-trabalhamos', 'Método de Atendimento | Método Empresarial SophData', 'Conheça o método da SophData para diagnóstico, planejamento, escopo, implantação, documentação e acompanhamento de soluções empresariais.', 'img/sophdata/cta/contact-banner.webp'],
+    ['/para-empresas/contato', 'Solicitar Atendimento Empresarial | SophData', 'Solicite atendimento empresarial para organizar software, infraestrutura, servidores, backup, acessos ou suporte mensal.', 'img/sophdata/cta/contact-banner.webp'],
 ]);
 
 test('business internal category pages expose specific seo metadata', function (

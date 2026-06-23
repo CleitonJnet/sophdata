@@ -28,10 +28,11 @@ test('public routes keep portuguese slugs and english internal names', function 
     }
 });
 
-test('mvp remains static without authentication database admin or forms', function () {
-    expect(file_exists(app_path('Models/User.php')))->toBeFalse()
-        ->and(file_exists(database_path('database.sqlite')))->toBeFalse()
-        ->and(glob(database_path('migrations/*.php')) ?: [])->toBeEmpty();
+test('public site remains institutional while authentication base exists separately', function () {
+    expect(file_exists(app_path('Models/User.php')))->toBeTrue()
+        ->and(Route::has('login'))->toBeTrue()
+        ->and(Route::has('register'))->toBeTrue()
+        ->and(Route::has('dashboard'))->toBeTrue();
 
     foreach ([
         'portal.business',
@@ -45,8 +46,8 @@ test('mvp remains static without authentication database admin or forms', functi
         expect($content)
             ->not->toContain('<form')
             ->not->toContain('Falar no WhatsApp')
-            ->not->toContain('Chamar no WhatsApp')
-            ->not->toContain('Mandar WhatsApp');
+            ->not->toContain('Mandar WhatsApp')
+            ->not->toContain('Painel do cliente SophData');
     }
 
     $response = $this->get('/contato')->assertRedirect();

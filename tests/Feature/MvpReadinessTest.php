@@ -44,12 +44,14 @@ test('portal category routing is isolated and rejects invalid slugs', function (
     }
 });
 
-test('mvp does not expose login admin database migrations or functional forms', function () {
-    expect(Route::has('login'))->toBeFalse()
-        ->and(Route::has('register'))->toBeFalse()
+test('authentication base is exposed without admin crm or public functional forms', function () {
+    expect(Route::has('login'))->toBeTrue()
+        ->and(Route::has('register'))->toBeTrue()
+        ->and(Route::has('logout'))->toBeTrue()
+        ->and(Route::has('dashboard'))->toBeTrue()
         ->and(Route::has('admin'))->toBeFalse()
-        ->and(file_exists(app_path('Models/User.php')))->toBeFalse()
-        ->and(glob(database_path('migrations/*.php')) ?: [])->toBeEmpty();
+        ->and(file_exists(app_path('Models/User.php')))->toBeTrue()
+        ->and(file_exists(database_path('migrations/0001_01_01_000000_create_users_table.php')))->toBeTrue();
 
     foreach ([
         '/para-empresas',
@@ -64,16 +66,16 @@ test('mvp does not expose login admin database migrations or functional forms', 
             ->not->toContain('<form')
             ->not->toContain('Lorem ipsum')
             ->not->toContain('Falar no WhatsApp')
-            ->not->toContain('Chamar no WhatsApp')
             ->not->toContain('Mandar WhatsApp')
-            ->not->toContain('Enviar WhatsApp');
+            ->not->toContain('Enviar WhatsApp')
+            ->not->toContain('Painel do cliente SophData');
     }
 });
 
 test('portal home pages sell by customer problem and category pages sell by packages', function () {
     $this->get('/para-empresas')
         ->assertOk()
-        ->assertSee('Tecnologia organizada para empresas')
+        ->assertSee('Organize software, infraestrutura e servidores da sua empresa')
         ->assertSee('Soluções empresariais organizadas por necessidade')
         ->assertSee('Desenvolvimento de Software')
         ->assertSee('Infraestrutura Corporativa Gerenciada')

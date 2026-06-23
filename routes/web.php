@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\BusinessCatalogController;
+use App\Livewire\Profile\EditProfile;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
@@ -62,3 +63,13 @@ Route::get('/contato', function () {
 });
 Route::get('/politica-de-privacidade', [StaticPageController::class, 'privacy'])
     ->name('site.privacy');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
+Route::get('/profile', EditProfile::class)
+    ->middleware('auth')
+    ->name('profile.edit');
+
+require __DIR__.'/auth.php';

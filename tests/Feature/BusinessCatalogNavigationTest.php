@@ -50,7 +50,10 @@ test('infrastructure catalog index presents the managed infrastructure offer', f
         ->assertSee('Computadores, redes, Wi-Fi, suporte e administração mensal.')
         ->assertSee('Sua empresa perde tempo com infraestrutura desorganizada?')
         ->assertSee('Infraestrutura pensada para a rotina da empresa')
+        ->assertSee('Lógica comercial')
         ->assertSee('Como a infraestrutura se encaixa na operação')
+        ->assertSee('O hardware é a estação de trabalho.')
+        ->assertSee('A administração mensal mantém tudo em ordem.')
         ->assertSee('Pacotes integrados por porte de empresa')
         ->assertSee('Infraestrutura Starter')
         ->assertSee('Infraestrutura Corporativa')
@@ -69,6 +72,7 @@ test('infrastructure catalog index presents the managed infrastructure offer', f
         ->toContain('/para-empresas/infraestrutura-corporativa-gerenciada/wifi-corporativo')
         ->toContain('/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal')
         ->toContain('/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados')
+        ->toContain('/para-empresas/contato')
         ->toContain('img/sophdata/services/business/suporte-de-ti-hero.webp');
 });
 
@@ -115,5 +119,5 @@ test('personal portal remains available without business catalog card changes', 
     $this->get('/para-voce')
         ->assertOk()
         ->assertSee('Portal Para Você')
-        ->assertDontSee('Soluções empresariais organizadas por necessidade');
+        ->assertDontSee('Escolha por onde sua empresa precisa começar');
 });

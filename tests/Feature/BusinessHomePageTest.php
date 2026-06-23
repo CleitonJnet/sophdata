@@ -3,7 +3,7 @@
 test('business home works as the main entrance for the enterprise catalog', function () {
     $content = $this->get('/para-empresas')
         ->assertOk()
-        ->assertSee('Tecnologia organizada para empresas que precisam crescer com')
+        ->assertSee('Organize software, infraestrutura e servidores da sua empresa')
         ->assertSee('Sua empresa sente algum desses problemas?')
         ->assertSee('Soluções empresariais organizadas por necessidade')
         ->assertSee('Desenvolvimento de Software')
@@ -11,7 +11,7 @@ test('business home works as the main entrance for the enterprise catalog', func
         ->assertSee('Servidores e Ambientes Corporativos')
         ->assertSee('Responsável técnico')
         ->assertSee('Contratação conforme a necessidade da empresa')
-        ->assertSee('Como trabalhamos')
+        ->assertSee('Como Trabalhamos')
         ->assertSee('Caminhos recomendados para começar')
         ->assertSee('Solicitar diagnóstico empresarial')
         ->getContent();

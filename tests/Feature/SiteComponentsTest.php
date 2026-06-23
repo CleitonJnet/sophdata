@@ -4,7 +4,7 @@ test('business portal presents the new enterprise catalog without personal servi
     $content = $this->get(route('portal.business'))
         ->assertOk()
         ->assertSee('Portal Para Empresas')
-        ->assertSee('Tecnologia organizada para empresas que precisam crescer com segurança.')
+        ->assertSee('Organize software, infraestrutura e servidores da sua empresa')
         ->assertSee('Soluções empresariais organizadas por necessidade')
         ->assertSee('Desenvolvimento de Software')
         ->assertSee('Infraestrutura Corporativa Gerenciada')
@@ -25,7 +25,7 @@ test('personal portal remains focused on personal problems without business cata
     $content = $this->get(route('portal.personal'))
         ->assertOk()
         ->assertSee('Portal Para Você')
-        ->assertSee('Soluções de tecnologia para o seu dia a dia')
+        ->assertSee('Suporte técnico para o seu dia a dia')
         ->assertSee('O que você precisa resolver hoje?')
         ->assertSee('Meu computador está lento')
         ->assertSee('Meu Wi-Fi está ruim')
@@ -47,7 +47,7 @@ test('personal portal remains focused on personal problems without business cata
 test('personal category pages keep benefits packages comparison and faq structure', function () {
     $content = $this->get(route('portal.personal.category', 'wifi-e-casa-conectada'))
         ->assertOk()
-        ->assertSee('Wi-Fi e Casa Conectada')
+        ->assertSee('Internet, Wi-Fi e dispositivos')
         ->assertSee('aria-label="Breadcrumb"', false)
         ->assertSee('O que essa solução resolve?')
         ->assertSee('Escolha o pacote ideal')
@@ -115,12 +115,12 @@ test('profile chooser and header expose accessible navigation', function () {
         ->assertSee('aria-label="Serviços principais do portal ativo"', false)
         ->assertSee('data-menu-button', false)
         ->assertSee('Desenvolvimento de Software')
-        ->assertSee('Infraestrutura Gerenciada')
-        ->assertSee('Servidores e Ambientes');
+        ->assertSee('Infraestrutura Corporativa Gerenciada')
+        ->assertSee('Servidores e Ambientes Corporativos');
 
     $personal
-        ->assertSee('Serviço de Computador Lento')
-        ->assertSee('Wi-Fi e Casa Conectada')
+        ->assertSee('Serviço de Computador lento ou travando')
+        ->assertSee('Internet, Wi-Fi e dispositivos')
         ->assertDontSee('Miniatura de Suporte de TI');
 });
 
@@ -215,12 +215,12 @@ test('public pages expose seo metadata and canonical urls', function (string $pa
         ->toContain('rel="canonical" href="'.url($path).'"')
         ->and(preg_match_all('/<h1\b/i', $content))->toBe(1);
 })->with([
-    ['/para-empresas', 'SophData para Empresas | Software, Infraestrutura e Servidores', 'desenvolvimento de software, infraestrutura gerenciada'],
+    ['/para-empresas', 'SophData para Empresas | Sites, Infraestrutura e Servidores', 'sites, sistemas, automações, suporte'],
     ['/para-voce', 'SophData | Soluções de Tecnologia para Você', 'computador lento, Wi-Fi ruim, proteção de contas'],
     ['/escolher-perfil', 'Escolha seu Perfil | SophData', 'Escolha entre o portal Para Empresas'],
     ['/sobre', 'Sobre a SophData | Soluções em TI', 'Conheça a SophData'],
     ['/politica-de-privacidade', 'Política de Privacidade | SophData', 'site institucional da SophData'],
-    ['/para-voce/wifi-e-casa-conectada', 'Wi-Fi e Casa Conectada | SophData', 'Essencial, Profissional e Completo'],
+    ['/para-voce/wifi-e-casa-conectada', 'Internet, Wi-Fi e dispositivos | SophData', 'Essencial, Profissional e Completo'],
 ]);
 
 test('rendered informative images have alt text and async decoding', function (string $routeName) {

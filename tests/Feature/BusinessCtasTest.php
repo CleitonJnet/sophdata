@@ -20,13 +20,13 @@ test('business pages render standardized primary ctas and contextual whatsapp li
     ['/para-empresas/servidores-e-ambientes-corporativos', 'Avaliar meu ambiente', 'Olá! Quero avaliar servidores, backup ou ambiente corporativo para minha empresa com a SophData.'],
     ['/para-empresas/planos', 'Solicitar diagnóstico empresarial', 'Olá! Quero entender qual plano da SophData faz mais sentido para minha empresa.'],
     ['/para-empresas/como-trabalhamos', 'Solicitar diagnóstico empresarial', 'Olá! Quero solicitar um diagnóstico empresarial com a SophData.'],
-    ['/para-empresas/contato', 'Chamar no WhatsApp', 'Olá! Quero solicitar um diagnóstico empresarial com a SophData.'],
+    ['/para-empresas/contato', 'Iniciar atendimento', 'Olá! Quero solicitar um diagnóstico empresarial com a SophData.'],
 ]);
 
 test('business ctas keep secondary internal conversion paths available', function () {
     $this->get('/para-empresas')
         ->assertOk()
-        ->assertSee('Conhecer soluções')
+        ->assertSee('Ver soluções para empresas')
         ->assertSee('#solucoes', false);
 
     $this->get('/para-empresas/infraestrutura-corporativa-gerenciada')
@@ -36,7 +36,7 @@ test('business ctas keep secondary internal conversion paths available', functio
 
     $this->get('/para-empresas/planos')
         ->assertOk()
-        ->assertSee('Como trabalhamos')
+        ->assertSee('Como Trabalhamos')
         ->assertSee('/para-empresas/como-trabalhamos', false);
 
     $this->get('/para-empresas/como-trabalhamos')
@@ -59,9 +59,9 @@ test('business category pages keep contextual ctas', function (
         ->toContain('https://wa.me/'.config('sophdata.brand.whatsapp'))
         ->toContain(rawurlencode($messageFragment));
 })->with([
-    ['/para-empresas/desenvolvimento-de-software/sistemas-sob-medida', 'Mapear meu sistema', 'Olá! Quero avaliar um sistema sob medida para minha empresa.'],
-    ['/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal', 'Contratar administração mensal', 'Olá! Quero falar sobre administração mensal de TI para minha empresa.'],
-    ['/para-empresas/servidores-e-ambientes-corporativos/backup-empresarial', 'Proteger meus dados', 'Olá! Quero proteger os dados da minha empresa com uma solução de backup.'],
+    ['/para-empresas/desenvolvimento-de-software/sistemas-sob-medida', 'Mapear meu sistema', 'Olá! Quero mapear um sistema sob medida para minha empresa.'],
+    ['/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal', 'Contratar administração mensal', 'Olá! Quero entender os planos de administração mensal de infraestrutura da SophData.'],
+    ['/para-empresas/servidores-e-ambientes-corporativos/backup-empresarial', 'Proteger meus dados', 'Olá! Quero avaliar backup empresarial para proteger os dados da minha empresa.'],
 ]);
 
 test('personal portal remains available after business cta refactor', function () {

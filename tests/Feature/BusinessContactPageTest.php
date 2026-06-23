@@ -4,7 +4,9 @@ test('business contact page guides enterprise visitors to the right channel', fu
     $content = $this->get('/para-empresas/contato')
         ->assertOk()
         ->assertSee('Contato Empresarial')
-        ->assertSee('Solicite um diagnóstico')
+        ->assertSee('Solicite um diagnóstico ou orientação para organizar a tecnologia da sua empresa.')
+        ->assertSee('Conte o cenário atual. A SophData ajuda a identificar o melhor caminho')
+        ->assertSee('Chamar no WhatsApp')
         ->assertSee('Escolha o melhor canal para falar com a SophData')
         ->assertSee('WhatsApp')
         ->assertSee(config('sophdata.brand.whatsapp_display'))
@@ -17,6 +19,7 @@ test('business contact page guides enterprise visitors to the right channel', fu
         ->assertSee('O que enviar no primeiro contato')
         ->assertSee('Como funciona o atendimento inicial')
         ->assertSee('Orientações importantes')
+        ->assertSee('Solicitar diagnóstico empresarial')
         ->getContent();
 
     expect($content)

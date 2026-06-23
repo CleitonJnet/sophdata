@@ -3,31 +3,31 @@
 function businessFinalPages(): array
 {
     return [
-        ['/para-empresas', 'Tecnologia organizada para empresas', 'Solicitar diagnóstico empresarial'],
+        ['/para-empresas', 'Organize software, infraestrutura e servidores da sua empresa', 'Solicitar diagnóstico empresarial'],
         ['/para-empresas/desenvolvimento-de-software', 'Desenvolvimento de Software', 'Solicitar diagnóstico digital'],
         ['/para-empresas/infraestrutura-corporativa-gerenciada', 'Infraestrutura Corporativa Gerenciada', 'Solicitar diagnóstico de infraestrutura'],
         ['/para-empresas/servidores-e-ambientes-corporativos', 'Servidores e Ambientes Corporativos', 'Avaliar meu ambiente'],
-        ['/para-empresas/planos', 'Planos Empresariais', 'Solicitar diagnóstico empresarial'],
-        ['/para-empresas/como-trabalhamos', 'Como Trabalhamos', 'Solicitar diagnóstico empresarial'],
+        ['/para-empresas/planos', 'Planos Empresariais', 'Iniciar atendimento empresarial'],
+        ['/para-empresas/como-trabalhamos', 'Como Trabalhamos', 'Iniciar atendimento empresarial'],
         ['/para-empresas/contato', 'Contato Empresarial', 'Chamar no WhatsApp'],
         ['/para-empresas/desenvolvimento-de-software/diagnostico-e-discovery', 'Diagnóstico e Discovery', 'Solicitar diagnóstico digital'],
-        ['/para-empresas/desenvolvimento-de-software/sites-e-portais', 'Sites e Portais', 'Planejar meu site'],
-        ['/para-empresas/desenvolvimento-de-software/lojas-e-catalogos-digitais', 'Lojas e Catálogos Digitais', 'Planejar meu catálogo'],
+        ['/para-empresas/desenvolvimento-de-software/sites-e-portais', 'Sites e Portais', 'Criar meu site profissional'],
+        ['/para-empresas/desenvolvimento-de-software/lojas-e-catalogos-digitais', 'Lojas e Catálogos Digitais', 'Criar meu catálogo digital'],
         ['/para-empresas/desenvolvimento-de-software/sistemas-sob-medida', 'Sistemas Sob Medida', 'Mapear meu sistema'],
-        ['/para-empresas/desenvolvimento-de-software/sistemas-por-segmento', 'Sistemas por Segmento', 'Avaliar sistema por segmento'],
-        ['/para-empresas/desenvolvimento-de-software/portais-area-logada-pwa', 'Portais, Área Logada e PWA', 'Planejar meu portal'],
-        ['/para-empresas/desenvolvimento-de-software/automacoes-e-integracoes', 'Automações e Integrações', 'Automatizar processos'],
-        ['/para-empresas/desenvolvimento-de-software/deploy-hospedagem', 'Deploy e Hospedagem', 'Organizar meu deploy'],
-        ['/para-empresas/desenvolvimento-de-software/sustentacao-e-evolucao', 'Sustentação e Evolução', 'Evoluir meu sistema'],
-        ['/para-empresas/infraestrutura-corporativa-gerenciada/hardware-corporativo', 'Hardware Corporativo', 'Avaliar hardware corporativo'],
+        ['/para-empresas/desenvolvimento-de-software/sistemas-por-segmento', 'Sistemas por Segmento', 'Ver solução para meu segmento'],
+        ['/para-empresas/desenvolvimento-de-software/portais-area-logada-pwa', 'Portais, Área Logada e PWA', 'Criar área logada'],
+        ['/para-empresas/desenvolvimento-de-software/automacoes-e-integracoes', 'Automações e Integrações', 'Automatizar meu processo'],
+        ['/para-empresas/desenvolvimento-de-software/deploy-hospedagem', 'Deploy e Hospedagem', 'Publicar meu sistema'],
+        ['/para-empresas/desenvolvimento-de-software/sustentacao-e-evolucao', 'Sustentação e Evolução', 'Manter meu sistema'],
+        ['/para-empresas/infraestrutura-corporativa-gerenciada/hardware-corporativo', 'Hardware Corporativo', 'Organizar meus computadores'],
         ['/para-empresas/infraestrutura-corporativa-gerenciada/redes-corporativas', 'Redes Corporativas', 'Avaliar minha rede'],
         ['/para-empresas/infraestrutura-corporativa-gerenciada/wifi-corporativo', 'Wi-Fi Corporativo', 'Melhorar meu Wi-Fi'],
         ['/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal', 'Administração Mensal', 'Contratar administração mensal'],
-        ['/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados', 'Pacotes Integrados', 'Ver pacotes integrados'],
-        ['/para-empresas/servidores-e-ambientes-corporativos/servidor-de-arquivos', 'Servidor de Arquivos', 'Organizar arquivos'],
-        ['/para-empresas/servidores-e-ambientes-corporativos/active-directory', 'Active Directory', 'Organizar usuários'],
+        ['/para-empresas/infraestrutura-corporativa-gerenciada/pacotes-integrados', 'Pacotes Integrados', 'Escolher pacote empresarial'],
+        ['/para-empresas/servidores-e-ambientes-corporativos/servidor-de-arquivos', 'Servidor de Arquivos', 'Centralizar meus arquivos'],
+        ['/para-empresas/servidores-e-ambientes-corporativos/active-directory', 'Active Directory', 'Organizar usuários e permissões'],
         ['/para-empresas/servidores-e-ambientes-corporativos/backup-empresarial', 'Backup Empresarial', 'Proteger meus dados'],
-        ['/para-empresas/servidores-e-ambientes-corporativos/vpn-e-trabalho-remoto', 'VPN e Trabalho Remoto', 'Organizar acesso remoto'],
+        ['/para-empresas/servidores-e-ambientes-corporativos/vpn-e-trabalho-remoto', 'VPN e Trabalho Remoto', 'Liberar acesso remoto seguro'],
         ['/para-empresas/servidores-e-ambientes-corporativos/virtualizacao', 'Virtualização', 'Avaliar virtualização'],
     ];
 }
@@ -75,7 +75,7 @@ test('final business redirects invalid slugs personal regression and sitemap are
 
     $this->get('/para-voce/computador-lento')
         ->assertOk()
-        ->assertSee('Computador Lento');
+        ->assertSee('Computador lento ou travando');
 
     $sitemap = file_get_contents(public_path('sitemap.xml'));
 

@@ -8,7 +8,7 @@ test('business how we work page explains the enterprise method', function () {
         ->assertSee('Diagnóstico')
         ->assertSee('Planejamento')
         ->assertSee('Proposta')
-        ->assertSee('Execucao ou implantação')
+        ->assertSee('Execução ou implantação')
         ->assertSee('Documentação')
         ->assertSee('Administração e evolução')
         ->assertSee('O método se adapta ao tipo de solução')

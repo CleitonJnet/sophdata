@@ -26,7 +26,7 @@
 
     $primaryLinks = [
         [
-            'label' => 'Desenvolvimento de Software',
+            'label' => 'Sites, Sistemas e Automações',
             'description' => 'Sites, sistemas, automações e soluções digitais para organizar serviços, dados e processos.',
             'href' => route('business.software.index'),
             'icon' => 'code',
