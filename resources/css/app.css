@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    --color-brand-50: #eff7ff;
+    --color-brand-100: #dcedff;
+    --color-brand-200: #b9ddff;
+    --color-brand-300: #85c6ff;
+    --color-brand-400: #4aa5ff;
+    --color-brand-500: #1f7fff;
+    --color-brand-600: #0b61e8;
+    --color-brand-700: #0b4dbc;
+    --color-brand-800: #0f4297;
+    --color-brand-900: #123a76;
+    --color-brand-950: #0c2449;
+
+    --color-action-400: #ff785a;
+    --color-action-500: #d83a20;
+    --color-action-600: #b92c16;
+
+    --color-gold: #c9a227;
+    --color-gold-light: #f2d675;
+    --color-silver: #c0c7d1;
+    --color-silver-light: #eef1f4;
+
+    --color-zinc-50: #fafafa;
+    --color-zinc-100: #f5f5f5;
+    --color-zinc-200: #e5e5e5;
+    --color-zinc-300: #d4d4d4;
+    --color-zinc-400: #a3a3a3;
+    --color-zinc-500: #737373;
+    --color-zinc-600: #525252;
+    --color-zinc-700: #404040;
+    --color-zinc-800: #262626;
+    --color-zinc-900: #171717;
+    --color-zinc-950: #0a0a0a;
+
+    --color-accent: var(--color-neutral-800);
+    --color-accent-content: var(--color-neutral-800);
+    --color-accent-foreground: var(--color-white);
+
+    /* BREAKPOINTS */
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 640px;
+    --breakpoint-sm2: 700px;
+    --breakpoint-md: 768px;
+    --breakpoint-md2: 991px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-lg2: 1180px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+
+    --container-8xl: 1500px;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+}
+
+body {
+    background: #f8fafc;
+    overflow-x: hidden;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html.menu-open,
+html.menu-open body,
+html.profile-gate-open,
+html.profile-gate-open body {
+    overflow: hidden;
+}
+
+:where(
+    a,
+    button,
+    summary,
+    input,
+    select,
+    textarea,
+    [role="button"]
+):focus-visible {
+    outline: 3px solid #1f7fff !important;
+    outline-offset: 3px !important;
+}
+
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.75rem 1rem;
+    color: #0c2449;
+    font-weight: 700;
+    box-shadow: 0 12px 30px rgb(12 36 73 / 20%);
+    transition: transform 150ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+::selection {
+    background: #b9ddff;
+    color: #0c2449;
+}
+
+.hero-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.card-lift {
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.swiper-wrapper > .category-card.swiper-slide {
+    height: auto;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    --swiper-navigation-size: 1.15rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgb(185 221 255 / 70%);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 82%);
+    color: #0c2449;
+    opacity: 0.62;
+    box-shadow: 0 12px 30px rgb(12 36 73 / 12%);
+    backdrop-filter: blur(10px);
+    transition:
+        opacity 160ms ease,
+        transform 160ms ease,
+        background-color 160ms ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover,
+.swiper-button-next:focus-visible,
+.swiper-button-prev:focus-visible {
+    background: rgb(255 255 255 / 95%);
+    opacity: 0.95;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-weight: 800;
+}
+
+.sd_problems,
+.sd_solutions {
+    padding-inline: 2.75rem;
+    padding-bottom: 2.75rem;
+}
+
+.sd_problems .swiper-button-prev,
+.sd_solutions .swiper-button-prev {
+    left: 0.25rem;
+}
+
+.sd_problems .swiper-button-next,
+.sd_solutions .swiper-button-next {
+    right: 0.25rem;
+}
+
+.site-hero-carousel .swiper-button-prev {
+    left: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.site-hero-carousel .swiper-button-next {
+    right: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.horizontal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #b9ddff transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 0.35rem;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #b9ddff;
+}
+
+.whatsapp-floating {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+@media (hover: hover) {
+    .card-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 50px -24px rgb(15 66 151 / 35%);
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        scroll-padding-top: 12.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        --swiper-navigation-size: 0.9rem;
+        width: 2rem;
+        height: 2rem;
+        opacity: 0.5;
+    }
+
+    .site-hero-carousel {
+        padding-bottom: 3.5rem;
+    }
+
+    .site-hero-carousel .swiper-pagination,
+    .sd_problems .swiper-pagination,
+    .sd_solutions .swiper-pagination {
+        bottom: 1rem;
+        left: 50%;
+        width: auto;
+        max-width: calc(100% - 7rem);
+        transform: translateX(-50%);
+        white-space: nowrap;
+    }
+
+    .site-hero-carousel .swiper-button-next,
+    .site-hero-carousel .swiper-button-prev {
+        top: auto;
+        bottom: 0.75rem;
+        margin-top: 0;
+    }
+
+    .site-hero-carousel .swiper-button-prev {
+        left: 1rem;
+    }
+
+    .site-hero-carousel .swiper-button-next {
+        right: 1rem;
+    }
+
+    .sd_problems,
+    .sd_solutions {
+        padding-inline: 0;
+        padding-bottom: 3.75rem;
+    }
+
+    .sd_problems .swiper-button-next,
+    .sd_problems .swiper-button-prev,
+    .sd_solutions .swiper-button-next,
+    .sd_solutions .swiper-button-prev {
+        top: auto;
+        bottom: 0.5rem;
+        margin-top: 0;
+    }
+
+    .sd_problems .swiper-button-prev,
+    .sd_solutions .swiper-button-prev {
+        left: 1rem;
+    }
+
+    .sd_problems .swiper-button-next,
+    .sd_solutions .swiper-button-next {
+        right: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}

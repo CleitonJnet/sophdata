@@ -1,0 +1,7 @@
+[19-Jun-2026 10:54:26 America/Fortaleza] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.4.1". You are running 8.3.31. in /home1/https576/sophdata.escolagenebra.com.br/vendor/composer/platform_check.php:22
+Stack trace:
+#0 /home1/https576/sophdata.escolagenebra.com.br/vendor/composer/autoload_real.php(25): require()
+#1 /home1/https576/sophdata.escolagenebra.com.br/vendor/autoload.php(22): ComposerAutoloaderInit22a0b587cc80bc99042c40e5415c8560::getLoader()
+#2 /home1/https576/sophdata.escolagenebra.com.br/public/index.php(14): require('/home1/https576...')
+#3 {main}
+  thrown in /home1/https576/sophdata.escolagenebra.com.br/vendor/composer/platform_check.php on line 22
