@@ -5,8 +5,17 @@
     @php
         $seo = is_array($seo ?? null) ? $seo : [];
         $indexable = (bool) config('sophdata.seo.indexable', false);
-        $seoTitle = trim($seo['title'] ?? $__env->yieldContent('title', config('sophdata.seo.default_title', config('sophdata.brand.name'))));
-        $seoDescription = trim($seo['description'] ?? $__env->yieldContent('meta_description', config('sophdata.seo.default_description', 'Soluções de tecnologia para pessoas e empresas.')));
+        $seoTitle = trim(
+            $seo['title'] ??
+                $__env->yieldContent('title', config('sophdata.seo.default_title', config('sophdata.brand.name'))),
+        );
+        $seoDescription = trim(
+            $seo['description'] ??
+                $__env->yieldContent(
+                    'meta_description',
+                    config('sophdata.seo.default_description', 'Soluções de tecnologia para pessoas e empresas.'),
+                ),
+        );
         $seoCanonical = $seo['canonical'] ?? null;
         $seoCanonicalUrl = $seoCanonical
             ? (str_starts_with($seoCanonical, 'http://') || str_starts_with($seoCanonical, 'https://')
@@ -15,11 +24,16 @@
             : url()->current();
         $seoOgTitle = $seo['og_title'] ?? $seoTitle;
         $seoOgDescription = $seo['og_description'] ?? $seoDescription;
-        $seoRobots = $indexable ? ($seo['robots'] ?? 'index, follow') : 'noindex, nofollow';
+        $seoRobots = $indexable ? $seo['robots'] ?? 'index, follow' : 'noindex, nofollow';
         $logoPath = config('sophdata.logos.symbol', 'favicon.svg');
         $logoUrl = asset($logoPath);
         $ogImagePath = $seo['og_image'] ?? config('sophdata.seo.default_og_image');
-        if ($ogImagePath && ! str_starts_with($ogImagePath, 'http://') && ! str_starts_with($ogImagePath, 'https://') && ! file_exists(public_path(ltrim($ogImagePath, '/')))) {
+        if (
+            $ogImagePath &&
+            !str_starts_with($ogImagePath, 'http://') &&
+            !str_starts_with($ogImagePath, 'https://') &&
+            !file_exists(public_path(ltrim($ogImagePath, '/')))
+        ) {
             $ogImagePath = config('sophdata.seo.default_og_image', 'img/sophdata/portals/business-hero.webp');
         }
         $ogImageUrl = $ogImagePath
@@ -59,18 +73,35 @@
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSEK5P43SL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PSEK5P43SL');
+    </script>
+
     <!-- Matomo -->
     <script>
-      var _paq = window._paq = window._paq || [];
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//analytics.sophdata.com.br/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '1']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u = "//analytics.sophdata.com.br/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d = document,
+                g = d.createElement('script'),
+                s = d.getElementsByTagName('script')[0];
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
     </script>
     <!-- End Matomo Code -->
 
