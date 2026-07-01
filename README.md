@@ -56,6 +56,12 @@ php artisan serve
 npm run build
 ```
 
+## SEO e Indexação
+
+Em produção, configure `APP_URL=https://sophdata.com.br` e `SOPHDATA_INDEXABLE=true` para permitir que o layout gere `<meta name="robots" content="index, follow">`.
+
+O sitemap oficial é `https://sophdata.com.br/sitemap.xml`, e o `robots.txt` oficial deve permitir o rastreamento do site. Mais detalhes estão em `docs/seo-indexacao.md`.
+
 ## Testes
 
 ```bash

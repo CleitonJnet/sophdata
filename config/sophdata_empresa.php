@@ -45,7 +45,7 @@ $mainBlocks = [
         'slug' => 'infraestrutura-corporativa-gerenciada',
         'title' => 'Infraestrutura Corporativa Gerenciada',
         'subtitle' => 'Computadores, redes, Wi-Fi, suporte e administração mensal.',
-        'description' => 'Organizamos a base tecnologica da empresa para que computadores, rede, Wi-Fi, impressoras e suporte funcionem com mais estabilidade, documentação e acompanhamento.',
+        'description' => 'Organizamos a base tecnológica da empresa para que computadores, rede, Wi-Fi, impressoras e suporte funcionem com mais estabilidade, documentação e acompanhamento.',
         'image' => $images['infraestrutura'],
         'image_alt' => 'Infraestrutura corporativa com suporte, computadores e rede organizada',
         'route' => '/para-empresas/infraestrutura-corporativa-gerenciada',
@@ -55,8 +55,8 @@ $mainBlocks = [
         ],
         'whatsapp_message' => 'Olá! Quero avaliar a infraestrutura de TI da minha empresa com a SophData.',
         'pains' => [
-            'Computadores lentos ou sem padrao',
-            'Rede instavel',
+            'Computadores lentos ou sem padrão',
+            'Rede instável',
             'Wi-Fi fraco',
             'Impressoras com falhas recorrentes',
             'Falta de documentação técnica',
@@ -87,9 +87,9 @@ $mainBlocks = [
         ],
         'whatsapp_message' => 'Olá! Quero avaliar servidores, backup ou ambiente corporativo para minha empresa com a SophData.',
         'pains' => [
-            'Arquivos espalhados em varias máquinas',
+            'Arquivos espalhados em várias máquinas',
             'Falta de controle de acesso',
-            'Ausencia de backup confiável',
+            'Ausência de backup confiável',
             'Dificuldade para trabalho remoto seguro',
             'Servidor improvisado',
             'Falta de organização de usuários e permissões',
@@ -111,10 +111,10 @@ return [
     'slug' => 'para-empresas',
     'title' => 'Soluções de TI para empresas',
     'subtitle' => 'Software, infraestrutura e servidores organizados para empresas que precisam de tecnologia funcionando com clareza e continuidade.',
-    'description' => 'A SophData ajuda empresas, igrejas, escolas, escritorios e organizações a organizar sistemas, computadores, redes, servidores e suporte em uma estrutura profissional de TI.',
+    'description' => 'A SophData ajuda empresas, igrejas, escolas, escritórios e organizações a organizar sistemas, computadores, redes, servidores e suporte em uma estrutura profissional de TI.',
     'seo' => [
-        'title' => 'SophData para Empresas | Software, Infraestrutura e Servidores',
-        'description' => 'A SophData ajuda empresas a organizar tecnologia com desenvolvimento de software, infraestrutura gerenciada, servidores, backup e suporte mensal.',
+        'title' => 'SophData para Empresas | Suporte de TI, Sistemas, Servidores e Backup',
+        'description' => 'A SophData ajuda empresas, igrejas, escolas, escritórios e organizações a organizar tecnologia com suporte de TI, desenvolvimento de sistemas, infraestrutura, servidores e backup.',
         'canonical' => '/para-empresas',
         'og_title' => 'SophData para Empresas',
         'og_description' => 'Software, infraestrutura e servidores para empresas que precisam organizar tecnologia com clareza e continuidade.',
@@ -172,21 +172,21 @@ return [
         ],
     ],
     'audiences' => [
-        'Empresas e escritorios',
+        'Empresas e escritórios',
         'Igrejas e organizações religiosas',
         'Escolas e cursos',
-        'Consultorios e clínicas',
+        'Consultórios e clínicas',
         'Imobiliárias',
         'Prestadores de serviço',
         'ONGs e associações',
-        'Comercios locais',
+        'Comércios locais',
     ],
     'business_pains' => [
         'Planilhas demais e pouca organização',
-        'Computadores lentos ou sem padrao',
+        'Computadores lentos ou sem padrão',
         'Rede e Wi-Fi instáveis',
         'Arquivos espalhados e sem controle',
-        'Ausencia de backup confiável',
+        'Ausência de backup confiável',
         'Site antigo ou inexistente',
         'Sistemas sem manutenção',
         'Suporte técnico apenas quando algo quebra',
@@ -198,7 +198,7 @@ return [
         ],
         [
             'title' => 'Planejamento',
-            'description' => 'Organizamos a solução em etapas claras, com escopo e direcao.',
+            'description' => 'Organizamos a solução em etapas claras, com escopo e direção.',
         ],
         [
             'title' => 'Implantação',
@@ -252,7 +252,7 @@ return [
             ],
             [
                 'title' => 'Planejamento',
-                'description' => 'Organizamos a solução em etapas claras, com escopo, limites e direcao.',
+                'description' => 'Organizamos a solução em etapas claras, com escopo, limites e direção.',
             ],
             [
                 'title' => 'Proposta',
@@ -279,7 +279,7 @@ return [
             [
                 'title' => 'Desenvolvimento de Software',
                 'description' => 'Em projetos de software, começamos entendendo o processo da empresa, transformamos a necessidade em escopo, validamos telas ou fluxos quando necessário, desenvolvemos a solução, homologamos com o cliente e planejamos sustentação ou evolução.',
-                'steps' => ['Diagnóstico', 'Discovery', 'Protótipo ou definicao de fluxos', 'Desenvolvimento', 'Homologação', 'Deploy', 'Sustentação'],
+                'steps' => ['Diagnóstico', 'Discovery', 'Protótipo ou definição de fluxos', 'Desenvolvimento', 'Homologação', 'Deploy', 'Sustentação'],
                 'url' => '/para-empresas/desenvolvimento-de-software',
             ],
             [
@@ -339,9 +339,9 @@ return [
             'points' => [
                 'Registro de informações importantes do ambiente',
                 'Orientação básica para o cliente',
-                'Historico de decisões e mudancas',
+                'Histórico de decisões e mudanças',
                 'Apoio ao suporte futuro',
-                'Reducao da dependencia de memória ou improviso',
+                'Redução da dependência de memória ou improviso',
                 'Mais clareza para continuidade e evolução',
             ],
         ],
@@ -350,8 +350,8 @@ return [
             'Disponibilizar acessos necessários quando combinados',
             'Validar escopo, textos, fluxos ou configurações',
             'Responder dúvidas em tempo adequado',
-            'Aprovar etapas antes de avancar quando necessário',
-            'Informar mudancas de prioridade ou regra de negócio',
+            'Aprovar etapas antes de avançar quando necessário',
+            'Informar mudanças de prioridade ou regra de negócio',
         ],
     ],
     'contact_page' => [
@@ -429,25 +429,25 @@ return [
         ],
         'first_contact_checklist' => [
             'Nome da empresa ou organização',
-            'Cidade e bairro, sé houver necessidade de atendimento presencial',
+            'Cidade e bairro, se houver necessidade de atendimento presencial',
             'Principal problema ou objetivo',
             'Quantidade aproximada de computadores ou usuários',
-            'Sé já existé site, sistema, servidor, backup ou rede estruturada',
-            'Urgencia do atendimento',
-            'Melhor horario para retorno',
-            'Sé a necessidade e pontual, projeto fechado ou acompanhamento mensal',
+            'Se já existe site, sistema, servidor, backup ou rede estruturada',
+            'Urgência do atendimento',
+            'Melhor horário para retorno',
+            'Se a necessidade é pontual, projeto fechado ou acompanhamento mensal',
         ],
         'initial_flow' => [
             [
-                'title' => 'Vocé apresenta o cenário',
+                'title' => 'Você apresenta o cenário',
                 'description' => 'Conte a necessidade principal, o problema atual e o objetivo da empresa.',
             ],
             [
                 'title' => 'A SophData avalia o caminho',
-                'description' => 'Identificamos sé o caso envolvé software, infraestrutura, servidores, backup, suporte ou diagnóstico.',
+                'description' => 'Identificamos se o caso envolve software, infraestrutura, servidores, backup, suporte ou diagnóstico.',
             ],
             [
-                'title' => 'Organizamos a proxima etapa',
+                'title' => 'Organizamos a próxima etapa',
                 'description' => 'Dependendo do caso, seguimos para diagnóstico, proposta, visita, reunião ou levantamento técnico.',
             ],
             [
@@ -477,8 +477,8 @@ return [
         'summary' => 'A SophData é conduzida por um responsável técnico com experiência prática em desenvolvimento de sistemas, suporte, redes, Linux, servidores e ambientes corporativos. Essa base permite avaliar o cenário da empresa com visão realista, propor soluções adequadas e acompanhar a continuidade da operação.',
         'highlights' => [
             'Experiência prática em suporte e infraestrutura de TI',
-            'Atuacao com desenvolvimento web e sistemas sob medida',
-            'Vivencia com Linux, redes, servidores e ambientes corporativos',
+            'Atuação com desenvolvimento web e sistemas sob medida',
+            'Vivência com Linux, redes, servidores e ambientes corporativos',
             'Atendimento consultivo para pequenas empresas, igrejas, escolas e organizações',
         ],
         'trust_points' => [
