@@ -12,7 +12,7 @@ class RedirectToDefaultPortal
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->is('/')) {
-            return new RedirectResponse(route('portal.business'));
+            return new RedirectResponse(route('portal.business'), Response::HTTP_MOVED_PERMANENTLY);
         }
 
         return $next($request);

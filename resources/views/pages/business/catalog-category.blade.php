@@ -140,7 +140,7 @@
             'monthly_price' => 'Mensalidade',
             'monthly_total' => 'Total mensal',
             'hours' => 'Horas',
-            'hours_per_month' => 'Horas por mes',
+            'hours_per_month' => 'Horas por mês',
             'recommended_use' => 'Uso recomendado',
             'recommended_for' => 'Indicado para',
             'need' => 'Necessidade',
@@ -369,7 +369,7 @@
                 <x-site.section-heading eyebrow="Combinados comerciais" title="Observações importantes"
                     description="Valores e escopo podem variar conforme diagnóstico, porte do ambiente, equipamentos existentes e materiais necessários." centered />
                 <div class="mt-12 grid gap-5 lg:grid-cols-2">
-                    @foreach (['Observações comerciais' => $category['commercial_notes'] ?? [], 'Limites de escopo' => $category['scope_limits'] ?? [], 'Não incluso por padrao' => $notIncluded] as $title => $notes)
+                    @foreach (['Observações comerciais' => $category['commercial_notes'] ?? [], 'Limites de escopo' => $category['scope_limits'] ?? [], 'Não incluso por padrão' => $notIncluded] as $title => $notes)
                         @if (filled($notes))
                             <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                                 <h3 class="text-xl font-bold text-brand-950">{{ $title }}</h3>

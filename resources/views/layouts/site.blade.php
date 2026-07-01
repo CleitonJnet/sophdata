@@ -41,6 +41,25 @@
                 ? $ogImagePath
                 : asset($ogImagePath))
             : $logoUrl;
+        $organizationSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfessionalService',
+            'name' => 'SophData',
+            'url' => 'https://sophdata.com.br',
+            'description' => 'Soluções de TI, desenvolvimento de software, infraestrutura, servidores e backup para empresas.',
+            'email' => 'contato@sophdata.com.br',
+            'telephone' => '+5521972765535',
+            'areaServed' => [
+                'Niterói',
+                'Rio de Janeiro',
+                'São Gonçalo',
+                'Brasil',
+            ],
+        ];
+
+        if (file_exists(public_path('img/SophData-logo.svg'))) {
+            $organizationSchema['logo'] = 'https://sophdata.com.br/img/SophData-logo.svg';
+        }
     @endphp
 
     <meta charset="utf-8">
@@ -70,8 +89,27 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
+    <script type="application/ld+json">
+        @json($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    </script>
+
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+</head>
+
+<body class="font-sans text-slate-900 antialiased relative">
+    <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+    <x-site.header />
+
+    <main id="main-content" tabindex="-1">
+        @yield('content')
+    </main>
+
+    <x-site.footer />
+    <x-site.whatsapp-floating />
+    <x-site.profile-gate-modal background="img/sophdata/cta/contact-banner.webp" />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSEK5P43SL"></script>
@@ -104,21 +142,6 @@
         })();
     </script>
     <!-- End Matomo Code -->
-
-</head>
-
-<body class="font-sans text-slate-900 antialiased relative">
-    <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
-
-    <x-site.header />
-
-    <main id="main-content" tabindex="-1">
-        @yield('content')
-    </main>
-
-    <x-site.footer />
-    <x-site.whatsapp-floating />
-    <x-site.profile-gate-modal background="img/sophdata/cta/contact-banner.webp" />
 
 </body>
 

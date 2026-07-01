@@ -39,8 +39,8 @@ return [
     'seo' => [
         'indexable' => (bool) env('SOPHDATA_INDEXABLE', false),
         'site_url' => env('APP_URL', 'http://localhost'),
-        'default_title' => 'SophData',
-        'default_description' => 'Soluções de tecnologia para empresas e pessoas.',
+        'default_title' => 'SophData | Suporte de TI, Sistemas, Servidores e Backup',
+        'default_description' => 'A SophData ajuda empresas com suporte de TI, desenvolvimento de sistemas, infraestrutura, servidores, backup e organização tecnológica.',
         'default_og_image' => 'img/sophdata/portals/business-hero.webp',
     ],
 

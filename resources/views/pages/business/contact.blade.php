@@ -60,8 +60,8 @@
     @if (filled($page['needs'] ?? []))
         <section class="bg-slate-50 py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                <x-site.section-heading eyebrow="Necessidade" title="Sobre o que voce quer falar?"
-                    description="Escolha o assunto mais proximo da necessidade da sua empresa." centered />
+                <x-site.section-heading eyebrow="Necessidade" title="Sobre o que você quer falar?"
+                    description="Escolha o assunto mais próximo da necessidade da sua empresa." centered />
                 <ul class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
                     @foreach ($page['needs'] as $need)
                         @php
@@ -96,7 +96,7 @@
             @if (filled($page['first_contact_checklist'] ?? []))
                 <div>
                     <x-site.section-heading eyebrow="Primeiro contato" title="O que enviar no primeiro contato"
-                        description="Quanto mais claro for o cenário inicial, melhor sera a orientação da SophData." />
+                        description="Quanto mais claro for o cenário inicial, melhor será a orientação da SophData." />
                     <ul class="mt-8 grid gap-3 text-sm leading-6 text-slate-600">
                         @foreach ($page['first_contact_checklist'] as $item)
                             <li class="flex gap-3">

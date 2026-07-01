@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\PortalController;
 use App\Http\Controllers\BusinessCatalogController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +30,7 @@ Route::get('/para-empresas/como-trabalhamos', [BusinessCatalogController::class,
 Route::get('/para-empresas/contato', [BusinessCatalogController::class, 'contact'])
     ->name('business.contact');
 
-// Redirecionamentos das categorias empresariais antigas para a nova arquitetura do catalogo.
+// Redirecionamentos das categorias empresariais antigas para a nova arquitetura do catálogo.
 Route::redirect('/para-empresas/sites-e-sistemas', '/para-empresas/desenvolvimento-de-software', 301);
 Route::redirect('/para-empresas/automacao-e-dados', '/para-empresas/desenvolvimento-de-software/automacoes-e-integracoes', 301);
 Route::redirect('/para-empresas/suporte-de-ti', '/para-empresas/infraestrutura-corporativa-gerenciada/administracao-mensal', 301);
